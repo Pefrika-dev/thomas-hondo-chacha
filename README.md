@@ -61,7 +61,7 @@ My Official Website/
 └── README.md
 ```
 
-All paths are relative, so the site can be hosted in a domain root or a subfolder.
+The main pages use relative paths, so the site can be hosted at a domain root or in a subfolder. `404.html` uses root-relative links so its styles, scripts and navigation still work when Vercel serves it from a missing nested URL. Adjust those root-relative paths if you host the site in a subfolder.
 
 ---
 
@@ -392,7 +392,7 @@ Absolute URLs are required for social previews and sitemaps. If the site moves i
 
 - `sitemap.xml` lists the five indexable pages. Update `lastmod` after meaningful content changes and remove pages you do not want indexed.
 - `robots.txt` allows crawling and points to the live sitemap.
-- `404.html` is served by most static hosts for missing pages. Some hosts need an explicit error-document setting; see the deployment section.
+- `404.html` is served by most static hosts for missing pages. Some hosts need an explicit error-document setting; see the deployment section. It uses root-relative asset links so that it still renders when the missing URL contains extra path segments.
 - `404.html` is marked `noindex, follow` and intentionally has no canonical URL.
 - The homepage includes JSON-LD `Person` structured data. Update it if the name, role, email or phone changes.
 
