@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace example.com with your real production domain before publishing.
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://thomas-hondo-chacha.vercel.app/sitemap.xml

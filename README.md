@@ -4,6 +4,9 @@ A complete, bilingual personal website for **Thomas Hondo Chacha**, a software e
 
 The site is built with **HTML5, CSS3 and vanilla JavaScript**. It has no build step, no framework and no backend.
 
+**Live site:** [https://thomas-hondo-chacha.vercel.app/](https://thomas-hondo-chacha.vercel.app/)\
+**Source repository:** [https://github.com/Pefrika-dev/thomas-hondo-chacha](https://github.com/Pefrika-dev/thomas-hondo-chacha)
+
 ---
 
 ## 1. What is included
@@ -53,6 +56,8 @@ My Official Website/
 ├── site.webmanifest
 ├── robots.txt
 ├── sitemap.xml
+├── vercel.json          Production security headers for Vercel
+├── .gitignore
 └── README.md
 ```
 
@@ -364,29 +369,29 @@ No backend is included in this project.
 
 ## 10. SEO, the production domain and the 404 page
 
-### Replace the placeholder domain
+### Production domain
 
-The site was delivered without a production domain, so `https://example.com/` is used as an explicit placeholder in:
+The site is live at **https://thomas-hondo-chacha.vercel.app/**. Canonical links, `og:url`, the Open Graph and Twitter images, `sitemap.xml` and `robots.txt` all use this hostname.
+
+If you attach a custom domain in Vercel, replace the hostname in:
 
 - canonical links and `og:url` in all six HTML pages;
 - `og:image` and `twitter:image` URLs;
 - `sitemap.xml`;
 - `robots.txt`.
 
-**Before publishing, replace every `https://example.com/` with the real domain**, including the trailing slash where appropriate.
-
 Find them with:
 
 ```powershell
-Select-String -Path *.html,sitemap.xml,robots.txt -Pattern "https://example.com"
+Select-String -Path *.html,sitemap.xml,robots.txt -Pattern "https://thomas-hondo-chacha.vercel.app"
 ```
 
-If the site will be hosted in a subfolder, update the canonical, Open Graph, sitemap and manifest paths to match. Absolute URLs are required for social previews and sitemaps.
+Absolute URLs are required for social previews and sitemaps. If the site moves into a subfolder, update those paths as well.
 
 ### Metadata files
 
 - `sitemap.xml` lists the five indexable pages. Update `lastmod` after meaningful content changes and remove pages you do not want indexed.
-- `robots.txt` allows crawling and points to the sitemap. Replace the placeholder domain.
+- `robots.txt` allows crawling and points to the live sitemap.
 - `404.html` is served by most static hosts for missing pages. Some hosts need an explicit error-document setting; see the deployment section.
 - `404.html` is marked `noindex, follow` and intentionally has no canonical URL.
 - The homepage includes JSON-LD `Person` structured data. Update it if the name, role, email or phone changes.
@@ -406,7 +411,13 @@ If the site will be hosted in a subfolder, update the canonical, Open Graph, sit
 
 ## 11. Deployment
 
-Because there is no build step, upload the folder contents as they are.
+### Live deployment
+
+- **GitHub:** [Pefrika-dev/thomas-hondo-chacha](https://github.com/Pefrika-dev/thomas-hondo-chacha)
+- **Vercel project:** [pefrika/thomas-hondo-chacha](https://vercel.com/pefrika/thomas-hondo-chacha)
+- **Production URL:** [https://thomas-hondo-chacha.vercel.app/](https://thomas-hondo-chacha.vercel.app/)
+
+The Vercel project is connected to the GitHub repository. Pushing to the `main` branch creates a new production deployment automatically. There is no build step: Vercel serves the repository files as a static site, and `vercel.json` adds basic security headers.
 
 ### Netlify
 
@@ -417,9 +428,13 @@ Because there is no build step, upload the folder contents as they are.
 
 ### Vercel
 
-1. Import the project as a static site.
-2. Use the folder containing `index.html` as the output directory.
-3. No build command is required.
+The project is already deployed. To recreate it from scratch:
+
+1. Import the GitHub repository into Vercel.
+2. Choose **Other** as the framework preset.
+3. Leave the build command empty and use the repository root as the output directory.
+4. Deploy. Vercel serves `404.html` for missing paths automatically.
+5. Add a custom domain under **Project → Settings → Domains** if needed, then update the SEO hostname as described above.
 
 ### GitHub Pages
 
@@ -450,7 +465,7 @@ After deployment:
 
 - test every page and internal link over HTTPS;
 - test the phone, WhatsApp and email links on a real phone;
-- replace the placeholder domain everywhere;
+- update the SEO hostname everywhere if you attach a custom domain;
 - submit `sitemap.xml` in Google Search Console or Bing Webmaster Tools if desired;
 - check the social preview with a tool such as the Facebook Sharing Debugger or LinkedIn Post Inspector.
 
@@ -566,7 +581,7 @@ No JavaScript libraries, CSS frameworks, analytics or tracking scripts are used.
 
 Before publishing:
 
-- [ ] Replace `https://example.com/` in all HTML, `sitemap.xml` and `robots.txt`.
+- [ ] If using a custom domain, update the production hostname in all HTML, `sitemap.xml` and `robots.txt`.
 - [ ] Confirm the phone, WhatsApp and email links.
 - [ ] Confirm every project status and limitation is accurate.
 - [ ] Add public links only where they really exist.
