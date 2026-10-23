@@ -521,7 +521,15 @@ The following checks were actually run during development:
   - “Back to the form” restored focus and kept the entered values;
   - reset cleared the values, errors and review panel;
   - service query values preselected the correct project type.
-- **Lighthouse** in Chrome:
+- **Live deployment checks** against [https://thomas-hondo-chacha.vercel.app/](https://thomas-hondo-chacha.vercel.app/) with Chrome and Playwright:
+  - all main pages and required assets returned `200`;
+  - canonical and `og:url` values used the production hostname;
+  - the profile photo loaded and its alt text switched to Kiswahili;
+  - the mobile menu, theme switch, project deep link, contact review panel and draft links worked;
+  - a missing nested URL returned a real `404` with the custom page, styles, scripts and no horizontal overflow;
+  - the sitemap, robots file and web manifest were reachable;
+  - the configured security headers were present.
+- **Lighthouse** in Chrome, run locally and against the live Vercel deployment:
   - Accessibility and Best Practices scored **100** on all six pages in the light theme;
   - SEO scored **100** on the five indexable pages; `404.html` is deliberately `noindex`, so its SEO score is lower;
   - the homepage also scored **100** in Accessibility, Best Practices and SEO in the dark theme;
@@ -538,13 +546,13 @@ The following checks were actually run during development:
 
 ### Not tested
 
-The following were **not** tested and should be checked before a public launch:
+The site is live, but the following checks were **not** performed. Treat them as remaining verification work:
 
 - Safari, Firefox, Edge or older browser versions;
 - physical iOS or Android devices;
 - screen readers such as NVDA, JAWS or VoiceOver;
 - real WhatsApp or email delivery (the site only prepares drafts);
-- production hosting, HTTPS, redirects or server-side 404 configuration;
+- custom-domain DNS, TLS and redirect configuration (only the default Vercel URL was tested);
 - search-engine indexing or social-platform preview rendering;
 - slow-network performance or Core Web Vitals in the field;
 - print styles.
@@ -579,7 +587,7 @@ No JavaScript libraries, CSS frameworks, analytics or tracking scripts are used.
 
 ## 15. Maintenance checklist
 
-Before publishing:
+Before each production update:
 
 - [ ] If using a custom domain, update the production hostname in all HTML, `sitemap.xml` and `robots.txt`.
 - [ ] Confirm the phone, WhatsApp and email links.
