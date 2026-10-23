@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Thomas Hondo Chacha portfolio interface study</title>
+  <desc id="desc">An illustrative view of the bilingual portfolio website with an editorial hero, theme controls and project cards.</desc>
+  <defs>
+    <linearGradient id="folio-panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#163a57"/>
+      <stop offset="1" stop-color="#091d2d"/>
+    </linearGradient>
+    <pattern id="folio-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#0d2235" stroke-opacity=".06"/>
+    </pattern>
+    <pattern id="folio-dotgrid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".7" fill="#f1ede3" opacity=".14"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" fill="#e6dfd1"/>
+  <circle cx="1060" cy="120" r="300" fill="#d7cbb8" opacity=".55"/>
+  <rect x="54" y="46" width="1092" height="808" rx="20" fill="#f4f1e9" stroke="#0d2235" stroke-opacity=".18"/>
+
+  <g transform="translate(86 118)">
+    <g>
+      <rect width="38" height="38" rx="4" fill="#0d2235"/>
+      <text x="19" y="26" fill="#f1ede3" font-family="Georgia, Times New Roman, serif" font-size="16" text-anchor="middle">T</text>
+      <text x="52" y="15" fill="#0d2235" font-family="Manrope, Segoe UI, sans-serif" font-size="11" font-weight="700" letter-spacing=".5">Thomas Hondo Chacha</text>
+      <text x="52" y="30" fill="#7c7f80" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" letter-spacing="1.5">SOFTWARE ENGINEER</text>
+      <g fill="#4d5359" font-family="Manrope, Segoe UI, sans-serif" font-size="10">
+        <text x="708" y="23">Home</text>
+        <text x="758" y="23">About</text>
+        <text x="812" y="23">Projects</text>
+        <text x="878" y="23">Services</text>
+        <text x="944" y="23">Contact</text>
+      </g>
+      <g transform="translate(1004 0)">
+        <rect width="42" height="24" rx="12" fill="none" stroke="#0d2235" stroke-opacity=".2"/>
+        <text x="12" y="16" fill="#0d2235" font-family="IBM Plex Mono, Consolas, monospace" font-size="7">EN</text>
+        <text x="27" y="16" fill="#8a8d8d" font-family="IBM Plex Mono, Consolas, monospace" font-size="7">SW</text>
+        <circle cx="60" cy="12" r="10" fill="none" stroke="#0d2235" stroke-opacity=".2"/>
+        <circle cx="60" cy="12" r="3.5" fill="#b6532f"/>
+        <circle cx="76" cy="12" r="10" fill="#0d2235"/>
+        <path d="M80 8a5 5 0 0 0 6 7 6 6 0 1 1-6-7Z" fill="#f1ede3"/>
+      </g>
+      <path d="M0 56h1078" stroke="#0d2235" stroke-opacity=".14"/>
+    </g>
+
+    <g transform="translate(0 94)">
+      <text x="0" y="16" fill="#b6532f" font-family="IBM Plex Mono, Consolas, monospace" font-size="9" letter-spacing="2.5">SOFTWARE ENGINEER · KENYA</text>
+      <text x="0" y="66" fill="#15191e" font-family="Manrope, Segoe UI, sans-serif" font-size="18" font-weight="600" letter-spacing=".5">Thomas Hondo Chacha</text>
+      <text x="0" y="136" fill="#15191e" font-family="Georgia, Times New Roman, serif" font-size="72" letter-spacing="-2">Turning ideas into</text>
+      <text x="0" y="208" fill="#173d62" font-family="Georgia, Times New Roman, serif" font-size="72" font-style="italic" letter-spacing="-2">functional products.</text>
+      <text x="0" y="252" fill="#4d5359" font-family="Manrope, Segoe UI, sans-serif" font-size="12">Modern websites, interactive applications and</text>
+      <text x="0" y="272" fill="#4d5359" font-family="Manrope, Segoe UI, sans-serif" font-size="12">practical digital experiences for real businesses.</text>
+      <g transform="translate(0 298)">
+        <rect width="134" height="36" rx="18" fill="#15191e"/>
+        <text x="67" y="23" fill="#f7f4ed" font-family="Manrope, Segoe UI, sans-serif" font-size="10" text-anchor="middle">View projects</text>
+        <rect x="146" y="0" width="120" height="36" rx="18" fill="none" stroke="#15191e" stroke-opacity=".24"/>
+        <text x="206" y="23" fill="#15191e" font-family="Manrope, Segoe UI, sans-serif" font-size="10" text-anchor="middle">Contact me</text>
+      </g>
+    </g>
+
+    <g transform="translate(686 106)">
+      <rect width="392" height="354" rx="6" fill="url(#folio-panel)"/>
+      <rect width="392" height="354" rx="6" fill="url(#folio-dotgrid)"/>
+      <text x="24" y="32" fill="#8ea6b9" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" letter-spacing="1.5">FIG. 01 / PRACTICE MAP</text>
+      <text x="368" y="32" fill="#8ea6b9" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" text-anchor="end">KE</text>
+      <circle cx="196" cy="170" r="78" fill="none" stroke="#f1ede3" stroke-opacity=".14"/>
+      <circle cx="196" cy="170" r="118" fill="none" stroke="#f1ede3" stroke-opacity=".08"/>
+      <text x="196" y="205" fill="#f1ede3" font-family="Georgia, Times New Roman, serif" font-size="94" letter-spacing="-6" text-anchor="middle">THC</text>
+      <rect x="40" y="86" width="78" height="24" rx="12" fill="#0d2235" stroke="#f1ede3" stroke-opacity=".16"/>
+      <text x="79" y="102" fill="#d7e3ec" font-family="IBM Plex Mono, Consolas, monospace" font-size="7" letter-spacing="1" text-anchor="middle">INTERFACES</text>
+      <rect x="284" y="232" width="70" height="24" rx="12" fill="#0d2235" stroke="#f1ede3" stroke-opacity=".16"/>
+      <text x="319" y="248" fill="#d7e3ec" font-family="IBM Plex Mono, Consolas, monospace" font-size="7" letter-spacing="1" text-anchor="middle">SYSTEMS</text>
+      <g transform="translate(24 290)">
+        <path d="M0 0h344" stroke="#f1ede3" stroke-opacity=".14"/>
+        <text x="0" y="28" fill="#93a7b6" font-family="IBM Plex Mono, Consolas, monospace" font-size="8">$ build(idea)</text>
+        <text x="104" y="28" fill="#b6532f" font-family="IBM Plex Mono, Consolas, monospace" font-size="8">→</text>
+        <text x="124" y="28" fill="#f1ede3" font-family="IBM Plex Mono, Consolas, monospace" font-size="8">useful_product</text>
+        <rect x="0" y="40" width="80" height="14" rx="2" fill="#f1ede3" opacity=".08"/>
+      </g>
+    </g>
+
+    <g transform="translate(0 466)">
+      <text x="0" y="0" fill="#7c7f80" font-family="IBM Plex Mono, Consolas, monospace" font-size="9" letter-spacing="2.5">SELECTED PROJECTS</text>
+      <text x="1078" y="0" fill="#4d5359" font-family="Manrope, Segoe UI, sans-serif" font-size="10" text-anchor="end">All projects  →</text>
+      <g transform="translate(0 28)">
+        <g>
+          <rect width="342" height="202" rx="4" fill="#e9e2d4" stroke="#0d2235" stroke-opacity=".12"/>
+          <rect x="1" y="1" width="340" height="118" fill="#d9cdb9"/>
+          <rect x="26" y="20" width="86" height="52" fill="#f5eee1" opacity=".8"/>
+          <path d="M26 98h290v21H26Z" fill="#c5b49d"/>
+          <circle cx="282" cy="44" r="26" fill="#b6532f" opacity=".2"/>
+          <text x="18" y="152" fill="#15191e" font-family="Manrope, Segoe UI, sans-serif" font-size="12" font-weight="700">Jofa Hotel Website</text>
+          <text x="18" y="172" fill="#7c7f80" font-family="IBM Plex Mono, Consolas, monospace" font-size="7" letter-spacing="1">HOSPITALITY · DEMONSTRATION</text>
+          <text x="18" y="192" fill="#b6532f" font-family="Manrope, Segoe UI, sans-serif" font-size="8">View case study  →</text>
+        </g>
+        <g transform="translate(368 0)">
+          <rect width="342" height="202" rx="4" fill="#1b211b" stroke="#0d2235" stroke-opacity=".12"/>
+          <rect x="1" y="1" width="340" height="118" fill="#252c25"/>
+          <path d="M54 88h234M66 88l18-28h58l30 28M86 88a12 12 0 1 0 0 .1M230 88a12 12 0 1 0 0 .1M84 88h164M138 60h28l12 20H120Z" fill="none" stroke="#d7d2c7" stroke-width="1.8"/>
+          <circle cx="294" cy="36" r="28" fill="#d9683a" opacity=".16"/>
+          <text x="18" y="152" fill="#f1ede3" font-family="Manrope, Segoe UI, sans-serif" font-size="12" font-weight="700">Suna Motor Bazaar</text>
+          <text x="18" y="172" fill="#8f978e" font-family="IBM Plex Mono, Consolas, monospace" font-size="7" letter-spacing="1">VEHICLES · DEMONSTRATION</text>
+          <text x="18" y="192" fill="#d9683a" font-family="Manrope, Segoe UI, sans-serif" font-size="8">View case study  →</text>
+        </g>
+        <g transform="translate(736 0)">
+          <rect width="342" height="202" rx="4" fill="#eef3ea" stroke="#0d2235" stroke-opacity=".12"/>
+          <rect x="1" y="1" width="340" height="118" fill="#d9e4d8"/>
+          <text x="24" y="46" fill="#12312c" font-family="Georgia, Times New Roman, serif" font-size="24">Pefrika</text>
+          <rect x="24" y="64" width="160" height="6" fill="#17423b" opacity=".22"/>
+          <rect x="24" y="78" width="112" height="6" fill="#17423b" opacity=".14"/>
+          <rect x="236" y="42" width="78" height="52" rx="2" fill="#17423b" opacity=".82"/>
+          <text x="18" y="152" fill="#15191e" font-family="Manrope, Segoe UI, sans-serif" font-size="12" font-weight="700">Pefrika Website</text>
+          <text x="18" y="172" fill="#7c7f80" font-family="IBM Plex Mono, Consolas, monospace" font-size="7" letter-spacing="1">BUSINESS · IN DEVELOPMENT</text>
+          <text x="18" y="192" fill="#b6532f" font-family="Manrope, Segoe UI, sans-serif" font-size="8">View case study  →</text>
+        </g>
+      </g>
+    </g>
+
+    <g transform="translate(0 732)">
+      <path d="M0 0h1078" stroke="#0d2235" stroke-opacity=".14"/>
+      <text x="0" y="26" fill="#7c7f80" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" letter-spacing="1.5">BILINGUAL · LIGHT / DARK · HONEST PROJECT STATUSES</text>
+      <text x="1078" y="26" fill="#15191e" font-family="Manrope, Segoe UI, sans-serif" font-size="9" text-anchor="end">English / Kiswahili</text>
+    </g>
+  </g>
+
+  <rect x="950" y="824" width="196" height="22" rx="4" fill="#0d2235"/>
+  <text x="1048" y="839" fill="#f1ede3" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" letter-spacing="1.5" text-anchor="middle">THIS PORTFOLIO · STUDY</text>
+</svg>

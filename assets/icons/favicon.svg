@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Thomas Hondo Chacha monogram</title>
+  <rect width="64" height="64" rx="14" fill="#0d2235"/>
+  <path d="M14 17h36M32 17v31" stroke="#f1ede3" stroke-width="3.2" stroke-linecap="square"/>
+  <path d="M18 31h11M18 40h11M35 31h11M35 40h11" stroke="#f1ede3" stroke-width="2.6" stroke-linecap="square"/>
+  <circle cx="48" cy="47" r="4" fill="#b6532f"/>
+</svg>

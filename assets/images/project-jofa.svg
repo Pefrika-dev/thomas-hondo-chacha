@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Jofa Hotel website interface study</title>
+  <desc id="desc">An illustrative layout for a hospitality website with a large editorial introduction, room cards and an enquiry path.</desc>
+  <defs>
+    <linearGradient id="jofa-sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c6a57b"/>
+      <stop offset="0.55" stop-color="#8e6a4d"/>
+      <stop offset="1" stop-color="#4b3a2e"/>
+    </linearGradient>
+    <linearGradient id="jofa-warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8f2e6"/>
+      <stop offset="1" stop-color="#eee4d3"/>
+    </linearGradient>
+    <pattern id="jofa-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#2c241d" stroke-opacity=".06"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" fill="#dcd1bf"/>
+  <circle cx="1070" cy="90" r="250" fill="#c8b49a" opacity=".45"/>
+
+  <g>
+    <rect x="54" y="46" width="1092" height="808" rx="22" fill="#fbf8f1" stroke="#2c241d" stroke-opacity=".18"/>
+    <path d="M54 96a22 22 0 0 1 22-22h1048a22 22 0 0 1 22 22v22H54Z" fill="#f2ebde"/>
+    <circle cx="82" cy="71" r="5" fill="#b6532f" opacity=".8"/>
+    <circle cx="100" cy="71" r="5" fill="#c99b62" opacity=".8"/>
+    <circle cx="118" cy="71" r="5" fill="#7d8b79" opacity=".8"/>
+    <text x="150" y="75" fill="#6d6255" font-family="IBM Plex Mono, Consolas, monospace" font-size="11" letter-spacing="2">JOFA / HOSPITALITY INTERFACE STUDY</text>
+    <text x="1070" y="75" fill="#8b7d6b" font-family="IBM Plex Mono, Consolas, monospace" font-size="10" letter-spacing="1.5" text-anchor="end">FIG. 01</text>
+  </g>
+
+  <g transform="translate(86 128)">
+    <text x="0" y="26" fill="#20251f" font-family="Georgia, Times New Roman, serif" font-size="31" letter-spacing="7">JOFA</text>
+    <text x="118" y="26" fill="#8b7d6b" font-family="IBM Plex Mono, Consolas, monospace" font-size="9" letter-spacing="2">HOTEL</text>
+    <g fill="#5d5348" font-family="Manrope, Segoe UI, sans-serif" font-size="12" letter-spacing=".5">
+      <text x="720" y="25">Stay</text>
+      <text x="790" y="25">Rooms</text>
+      <text x="878" y="25">Dining</text>
+      <text x="964" y="25">Contact</text>
+    </g>
+    <rect x="1042" y="2" width="36" height="30" rx="15" fill="#20251f"/>
+    <path d="M1052 17h14M1061 11l6 6-6 6" fill="none" stroke="#f6efe3" stroke-width="1.4"/>
+    <path d="M0 48h1078" stroke="#2c241d" stroke-opacity=".14"/>
+
+    <g>
+      <rect x="0" y="82" width="600" height="338" rx="3" fill="url(#jofa-warm)"/>
+      <rect x="0" y="82" width="600" height="338" rx="3" fill="url(#jofa-grid)"/>
+      <text x="42" y="137" fill="#8b6a4f" font-family="IBM Plex Mono, Consolas, monospace" font-size="10" letter-spacing="3">A PLACE TO SLOW DOWN</text>
+      <text x="40" y="220" fill="#1f261f" font-family="Georgia, Times New Roman, serif" font-size="64" letter-spacing="-1">A quieter</text>
+      <text x="40" y="282" fill="#1f261f" font-family="Georgia, Times New Roman, serif" font-size="64" font-style="italic" letter-spacing="-1">kind of stay.</text>
+      <text x="42" y="328" fill="#675b4d" font-family="Manrope, Segoe UI, sans-serif" font-size="13">Rooms, dining and unhurried hospitality —</text>
+      <text x="42" y="348" fill="#675b4d" font-family="Manrope, Segoe UI, sans-serif" font-size="13">presented with clarity from the first screen.</text>
+      <g transform="translate(42 376)">
+        <rect width="132" height="34" rx="17" fill="#20251f"/>
+        <text x="66" y="22" fill="#f8f2e6" font-family="Manrope, Segoe UI, sans-serif" font-size="11" text-anchor="middle">Explore rooms</text>
+        <text x="152" y="22" fill="#4f463b" font-family="Manrope, Segoe UI, sans-serif" font-size="11">Enquire  →</text>
+      </g>
+    </g>
+
+    <g transform="translate(628 82)">
+      <rect width="450" height="338" rx="3" fill="url(#jofa-sky)"/>
+      <circle cx="322" cy="94" r="58" fill="#f4d6a7" opacity=".55"/>
+      <path d="M0 246c70-34 128-28 204-2s132 28 246-22v116H0Z" fill="#5d4636" opacity=".55"/>
+      <path d="M0 276c86-36 151-22 228 6s135 12 222-22v78H0Z" fill="#3e3027" opacity=".6"/>
+      <g fill="none" stroke="#f1e6d3" stroke-opacity=".5">
+        <path d="M104 246V145a74 74 0 0 1 148 0v101"/>
+        <path d="M252 246V173a52 52 0 0 1 104 0v73"/>
+      </g>
+      <rect x="24" y="24" width="96" height="26" rx="13" fill="#2b211a" opacity=".55"/>
+      <text x="72" y="41" fill="#f5ecdd" font-family="IBM Plex Mono, Consolas, monospace" font-size="9" letter-spacing="1.5" text-anchor="middle">THE COURTYARD</text>
+      <text x="24" y="310" fill="#f5ecdd" font-family="Georgia, Times New Roman, serif" font-size="18" font-style="italic">Space to arrive.</text>
+    </g>
+
+    <g transform="translate(0 460)">
+      <text x="0" y="0" fill="#8b7d6b" font-family="IBM Plex Mono, Consolas, monospace" font-size="10" letter-spacing="3">ROOMS &amp; SUITES</text>
+      <text x="1078" y="0" fill="#5d5348" font-family="Manrope, Segoe UI, sans-serif" font-size="11" text-anchor="end">A considered introduction  →</text>
+      <g transform="translate(0 24)">
+        <g>
+          <rect width="342" height="162" rx="3" fill="#d8c7ae"/>
+          <rect x="20" y="18" width="302" height="86" fill="#b49a78"/>
+          <path d="M20 104h302v40H20Z" fill="#cbb89e"/>
+          <rect x="58" y="40" width="86" height="50" fill="#f1e7d7" opacity=".65"/>
+          <rect x="204" y="34" width="78" height="56" fill="#7b654f" opacity=".55"/>
+          <text x="20" y="150" fill="#2b312a" font-family="Manrope, Segoe UI, sans-serif" font-size="11">Garden Room · 01</text>
+        </g>
+        <g transform="translate(368 0)">
+          <rect width="342" height="162" rx="3" fill="#c9b59b"/>
+          <rect x="20" y="18" width="302" height="86" fill="#a88a68"/>
+          <path d="M20 104h302v40H20Z" fill="#bca98e"/>
+          <rect x="40" y="36" width="120" height="54" fill="#efe3d1" opacity=".6"/>
+          <rect x="214" y="46" width="86" height="44" fill="#6e5843" opacity=".6"/>
+          <text x="20" y="150" fill="#2b312a" font-family="Manrope, Segoe UI, sans-serif" font-size="11">Courtyard Suite · 02</text>
+        </g>
+        <g transform="translate(736 0)">
+          <rect width="342" height="162" rx="3" fill="#e2d5c1"/>
+          <rect x="20" y="18" width="302" height="86" fill="#bda888"/>
+          <path d="M20 104h302v40H20Z" fill="#d2c2ab"/>
+          <rect x="56" y="34" width="82" height="56" fill="#f1e7d7" opacity=".7"/>
+          <rect x="180" y="28" width="112" height="62" fill="#8e765c" opacity=".45"/>
+          <text x="20" y="150" fill="#2b312a" font-family="Manrope, Segoe UI, sans-serif" font-size="11">Family Room · 03</text>
+        </g>
+      </g>
+    </g>
+
+    <g transform="translate(0 684)">
+      <path d="M0 0h1078" stroke="#2c241d" stroke-opacity=".14"/>
+      <text x="0" y="42" fill="#6d6255" font-family="IBM Plex Mono, Consolas, monospace" font-size="9" letter-spacing="2">JOFA HOTEL · WEBSITE DEMONSTRATION</text>
+      <text x="1078" y="42" fill="#1f261f" font-family="Manrope, Segoe UI, sans-serif" font-size="12" text-anchor="end">Plan a stay  →</text>
+    </g>
+  </g>
+
+  <rect x="950" y="824" width="196" height="22" rx="4" fill="#20251f" opacity=".86"/>
+  <text x="1048" y="839" fill="#f6efe3" font-family="IBM Plex Mono, Consolas, monospace" font-size="8" letter-spacing="1.5" text-anchor="middle">ILLUSTRATIVE INTERFACE STUDY</text>
+</svg>
