@@ -73,6 +73,7 @@
         home: "Home",
         about: "About",
         projects: "Projects",
+        blog: "Blog",
         services: "Services",
         contact: "Contact",
         startProject: "Start a project"
@@ -282,6 +283,28 @@
         openDemo: "Open demo",
         openSource: "View source",
         openSite: "Open website"
+      },
+      blogPage: {
+        eyebrow: "Notes & ideas",
+        title: "Writing about <em>the work.</em>",
+        lede: "Practical notes on web design, software engineering, accessibility and building useful things for real people.",
+        sideMeta1: "Design & engineering",
+        sideMeta2: "Written by Thomas",
+        articlesTitle: "Articles",
+        loading: "Loading articles…",
+        empty: "No articles yet. Check back soon.",
+        readMore: "Read article",
+        back: "Back to blog",
+        notFound: "Article not found.",
+        article: "Article"
+      },
+      projectPage: {
+        project: "Project",
+        loading: "Loading project…",
+        notFound: "Project not found.",
+        live: "Visit live site",
+        source: "View source",
+        back: "Back to projects"
       },
       projectData: {
         jofa: {
@@ -595,6 +618,7 @@
         home: "Mwanzo",
         about: "Kuhusu",
         projects: "Miradi",
+        blog: "Blogu",
         services: "Huduma",
         contact: "Mawasiliano",
         startProject: "Anzisha mradi"
@@ -804,6 +828,28 @@
         openDemo: "Fungua onyesho",
         openSource: "Tazama msimbo",
         openSite: "Fungua tovuti"
+      },
+      blogPage: {
+        eyebrow: "Mawazo na maelezo",
+        title: "Maandishi kuhusu <em>kazi.</em>",
+        lede: "Maelezo ya vitendo kuhusu muundo wa tovuti, uhandisi wa programu, ufikivu na kujenga vitu vinavyofaa kwa watu halisi.",
+        sideMeta1: "Muundo na uhandisi",
+        sideMeta2: "Imeandikwa na Thomas",
+        articlesTitle: "Makala",
+        loading: "Inapakia makala…",
+        empty: "Hakuna makala bado. Rudi hivi karibuni.",
+        readMore: "Soma makala",
+        back: "Rudi kwenye blogu",
+        notFound: "Makala haipatikani.",
+        article: "Makala"
+      },
+      projectPage: {
+        project: "Mradi",
+        loading: "Inapakia mradi…",
+        notFound: "Mradi haupatikani.",
+        live: "Tembelea tovuti",
+        source: "Tazama msimbo",
+        back: "Rudi kwenye miradi"
       },
       projectData: {
         jofa: {
