@@ -107,7 +107,32 @@
     tr:last-child td { border-bottom: 0; }
     tbody tr:hover { background: #fafbfc; }
     .description-cell { max-width: 420px; }
-    .description-cell span { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .description-cell span {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .description-cell.is-expanded span {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+    }
+    .description-toggle {
+      margin-top: 6px;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--brand);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .description-toggle:hover { text-decoration: underline; }
+    .description-toggle[hidden] { display: none; }
     .no-data { text-align: center; padding: 38px 20px; color: var(--muted); font-size: 13px; }
     .badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
     .badge-whatsapp { background: #dcfce7; color: #166534; }
@@ -694,12 +719,30 @@
             tr.appendChild(td);
           });
 
+          const descText = submission.project_description || "";
           const descTd = document.createElement("td");
           descTd.className = "description-cell";
           const descSpan = document.createElement("span");
-          descSpan.textContent = submission.project_description || "";
-          descSpan.title = submission.project_description || "";
+          descSpan.textContent = descText;
+          descSpan.title = descText;
           descTd.appendChild(descSpan);
+
+          let descToggle = null;
+          if (descText) {
+            descToggle = document.createElement("button");
+            descToggle.type = "button";
+            descToggle.className = "description-toggle";
+            descToggle.textContent = "Show more";
+            descToggle.setAttribute("aria-expanded", "false");
+            descToggle.hidden = true;
+            descToggle.addEventListener("click", function () {
+              const expanded = descTd.classList.toggle("is-expanded");
+              descToggle.textContent = expanded ? "Show less" : "Show more";
+              descToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+            });
+            descTd.appendChild(descToggle);
+          }
+
           tr.appendChild(descTd);
 
           const contactTd = document.createElement("td");
@@ -710,6 +753,14 @@
           tr.appendChild(contactTd);
 
           tableBody.appendChild(tr);
+
+          if (descToggle) {
+            window.requestAnimationFrame(function () {
+              const overflows = descSpan.scrollHeight > descSpan.clientHeight + 2;
+              const likelyLong = descText.length > 140 || descText.split("\n").length > 4;
+              descToggle.hidden = !(overflows || likelyLong);
+            });
+          }
         });
 
         todayCount.textContent = todayNum;
