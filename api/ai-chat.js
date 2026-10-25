@@ -307,11 +307,12 @@ module.exports = async function handler(req, res) {
       lastModel = model;
 
       const response = await fetch(
-        GEMINI_ENDPOINT + "/" + encodeURIComponent(model) + ":generateContent?key=" + encodeURIComponent(apiKey),
+        GEMINI_ENDPOINT + "/" + encodeURIComponent(model) + ":generateContent",
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-goog-api-key": apiKey
           },
           body: JSON.stringify({
             system_instruction: {
