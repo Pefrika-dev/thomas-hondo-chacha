@@ -302,8 +302,6 @@ module.exports = async function handler(req, res) {
   let lastModel = models[0];
 
   try {
-    sendJson(res, 200, { reply: "stub", stubbed: true });
-    return;
     for (let index = 0; index < models.length; index += 1) {
       const model = models[index];
       lastModel = model;
