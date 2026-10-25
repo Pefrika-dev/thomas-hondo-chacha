@@ -356,7 +356,7 @@
           <fieldset class="fieldset">
             <legend>Basics</legend>
             <div class="field-row">
-              <div class="field"><label for="p_title">Title (English)</label><input id="p_title" name="title" type="text" required></div>
+              <div class="field"><label for="p_title">Title (English)</label><input id="p_title" name="title" type="text"></div>
               <div class="field"><label for="p_title_sw">Title (Kiswahili)</label><input id="p_title_sw" name="title_sw" type="text"></div>
             </div>
             <div class="field-row">
@@ -410,11 +410,11 @@
           <fieldset class="fieldset">
             <legend>Basics</legend>
             <div class="field-row">
-              <div class="field"><label for="b_title">Title (English)</label><input id="b_title" name="title" type="text" required></div>
-              <div class="field"><label for="b_title_sw">Title (Kiswahili)</label><input id="b_title_sw" name="title_sw" type="text"></div>
+              <div class="field"><label for="b_title">Title (English)</label><input id="b_title" name="post_title" type="text"></div>
+              <div class="field"><label for="b_title_sw">Title (Kiswahili)</label><input id="b_title_sw" name="post_title_sw" type="text"></div>
             </div>
             <div class="field-row">
-              <div class="field"><label for="b_slug">Slug</label><input id="b_slug" name="slug" type="text" placeholder="my-article"><span class="hint">Used in the article URL. Leave blank to generate from the title.</span></div>
+              <div class="field"><label for="b_slug">Slug</label><input id="b_slug" name="post_slug" type="text" placeholder="my-article"><span class="hint">Used in the article URL. Leave blank to generate from the title.</span></div>
               <div class="field"><label for="b_tags">Tags</label><input id="b_tags" name="tags" type="text" placeholder="Web design, JavaScript"><span class="hint">Comma-separated.</span></div>
             </div>
           </fieldset>
@@ -431,9 +431,9 @@
           </fieldset>
           <fieldset class="fieldset">
             <legend>Cover &amp; publishing</legend>
-            <div class="field"><label for="b_cover_url">Cover image URL</label><input id="b_cover_url" name="cover_url" type="url" placeholder="assets/images/article-cover.jpg"></div>
+            <div class="field"><label for="b_cover_url">Cover image URL</label><input id="b_cover_url" name="post_cover_url" type="url" placeholder="assets/images/article-cover.jpg"></div>
             <div class="field-row">
-              <div class="field"><label for="b_status">Status</label><select id="b_status" name="status">
+              <div class="field"><label for="b_status">Status</label><select id="b_status" name="post_status">
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select></div>
@@ -853,16 +853,16 @@
         postFields.hidden = false;
         editorTitle.textContent = post ? "Edit article" : "New article";
 
-        setField("title", post ? post.title : "");
-        setField("title_sw", post ? post.title_sw : "");
-        setField("slug", post ? post.slug : "");
+        setField("post_title", post ? post.title : "");
+        setField("post_title_sw", post ? post.title_sw : "");
+        setField("post_slug", post ? post.slug : "");
         setField("tags", post ? post.tags : "");
         setField("excerpt", post ? post.excerpt : "");
         setField("excerpt_sw", post ? post.excerpt_sw : "");
         setField("content", post ? post.content : "");
         setField("content_sw", post ? post.content_sw : "");
-        setField("cover_url", post ? post.cover_url : "");
-        setField("status", post ? post.status : "draft");
+        setField("post_cover_url", post ? post.cover_url : "");
+        setField("post_status", post ? post.status : "draft");
         setField("published_at", post && post.published_at ? toLocalInput(post.published_at) : "");
         setField("seo_title", post ? post.seo_title : "");
         setField("seo_description", post ? post.seo_description : "");
@@ -970,31 +970,31 @@
       }
 
       async function savePost() {
-        const title = String(editorForm.elements.namedItem("title").value || "").trim();
+        const title = String(editorForm.elements.namedItem("post_title").value || "").trim();
         if (!title) {
           toast("Article title is required.", "error");
           return;
         }
-        const slug = slugify(editorForm.elements.namedItem("slug").value || title);
+        const slug = slugify(editorForm.elements.namedItem("post_slug").value || title);
         if (!slug) {
           toast("A valid slug is required.", "error");
           return;
         }
-        const status = editorForm.elements.namedItem("status").value || "draft";
+        const status = editorForm.elements.namedItem("post_status").value || "draft";
         let publishedAt = fromLocalInput(editorForm.elements.namedItem("published_at").value);
         if (status === "published" && !publishedAt) publishedAt = new Date().toISOString();
         if (status === "draft") publishedAt = null;
 
         const payload = {
           title: title,
-          title_sw: emptyToNull(editorForm.elements.namedItem("title_sw").value),
+          title_sw: emptyToNull(editorForm.elements.namedItem("post_title_sw").value),
           slug: slug,
           tags: emptyToNull(editorForm.elements.namedItem("tags").value),
           excerpt: emptyToNull(editorForm.elements.namedItem("excerpt").value),
           excerpt_sw: emptyToNull(editorForm.elements.namedItem("excerpt_sw").value),
           content: emptyToNull(editorForm.elements.namedItem("content").value),
           content_sw: emptyToNull(editorForm.elements.namedItem("content_sw").value),
-          cover_url: emptyToNull(editorForm.elements.namedItem("cover_url").value),
+          cover_url: emptyToNull(editorForm.elements.namedItem("post_cover_url").value),
           status: status,
           published_at: publishedAt,
           seo_title: emptyToNull(editorForm.elements.namedItem("seo_title").value),
