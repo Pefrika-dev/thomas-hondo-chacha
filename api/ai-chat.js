@@ -306,35 +306,32 @@ module.exports = async function handler(req, res) {
       const model = models[index];
       lastModel = model;
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemText }]
-          },
-          contents: buildContents(messages),
-          generationConfig: {
-            temperature: 0.35,
-            topP: 0.9,
-            maxOutputTokens: 450
-          },
-          safetySettings: [
-            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-            { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-            { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
-          ]
-        }),
-        signal: controller ? controller.signal : undefined
-      };
-
       const response = await fetch(
-        GEMINI_ENDPOINT + "/" + encodeURIComponent(model) + ":generateContent",
-        requestOptions
+        GEMINI_ENDPOINT + "/" + encodeURIComponent(model) + ":generateContent?key=" + encodeURIComponent(apiKey),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            system_instruction: {
+              parts: [{ text: systemText }]
+            },
+            contents: buildContents(messages),
+            generationConfig: {
+              temperature: 0.35,
+              topP: 0.9,
+              maxOutputTokens: 450
+            },
+            safetySettings: [
+              { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+              { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+              { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+              { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
+            ]
+          }),
+          signal: controller ? controller.signal : undefined
+        }
       );
 
       const raw = await response.text();
