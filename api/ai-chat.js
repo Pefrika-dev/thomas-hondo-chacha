@@ -3,8 +3,8 @@
    Server-side Gemini request. The API key never reaches the browser.
    ========================================================================== */
 
-const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1/models";
-const DEFAULT_MODEL = "gemini-2.0-flash";
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
+const DEFAULT_MODEL = "gemini-2.0-flash-exp";
 const MAX_HISTORY_MESSAGES = 10;
 const MAX_MESSAGE_LENGTH = 1200;
 const MAX_TOTAL_LENGTH = 8000;
