@@ -3,270 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard — Thomas Hondo Chacha</title>
+  <title>Content Studio — Thomas Hondo Chacha</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --surface: #ffffff;
+      --canvas: #f5f7fa;
+      --brand: #0b6bcb;
+      --brand-dark: #07539f;
+      --danger: #b42318;
+      --success: #067647;
+      --warning: #b54708;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .04);
     }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-      background: #f5f7fa;
-      color: #333;
-      line-height: 1.6;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--canvas);
+      color: var(--ink);
+      line-height: 1.5;
     }
-    .login-container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .login-box {
-      background: white;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px;
-    }
-    .login-box h1 {
-      margin-bottom: 10px;
-      font-size: 24px;
-      color: #1a1a1a;
-    }
-    .login-box p {
-      color: #666;
-      margin-bottom: 30px;
-      font-size: 14px;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      font-size: 14px;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      font-family: inherit;
-    }
-    .form-group input:focus {
-      outline: none;
-      border-color: #0066cc;
-    }
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    .btn:hover {
-      background: #0052a3;
-    }
-    .btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    .error {
-      color: #d32f2f;
-      font-size: 13px;
-      margin-top: 10px;
-      display: none;
-    }
-    .error.show {
-      display: block;
-    }
-    .dashboard {
-      display: none;
-    }
-    .dashboard.active {
-      display: block;
-    }
+    body.no-scroll { overflow: hidden; }
+    button, input, textarea, select { font: inherit; }
+    .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-box { background: var(--surface); padding: 40px; border-radius: 12px; box-shadow: var(--shadow); width: 100%; max-width: 420px; }
+    .login-box h1 { font-size: 26px; margin-bottom: 6px; }
+    .login-box > p { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; margin-bottom: 7px; font-weight: 600; font-size: 13px; }
+    .form-group input { width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 7px; font-size: 14px; background: #fff; }
+    .form-group input:focus { outline: 2px solid rgba(11, 107, 203, .2); border-color: var(--brand); }
+    .error { color: var(--danger); font-size: 13px; margin-top: 10px; display: none; }
+    .error.show { display: block; }
+
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
     .header {
-      background: white;
-      border-bottom: 1px solid #e0e0e0;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: var(--surface); border-bottom: 1px solid var(--line); padding: 14px 28px;
+      display: flex; align-items: center; gap: 22px; justify-content: space-between; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 20;
     }
-    .header h1 {
-      font-size: 24px;
-      color: #1a1a1a;
+    .header-brand { display: flex; align-items: center; gap: 10px; min-width: 200px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 38px; height: 38px; border-radius: 9px;
+      background: var(--ink); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .06em;
     }
-    .header-actions {
-      display: flex;
-      gap: 15px;
-      align-items: center;
+    .brand-copy strong { display: block; font-size: 15px; line-height: 1.2; }
+    .brand-copy span { display: block; color: var(--muted); font-size: 11px; }
+    .admin-nav { display: flex; gap: 4px; background: #eef2f6; padding: 4px; border-radius: 9px; flex-wrap: wrap; }
+    .admin-nav__item {
+      border: 0; background: transparent; color: #475467; padding: 8px 14px; border-radius: 6px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
     }
-    .user-info {
-      color: #666;
-      font-size: 14px;
+    .admin-nav__item:hover { background: rgba(255,255,255,.65); }
+    .admin-nav__item.is-active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(16,24,40,.08); }
+    .header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .user-info { color: var(--muted); font-size: 12px; }
+    .btn-link { color: var(--brand); text-decoration: none; font-size: 13px; font-weight: 600; }
+    .btn-link:hover { text-decoration: underline; }
+    .container { max-width: 1360px; margin: 0 auto; padding: 26px 28px 60px; }
+    .tab-panel { display: none; }
+    .tab-panel.is-active { display: block; }
+    .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+    .page-head h2 { font-size: 22px; line-height: 1.25; }
+    .page-head p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .page-head__actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .btn, .btn-primary, .btn-secondary, .btn-danger, .refresh-btn, .btn-logout {
+      border: 1px solid transparent; border-radius: 7px; cursor: pointer; font-size: 13px; font-weight: 600;
+      padding: 9px 14px; transition: background .15s ease, border-color .15s ease, color .15s ease;
     }
-    .btn-logout {
-      padding: 8px 16px;
-      background: #f5f5f5;
-      color: #333;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
+    .btn, .btn-primary { background: var(--brand); color: #fff; }
+    .btn:hover, .btn-primary:hover { background: var(--brand-dark); }
+    .btn-secondary { background: #fff; color: #344054; border-color: #d0d5dd; }
+    .btn-secondary:hover { background: #f9fafb; }
+    .btn-danger { background: #fff; color: var(--danger); border-color: #fecdca; }
+    .btn-danger:hover { background: #fef3f2; }
+    .btn-sm { padding: 6px 10px; font-size: 12px; }
+    .btn-logout { background: #fff; color: #344054; border-color: #d0d5dd; }
+    .btn-logout:hover { background: #f9fafb; }
+    .refresh-btn { background: #fff; color: #344054; border-color: #d0d5dd; }
+    .btn:disabled, .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .stat-card { background: var(--surface); padding: 18px 20px; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .stat-card h3 { color: var(--muted); font-size: 11px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+    .stat-card .number { font-size: 30px; font-weight: 700; line-height: 1; }
+
+    .table-container { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .table-header { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .table-header h3 { font-size: 16px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 760px; }
+    thead { background: #f9fafb; }
+    th { text-align: left; padding: 10px 16px; font-weight: 700; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    td { padding: 13px 16px; border-bottom: 1px solid #f2f4f7; font-size: 13px; vertical-align: top; }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #fafbfc; }
+    .description-cell { max-width: 320px; }
+    .description-cell span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .no-data { text-align: center; padding: 38px 20px; color: var(--muted); font-size: 13px; }
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .badge-whatsapp { background: #dcfce7; color: #166534; }
+    .badge-email { background: #dbeafe; color: #1e40af; }
+    .badge-phone { background: #fef3c7; color: #92400e; }
+    .pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .pill--published { background: #ecfdf3; color: var(--success); }
+    .pill--draft { background: #f2f4f7; color: #475467; }
+    .pill--featured { background: #fffaeb; color: var(--warning); }
+    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .overlay {
+      position: fixed; inset: 0; z-index: 60; background: rgba(16, 24, 40, .55);
+      padding: 24px; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto;
     }
-    .btn-logout:hover {
-      background: #e0e0e0;
+    .overlay[hidden] { display: none; }
+    .overlay__panel {
+      background: var(--surface); width: 100%; max-width: 980px; border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(16,24,40,.24); margin: auto;
     }
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 30px 40px;
+    .overlay__header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+    .overlay__header h2 { font-size: 20px; }
+    .icon-btn { border: 0; background: #f2f4f7; color: #344054; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 20px; line-height: 1; }
+    .icon-btn:hover { background: #e4e7ec; }
+    .editor-form { padding: 22px 24px; }
+    .fields[hidden] { display: none; }
+    .fieldset { border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+    .fieldset legend { padding: 0 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; color: #344054; }
+    .field input, .field textarea, .field select {
+      width: 100%; border: 1px solid #d0d5dd; border-radius: 7px; padding: 9px 11px; font-size: 13px; background: #fff; color: var(--ink);
     }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+    .field textarea { min-height: 92px; resize: vertical; }
+    .field textarea.tall { min-height: 190px; }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: 2px solid rgba(11,107,203,.18); border-color: var(--brand); }
+    .field .hint { display: block; color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .check-row { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; padding: 4px 0 0; }
+    .check { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #344054; }
+    .check input { width: 16px; height: 16px; accent-color: var(--brand); }
+    .editor-actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 4px; flex-wrap: wrap; }
+
+    .settings-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 24px; max-width: 980px; }
+    .toast {
+      position: fixed; right: 22px; bottom: 22px; z-index: 100; max-width: 380px;
+      background: #101828; color: #fff; padding: 12px 16px; border-radius: 9px; font-size: 13px;
+      box-shadow: 0 8px 24px rgba(16,24,40,.24); opacity: 0; transform: translateY(10px);
+      pointer-events: none; transition: opacity .2s ease, transform .2s ease;
     }
-    .stat-card {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .stat-card h3 {
-      color: #666;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .stat-card .number {
-      font-size: 32px;
-      font-weight: 600;
-      color: #1a1a1a;
-    }
-    .table-container {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      overflow: hidden;
-    }
-    .table-header {
-      padding: 20px;
-      border-bottom: 1px solid #e0e0e0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .table-header h2 {
-      font-size: 18px;
-      color: #1a1a1a;
-    }
-    .refresh-btn {
-      padding: 8px 16px;
-      background: #0066cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .refresh-btn:hover {
-      background: #0052a3;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    thead {
-      background: #f9f9f9;
-    }
-    th {
-      text-align: left;
-      padding: 12px 20px;
-      font-weight: 600;
-      font-size: 13px;
-      color: #666;
-      text-transform: uppercase;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    td {
-      padding: 16px 20px;
-      border-bottom: 1px solid #f0f0f0;
-      font-size: 14px;
-    }
-    tr:hover {
-      background: #f9f9f9;
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .badge-whatsapp {
-      background: #dcfce7;
-      color: #166534;
-    }
-    .badge-email {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-    .badge-phone {
-      background: #fef3c7;
-      color: #92400e;
-    }
-    .description-cell {
-      max-width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .no-data {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
-      }
-      .container {
-        padding: 20px;
-      }
-      table {
-        display: block;
-        overflow-x: auto;
-      }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: #7a271a; }
+    .toast.success { background: #054f31; }
+
+    @media (max-width: 900px) {
+      .header { padding: 12px 16px; }
+      .container { padding: 20px 16px 50px; }
+      .field-row { grid-template-columns: 1fr; }
+      .overlay { padding: 10px; }
+      .overlay__panel { border-radius: 10px; }
+      .editor-form { padding: 18px 16px; }
     }
   </style>
 </head>
 <body>
-  <!-- Login Screen -->
   <div id="loginScreen" class="login-container">
     <div class="login-box">
-      <h1>Admin Login</h1>
-      <p>Sign in to view contact form submissions</p>
+      <h1>Content Studio</h1>
+      <p>Sign in to manage submissions, projects, blog posts and site settings.</p>
       <form id="loginForm">
         <div class="form-group">
           <label for="email">Email</label>
@@ -276,237 +187,904 @@
           <label for="password">Password</label>
           <input type="password" id="password" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn" id="loginBtn">Sign In</button>
+        <button type="submit" class="btn" id="loginBtn" style="width:100%">Sign In</button>
         <div class="error" id="loginError"></div>
       </form>
     </div>
   </div>
 
-  <!-- Dashboard -->
   <div id="dashboard" class="dashboard">
     <header class="header">
-      <h1>Contact Submissions</h1>
+      <div class="header-brand">
+        <span class="brand-mark" aria-hidden="true">THC</span>
+        <div class="brand-copy">
+          <strong>Content Studio</strong>
+          <span>Thomas Hondo Chacha</span>
+        </div>
+      </div>
+      <nav class="admin-nav" aria-label="Admin sections">
+        <button type="button" class="admin-nav__item is-active" data-tab="submissions">Submissions</button>
+        <button type="button" class="admin-nav__item" data-tab="projects">Projects</button>
+        <button type="button" class="admin-nav__item" data-tab="posts">Blog</button>
+        <button type="button" class="admin-nav__item" data-tab="settings">Settings</button>
+      </nav>
       <div class="header-actions">
+        <a class="btn-link" href="index.html" target="_blank" rel="noopener">View site ↗</a>
         <span class="user-info" id="userInfo"></span>
-        <button class="btn-logout" id="logoutBtn">Logout</button>
+        <button class="btn-logout" id="logoutBtn" type="button">Logout</button>
       </div>
     </header>
-    <div class="container">
-      <div class="stats">
-        <div class="stat-card">
-          <h3>Total Submissions</h3>
-          <div class="number" id="totalCount">0</div>
+
+    <main class="container">
+      <section id="tab-submissions" class="tab-panel is-active" aria-labelledby="submissions-title">
+        <div class="page-head">
+          <div>
+            <h2 id="submissions-title">Contact submissions</h2>
+            <p>Every enquiry saved from the contact form.</p>
+          </div>
+          <div class="page-head__actions">
+            <button class="refresh-btn" id="refreshBtn" type="button">Refresh</button>
+          </div>
         </div>
-        <div class="stat-card">
-          <h3>Today</h3>
-          <div class="number" id="todayCount">0</div>
+        <div class="stats">
+          <div class="stat-card"><h3>Total Submissions</h3><div class="number" id="totalCount">0</div></div>
+          <div class="stat-card"><h3>Today</h3><div class="number" id="todayCount">0</div></div>
+          <div class="stat-card"><h3>This Week</h3><div class="number" id="weekCount">0</div></div>
         </div>
-        <div class="stat-card">
-          <h3>This Week</h3>
-          <div class="number" id="weekCount">0</div>
+        <div class="table-container">
+          <div class="table-header"><h3>All submissions</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Project Type</th><th>Description</th><th>Preferred Contact</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+          <div class="no-data" id="noData" style="display:none;">No submissions yet.</div>
         </div>
+      </section>
+
+      <section id="tab-projects" class="tab-panel" aria-labelledby="projects-title">
+        <div class="page-head">
+          <div>
+            <h2 id="projects-title">Projects</h2>
+            <p>Add, edit and publish the work shown on the portfolio.</p>
+          </div>
+          <div class="page-head__actions">
+            <button class="btn-primary" id="newProjectBtn" type="button">+ New project</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <div class="table-header"><h3>All projects</h3><span class="user-info" id="projectsCount"></span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Title</th><th>Category</th><th>Status</th><th>Featured</th><th>Published</th><th>Updated</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="projectsBody"></tbody>
+            </table>
+          </div>
+          <div class="no-data" id="projectsNoData" style="display:none;">No projects yet. Create your first project.</div>
+        </div>
+      </section>
+
+      <section id="tab-posts" class="tab-panel" aria-labelledby="posts-title">
+        <div class="page-head">
+          <div>
+            <h2 id="posts-title">Blog</h2>
+            <p>Write and publish articles. Content supports Markdown.</p>
+          </div>
+          <div class="page-head__actions">
+            <button class="btn-primary" id="newPostBtn" type="button">+ New article</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <div class="table-header"><h3>All articles</h3><span class="user-info" id="postsCount"></span></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Title</th><th>Status</th><th>Published</th><th>Updated</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="postsBody"></tbody>
+            </table>
+          </div>
+          <div class="no-data" id="postsNoData" style="display:none;">No articles yet. Write your first one.</div>
+        </div>
+      </section>
+
+      <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
+        <div class="page-head">
+          <div>
+            <h2 id="settings-title">Site settings</h2>
+            <p>Global copy and contact details used across the website.</p>
+          </div>
+        </div>
+        <form id="settingsForm" class="settings-card">
+          <fieldset class="fieldset">
+            <legend>Hero</legend>
+            <div class="field-row">
+              <div class="field"><label for="hero_title">Hero title (English)</label><input id="hero_title" name="hero_title" type="text"></div>
+              <div class="field"><label for="hero_title_sw">Hero title (Kiswahili)</label><input id="hero_title_sw" name="hero_title_sw" type="text"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="hero_subtitle">Hero subtitle (English)</label><textarea id="hero_subtitle" name="hero_subtitle"></textarea></div>
+              <div class="field"><label for="hero_subtitle_sw">Hero subtitle (Kiswahili)</label><textarea id="hero_subtitle_sw" name="hero_subtitle_sw"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>About</legend>
+            <div class="field-row">
+              <div class="field"><label for="about_text">About text (English)</label><textarea class="tall" id="about_text" name="about_text"></textarea></div>
+              <div class="field"><label for="about_text_sw">About text (Kiswahili)</label><textarea class="tall" id="about_text_sw" name="about_text_sw"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Contact &amp; location</legend>
+            <div class="field-row">
+              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email"></div>
+              <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="whatsapp">WhatsApp</label><input id="whatsapp" name="whatsapp" type="text" placeholder="+254..."></div>
+              <div class="field"><label for="location">Location</label><input id="location" name="location" type="text"></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>SEO defaults</legend>
+            <div class="field"><label for="seo_title">SEO title</label><input id="seo_title" name="seo_title" type="text"></div>
+            <div class="field"><label for="seo_description">SEO description</label><textarea id="seo_description" name="seo_description"></textarea></div>
+          </fieldset>
+          <div class="editor-actions">
+            <button type="submit" class="btn-primary" id="settingsSaveBtn">Save settings</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <div id="editorOverlay" class="overlay" hidden>
+    <div class="overlay__panel" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+      <div class="overlay__header">
+        <h2 id="editorTitle">New project</h2>
+        <button class="icon-btn" id="editorClose" type="button" aria-label="Close editor">×</button>
       </div>
-      <div class="table-container">
-        <div class="table-header">
-          <h2>All Submissions</h2>
-          <button class="refresh-btn" id="refreshBtn">Refresh</button>
+      <form id="editorForm" class="editor-form">
+        <div id="projectFields" class="fields" hidden>
+          <fieldset class="fieldset">
+            <legend>Basics</legend>
+            <div class="field-row">
+              <div class="field"><label for="p_title">Title (English)</label><input id="p_title" name="title" type="text" required></div>
+              <div class="field"><label for="p_title_sw">Title (Kiswahili)</label><input id="p_title_sw" name="title_sw" type="text"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="p_slug">Slug</label><input id="p_slug" name="slug" type="text" placeholder="my-project"><span class="hint">Used in the project URL. Leave blank to generate from the title.</span></div>
+              <div class="field"><label for="p_category">Category (English)</label><input id="p_category" name="category" type="text" placeholder="Hospitality website"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="p_category_sw">Category (Kiswahili)</label><input id="p_category_sw" name="category_sw" type="text"></div>
+              <div class="field"><label for="p_technologies">Technologies</label><input id="p_technologies" name="technologies" type="text" placeholder="HTML5, CSS3, JavaScript"><span class="hint">Comma-separated.</span></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Copy</legend>
+            <div class="field-row">
+              <div class="field"><label for="p_summary">Summary (English)</label><textarea id="p_summary" name="summary"></textarea></div>
+              <div class="field"><label for="p_summary_sw">Summary (Kiswahili)</label><textarea id="p_summary_sw" name="summary_sw"></textarea></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="p_description">Description (English)</label><textarea class="tall" id="p_description" name="description"></textarea><span class="hint">Markdown supported.</span></div>
+              <div class="field"><label for="p_description_sw">Description (Kiswahili)</label><textarea class="tall" id="p_description_sw" name="description_sw"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Media &amp; links</legend>
+            <div class="field"><label for="p_cover_url">Cover image URL</label><input id="p_cover_url" name="cover_url" type="url" placeholder="assets/images/project-example.svg"></div>
+            <div class="field-row">
+              <div class="field"><label for="p_demo_url">Live demo URL</label><input id="p_demo_url" name="demo_url" type="url"></div>
+              <div class="field"><label for="p_source_url">Source code URL</label><input id="p_source_url" name="source_url" type="url"></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Publishing</legend>
+            <div class="field-row">
+              <div class="field"><label for="p_status">Status</label><select id="p_status" name="status">
+                <option value="development">In development</option>
+                <option value="demo">Demo</option>
+                <option value="live">Live</option>
+                <option value="concept">Concept</option>
+                <option value="completed">Completed</option>
+              </select></div>
+              <div class="field"><label for="p_sort_order">Sort order</label><input id="p_sort_order" name="sort_order" type="number" value="0"></div>
+            </div>
+            <div class="check-row">
+              <label class="check"><input id="p_featured" name="featured" type="checkbox"> Featured on homepage</label>
+              <label class="check"><input id="p_published" name="published" type="checkbox"> Published</label>
+            </div>
+          </fieldset>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Project Type</th>
-              <th>Description</th>
-              <th>Preferred Contact</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-          </tbody>
-        </table>
-        <div class="no-data" id="noData" style="display: none;">
-          No submissions yet
+
+        <div id="postFields" class="fields" hidden>
+          <fieldset class="fieldset">
+            <legend>Basics</legend>
+            <div class="field-row">
+              <div class="field"><label for="b_title">Title (English)</label><input id="b_title" name="title" type="text" required></div>
+              <div class="field"><label for="b_title_sw">Title (Kiswahili)</label><input id="b_title_sw" name="title_sw" type="text"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="b_slug">Slug</label><input id="b_slug" name="slug" type="text" placeholder="my-article"><span class="hint">Used in the article URL. Leave blank to generate from the title.</span></div>
+              <div class="field"><label for="b_tags">Tags</label><input id="b_tags" name="tags" type="text" placeholder="Web design, JavaScript"><span class="hint">Comma-separated.</span></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Article</legend>
+            <div class="field-row">
+              <div class="field"><label for="b_excerpt">Excerpt (English)</label><textarea id="b_excerpt" name="excerpt"></textarea></div>
+              <div class="field"><label for="b_excerpt_sw">Excerpt (Kiswahili)</label><textarea id="b_excerpt_sw" name="excerpt_sw"></textarea></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label for="b_content">Content (English)</label><textarea class="tall" id="b_content" name="content" style="min-height:300px"></textarea><span class="hint">Markdown supported.</span></div>
+              <div class="field"><label for="b_content_sw">Content (Kiswahili)</label><textarea class="tall" id="b_content_sw" name="content_sw" style="min-height:300px"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>Cover &amp; publishing</legend>
+            <div class="field"><label for="b_cover_url">Cover image URL</label><input id="b_cover_url" name="cover_url" type="url" placeholder="assets/images/article-cover.jpg"></div>
+            <div class="field-row">
+              <div class="field"><label for="b_status">Status</label><select id="b_status" name="status">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select></div>
+              <div class="field"><label for="b_published_at">Published at</label><input id="b_published_at" name="published_at" type="datetime-local"><span class="hint">Leave blank to use the current time when publishing.</span></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend>SEO</legend>
+            <div class="field"><label for="b_seo_title">SEO title</label><input id="b_seo_title" name="seo_title" type="text"></div>
+            <div class="field"><label for="b_seo_description">SEO description</label><textarea id="b_seo_description" name="seo_description"></textarea></div>
+          </fieldset>
         </div>
-      </div>
+
+        <div class="editor-actions">
+          <button type="button" class="btn-secondary" id="editorCancel">Cancel</button>
+          <button type="submit" class="btn-primary" id="editorSave">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script>
     (function () {
-    const SUPABASE_URL = 'https://pumbpmgclnxisfkdaanm.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_dbDtzuRs1Ll8QZDYskQKSg_8LfoeDhD';
-    
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    const loginScreen = document.getElementById('loginScreen');
-    const dashboard = document.getElementById('dashboard');
-    const loginForm = document.getElementById('loginForm');
-    const loginBtn = document.getElementById('loginBtn');
-    const loginError = document.getElementById('loginError');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const userInfo = document.getElementById('userInfo');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const tableBody = document.getElementById('tableBody');
-    const noData = document.getElementById('noData');
-    const totalCount = document.getElementById('totalCount');
-    const todayCount = document.getElementById('todayCount');
-    const weekCount = document.getElementById('weekCount');
-    
-    // Check auth state
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        showDashboard(session.user);
-      } else {
-        loginScreen.style.display = 'flex';
-        dashboard.classList.remove('active');
+      "use strict";
+
+      const SUPABASE_URL = "https://pumbpmgclnxisfkdaanm.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_dbDtzuRs1Ll8QZDYskQKSg_8LfoeDhD";
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const loginScreen = document.getElementById("loginScreen");
+      const dashboard = document.getElementById("dashboard");
+      const loginForm = document.getElementById("loginForm");
+      const loginBtn = document.getElementById("loginBtn");
+      const loginError = document.getElementById("loginError");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userInfo = document.getElementById("userInfo");
+      const refreshBtn = document.getElementById("refreshBtn");
+      const tableBody = document.getElementById("tableBody");
+      const noData = document.getElementById("noData");
+      const totalCount = document.getElementById("totalCount");
+      const todayCount = document.getElementById("todayCount");
+      const weekCount = document.getElementById("weekCount");
+      const projectsBody = document.getElementById("projectsBody");
+      const projectsNoData = document.getElementById("projectsNoData");
+      const projectsCount = document.getElementById("projectsCount");
+      const postsBody = document.getElementById("postsBody");
+      const postsNoData = document.getElementById("postsNoData");
+      const postsCount = document.getElementById("postsCount");
+      const settingsForm = document.getElementById("settingsForm");
+      const settingsSaveBtn = document.getElementById("settingsSaveBtn");
+      const editorOverlay = document.getElementById("editorOverlay");
+      const editorForm = document.getElementById("editorForm");
+      const editorTitle = document.getElementById("editorTitle");
+      const editorClose = document.getElementById("editorClose");
+      const editorCancel = document.getElementById("editorCancel");
+      const editorSave = document.getElementById("editorSave");
+      const projectFields = document.getElementById("projectFields");
+      const postFields = document.getElementById("postFields");
+      const toastEl = document.getElementById("toast");
+
+      let projects = [];
+      let posts = [];
+      let editingProject = null;
+      let editingPost = null;
+      let editorMode = null;
+      let toastTimer = null;
+      let sessionUser = null;
+
+      const projectStatusLabels = {
+        development: "In development",
+        demo: "Demo",
+        live: "Live",
+        concept: "Concept",
+        completed: "Completed"
+      };
+
+      function escapeHtml(value) {
+        return String(value === null || typeof value === "undefined" ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
       }
-    });
-    
-    // Login form
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      loginBtn.disabled = true;
-      loginBtn.textContent = 'Signing in...';
-      loginError.classList.remove('show');
-      
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
+
+      function toast(message, type) {
+        toastEl.textContent = message;
+        toastEl.className = "toast show " + (type || "success");
+        if (toastTimer) window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(function () {
+          toastEl.className = "toast";
+        }, 3200);
+      }
+
+      function setError(message) {
+        loginError.textContent = message || "";
+        loginError.classList.toggle("show", Boolean(message));
+      }
+
+      function showLogin() {
+        sessionUser = null;
+        loginScreen.style.display = "flex";
+        dashboard.classList.remove("active");
+        closeEditor();
+      }
+
+      function showDashboard(user) {
+        sessionUser = user;
+        loginScreen.style.display = "none";
+        dashboard.classList.add("active");
+        userInfo.textContent = user.email || "";
+        loadSubmissions();
+        loadProjects();
+        loadPosts();
+        loadSettings();
+      }
+
+      supabase.auth.getSession().then(function (result) {
+        const session = result.data ? result.data.session : null;
+        if (session && session.user) showDashboard(session.user);
+        else showLogin();
       });
-      
-      if (error) {
-        loginError.textContent = error.message;
-        loginError.classList.add('show');
+
+      supabase.auth.onAuthStateChange(function (event, session) {
+        if (event === "SIGNED_OUT" || !session) showLogin();
+      });
+
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Signing in...";
+        setError("");
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const result = await supabase.auth.signInWithPassword({ email: email, password: password });
+
         loginBtn.disabled = false;
-        loginBtn.textContent = 'Sign In';
-      } else {
-        showDashboard(data.user);
-      }
-    });
-    
-    // Logout
-    logoutBtn.addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      loginScreen.style.display = 'flex';
-      dashboard.classList.remove('active');
-    });
-    
-    // Refresh
-    refreshBtn.addEventListener('click', loadSubmissions);
-    
-    function showDashboard(user) {
-      loginScreen.style.display = 'none';
-      dashboard.classList.add('active');
-      userInfo.textContent = user.email;
-      loadSubmissions();
-    }
-    
-    async function loadSubmissions() {
-      const { data, error } = await supabase
-        .from('contact_submissions')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) {
-        console.error('Error loading submissions:', error);
-        return;
-      }
-      
-      tableBody.innerHTML = '';
-      
-      if (!data || data.length === 0) {
-        noData.style.display = 'block';
-        totalCount.textContent = '0';
-        todayCount.textContent = '0';
-        weekCount.textContent = '0';
-        return;
-      }
-      
-      noData.style.display = 'none';
-      totalCount.textContent = data.length;
-      
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const weekAgo = new Date(today);
-      weekAgo.setDate(weekAgo.getDate() - 7);
-      
-      let todayNum = 0;
-      let weekNum = 0;
-      
-      data.forEach(sub => {
-        const subDate = new Date(sub.created_at);
-        if (subDate >= today) todayNum++;
-        if (subDate >= weekAgo) weekNum++;
-        
-        const tr = document.createElement('tr');
-        
-        const dateCell = document.createElement('td');
-        dateCell.textContent = subDate.toLocaleString('en-KE');
-        
-        const nameCell = document.createElement('td');
-        nameCell.textContent = sub.full_name;
-        
-        const emailCell = document.createElement('td');
-        emailCell.textContent = sub.email;
-        
-        const phoneCell = document.createElement('td');
-        phoneCell.textContent = sub.phone || '-';
-        
-        const typeCell = document.createElement('td');
-        typeCell.textContent = formatProjectType(sub.project_type);
-        
-        const descCell = document.createElement('td');
-        descCell.className = 'description-cell';
-        descCell.textContent = sub.project_description;
-        descCell.title = sub.project_description;
-        
-        const contactCell = document.createElement('td');
-        const badge = document.createElement('span');
-        badge.className = 'badge badge-' + sub.preferred_contact;
-        badge.textContent = formatContactMethod(sub.preferred_contact);
-        contactCell.appendChild(badge);
-        
-        tr.appendChild(dateCell);
-        tr.appendChild(nameCell);
-        tr.appendChild(emailCell);
-        tr.appendChild(phoneCell);
-        tr.appendChild(typeCell);
-        tr.appendChild(descCell);
-        tr.appendChild(contactCell);
-        
-        tableBody.appendChild(tr);
+        loginBtn.textContent = "Sign In";
+
+        if (result.error) {
+          setError(result.error.message);
+          return;
+        }
+        showDashboard(result.data.user);
       });
-      
-      todayCount.textContent = todayNum;
-      weekCount.textContent = weekNum;
-    }
-    
-    function formatProjectType(type) {
-      const map = {
-        'website-design': 'Website Design',
-        'landing-page': 'Landing Page',
-        'web-application': 'Web App',
-        'website-redesign': 'Website Redesign',
-        'api-integration': 'API Integration',
-        'technical-support': 'Technical Support',
-        'other': 'Other'
-      };
-      return map[type] || type;
-    }
-    
-    function formatContactMethod(method) {
-      const map = {
-        'whatsapp': 'WhatsApp',
-        'email': 'Email',
-        'phone': 'Phone'
-      };
-      return map[method] || method;
-    }
+
+      logoutBtn.addEventListener("click", async function () {
+        await supabase.auth.signOut();
+        showLogin();
+      });
+
+      refreshBtn.addEventListener("click", function () {
+        loadSubmissions();
+        toast("Submissions refreshed", "success");
+      });
+
+      document.querySelectorAll("[data-tab]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          switchTab(button.getAttribute("data-tab"));
+        });
+      });
+
+      function switchTab(name) {
+        document.querySelectorAll("[data-tab]").forEach(function (button) {
+          button.classList.toggle("is-active", button.getAttribute("data-tab") === name);
+        });
+        document.querySelectorAll(".tab-panel").forEach(function (panel) {
+          panel.classList.toggle("is-active", panel.id === "tab-" + name);
+        });
+        if (window.location.hash !== "#" + name) {
+          window.history.replaceState(null, "", "#" + name);
+        }
+      }
+
+      if (window.location.hash && document.getElementById("tab-" + window.location.hash.slice(1))) {
+        switchTab(window.location.hash.slice(1));
+      }
+
+      async function loadSubmissions() {
+        const result = await supabase.from("contact_submissions").select("*").order("created_at", { ascending: false });
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        const data = result.data || [];
+        tableBody.innerHTML = "";
+
+        if (!data.length) {
+          noData.style.display = "block";
+          totalCount.textContent = "0";
+          todayCount.textContent = "0";
+          weekCount.textContent = "0";
+          return;
+        }
+
+        noData.style.display = "none";
+        totalCount.textContent = data.length;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        let todayNum = 0;
+        let weekNum = 0;
+
+        data.forEach(function (submission) {
+          const subDate = new Date(submission.created_at);
+          if (subDate >= today) todayNum += 1;
+          if (subDate >= weekAgo) weekNum += 1;
+
+          const tr = document.createElement("tr");
+          const cells = [
+            subDate.toLocaleString("en-KE"),
+            submission.full_name,
+            submission.email,
+            submission.phone || "-",
+            formatProjectType(submission.project_type)
+          ];
+          cells.forEach(function (value) {
+            const td = document.createElement("td");
+            td.textContent = value;
+            tr.appendChild(td);
+          });
+
+          const descTd = document.createElement("td");
+          descTd.className = "description-cell";
+          const descSpan = document.createElement("span");
+          descSpan.textContent = submission.project_description || "";
+          descSpan.title = submission.project_description || "";
+          descTd.appendChild(descSpan);
+          tr.appendChild(descTd);
+
+          const contactTd = document.createElement("td");
+          const badge = document.createElement("span");
+          badge.className = "badge badge-" + submission.preferred_contact;
+          badge.textContent = formatContactMethod(submission.preferred_contact);
+          contactTd.appendChild(badge);
+          tr.appendChild(contactTd);
+
+          tableBody.appendChild(tr);
+        });
+
+        todayCount.textContent = todayNum;
+        weekCount.textContent = weekNum;
+      }
+
+      function formatProjectType(type) {
+        const map = {
+          "website-design": "Website Design",
+          "landing-page": "Landing Page",
+          "web-application": "Web App",
+          "website-redesign": "Website Redesign",
+          "api-integration": "API Integration",
+          "technical-support": "Technical Support",
+          "other": "Other"
+        };
+        return map[type] || type || "-";
+      }
+
+      function formatContactMethod(method) {
+        const map = { whatsapp: "WhatsApp", email: "Email", phone: "Phone" };
+        return map[method] || method || "-";
+      }
+
+      async function loadProjects() {
+        const result = await supabase.from("projects").select("*").order("sort_order", { ascending: true }).order("created_at", { ascending: false });
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        projects = result.data || [];
+        renderProjects();
+      }
+
+      function renderProjects() {
+        projectsCount.textContent = projects.length + (projects.length === 1 ? " project" : " projects");
+        projectsBody.innerHTML = "";
+        projectsNoData.style.display = projects.length ? "none" : "block";
+
+        projects.forEach(function (project) {
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td><strong>" + escapeHtml(project.title) + "</strong><br><span class=\"user-info\">" + escapeHtml(project.slug) + "</span></td>" +
+            "<td>" + escapeHtml(project.category || "-") + "</td>" +
+            "<td><span class=\"pill pill--draft\">" + escapeHtml(projectStatusLabels[project.status] || project.status || "-") + "</span></td>" +
+            "<td>" + (project.featured ? "<span class=\"pill pill--featured\">Featured</span>" : "-") + "</td>" +
+            "<td>" + (project.published ? "<span class=\"pill pill--published\">Published</span>" : "<span class=\"pill pill--draft\">Draft</span>") + "</td>" +
+            "<td>" + escapeHtml(formatDate(project.updated_at || project.created_at)) + "</td>" +
+            "<td><div class=\"row-actions\">" +
+              "<button class=\"btn-secondary btn-sm\" type=\"button\" data-edit-project=\"" + escapeHtml(project.id) + "\">Edit</button>" +
+              "<button class=\"btn-danger btn-sm\" type=\"button\" data-delete-project=\"" + escapeHtml(project.id) + "\">Delete</button>" +
+            "</div></td>";
+          projectsBody.appendChild(tr);
+        });
+      }
+
+      async function loadPosts() {
+        const result = await supabase.from("posts").select("*").order("created_at", { ascending: false });
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        posts = result.data || [];
+        renderPosts();
+      }
+
+      function renderPosts() {
+        postsCount.textContent = posts.length + (posts.length === 1 ? " article" : " articles");
+        postsBody.innerHTML = "";
+        postsNoData.style.display = posts.length ? "none" : "block";
+
+        posts.forEach(function (post) {
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            "<td><strong>" + escapeHtml(post.title) + "</strong><br><span class=\"user-info\">" + escapeHtml(post.slug) + "</span></td>" +
+            "<td>" + (post.status === "published" ? "<span class=\"pill pill--published\">Published</span>" : "<span class=\"pill pill--draft\">Draft</span>") + "</td>" +
+            "<td>" + escapeHtml(post.published_at ? formatDate(post.published_at) : "-") + "</td>" +
+            "<td>" + escapeHtml(formatDate(post.updated_at || post.created_at)) + "</td>" +
+            "<td><div class=\"row-actions\">" +
+              "<button class=\"btn-secondary btn-sm\" type=\"button\" data-edit-post=\"" + escapeHtml(post.id) + "\">Edit</button>" +
+              "<button class=\"btn-danger btn-sm\" type=\"button\" data-delete-post=\"" + escapeHtml(post.id) + "\">Delete</button>" +
+            "</div></td>";
+          postsBody.appendChild(tr);
+        });
+      }
+
+      function formatDate(value) {
+        if (!value) return "-";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "-";
+        return date.toLocaleString("en-KE", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+      }
+
+      document.addEventListener("click", function (event) {
+        const editProject = event.target.closest("[data-edit-project]");
+        if (editProject) {
+          const project = projects.find(function (item) { return item.id === editProject.getAttribute("data-edit-project"); });
+          if (project) openProjectEditor(project);
+          return;
+        }
+        const deleteProject = event.target.closest("[data-delete-project]");
+        if (deleteProject) {
+          deleteProjectById(deleteProject.getAttribute("data-delete-project"));
+          return;
+        }
+        const editPost = event.target.closest("[data-edit-post]");
+        if (editPost) {
+          const post = posts.find(function (item) { return item.id === editPost.getAttribute("data-edit-post"); });
+          if (post) openPostEditor(post);
+          return;
+        }
+        const deletePost = event.target.closest("[data-delete-post]");
+        if (deletePost) {
+          deletePostById(deletePost.getAttribute("data-delete-post"));
+        }
+      });
+
+      document.getElementById("newProjectBtn").addEventListener("click", function () { openProjectEditor(null); });
+      document.getElementById("newPostBtn").addEventListener("click", function () { openPostEditor(null); });
+      editorClose.addEventListener("click", closeEditor);
+      editorCancel.addEventListener("click", closeEditor);
+      editorOverlay.addEventListener("click", function (event) {
+        if (event.target === editorOverlay) closeEditor();
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !editorOverlay.hidden) closeEditor();
+      });
+
+      function setField(name, value) {
+        const field = editorForm.elements.namedItem(name);
+        if (field) field.value = value === null || typeof value === "undefined" ? "" : value;
+      }
+
+      function setChecked(name, value) {
+        const field = editorForm.elements.namedItem(name);
+        if (field) field.checked = Boolean(value);
+      }
+
+      function openProjectEditor(project) {
+        editorMode = "project";
+        editingProject = project || null;
+        editingPost = null;
+        editorForm.reset();
+        projectFields.hidden = false;
+        postFields.hidden = true;
+        editorTitle.textContent = project ? "Edit project" : "New project";
+
+        setField("title", project ? project.title : "");
+        setField("title_sw", project ? project.title_sw : "");
+        setField("slug", project ? project.slug : "");
+        setField("category", project ? project.category : "");
+        setField("category_sw", project ? project.category_sw : "");
+        setField("summary", project ? project.summary : "");
+        setField("summary_sw", project ? project.summary_sw : "");
+        setField("description", project ? project.description : "");
+        setField("description_sw", project ? project.description_sw : "");
+        setField("cover_url", project ? project.cover_url : "");
+        setField("demo_url", project ? project.demo_url : "");
+        setField("source_url", project ? project.source_url : "");
+        setField("technologies", project ? project.technologies : "");
+        setField("status", project ? project.status : "development");
+        setField("sort_order", project ? project.sort_order : 0);
+        setChecked("featured", project ? project.featured : false);
+        setChecked("published", project ? project.published : false);
+        openEditor();
+      }
+
+      function openPostEditor(post) {
+        editorMode = "post";
+        editingPost = post || null;
+        editingProject = null;
+        editorForm.reset();
+        projectFields.hidden = true;
+        postFields.hidden = false;
+        editorTitle.textContent = post ? "Edit article" : "New article";
+
+        setField("title", post ? post.title : "");
+        setField("title_sw", post ? post.title_sw : "");
+        setField("slug", post ? post.slug : "");
+        setField("tags", post ? post.tags : "");
+        setField("excerpt", post ? post.excerpt : "");
+        setField("excerpt_sw", post ? post.excerpt_sw : "");
+        setField("content", post ? post.content : "");
+        setField("content_sw", post ? post.content_sw : "");
+        setField("cover_url", post ? post.cover_url : "");
+        setField("status", post ? post.status : "draft");
+        setField("published_at", post && post.published_at ? toLocalInput(post.published_at) : "");
+        setField("seo_title", post ? post.seo_title : "");
+        setField("seo_description", post ? post.seo_description : "");
+        openEditor();
+      }
+
+      function openEditor() {
+        editorOverlay.hidden = false;
+        document.body.classList.add("no-scroll");
+        window.setTimeout(function () {
+          const firstInput = editorForm.querySelector("input:not([type=hidden]), textarea, select");
+          if (firstInput) firstInput.focus();
+        }, 30);
+      }
+
+      function closeEditor() {
+        editorOverlay.hidden = true;
+        document.body.classList.remove("no-scroll");
+        editorMode = null;
+        editingProject = null;
+        editingPost = null;
+      }
+
+      function slugify(value) {
+        return String(value || "")
+          .toLowerCase()
+          .normalize("NFKD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9\s-]/g, "")
+          .trim()
+          .replace(/[\s_-]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      }
+
+      function toLocalInput(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "";
+        const pad = function (number) { return String(number).padStart(2, "0"); };
+        return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes());
+      }
+
+      function fromLocalInput(value) {
+        if (!value) return null;
+        const date = new Date(value);
+        return Number.isNaN(date.getTime()) ? null : date.toISOString();
+      }
+
+      editorForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        editorSave.disabled = true;
+        editorSave.textContent = "Saving...";
+
+        try {
+          if (editorMode === "project") await saveProject();
+          else if (editorMode === "post") await savePost();
+        } finally {
+          editorSave.disabled = false;
+          editorSave.textContent = "Save";
+        }
+      });
+
+      async function saveProject() {
+        const title = String(editorForm.elements.namedItem("title").value || "").trim();
+        if (!title) {
+          toast("Project title is required.", "error");
+          return;
+        }
+        const slug = slugify(editorForm.elements.namedItem("slug").value || title);
+        if (!slug) {
+          toast("A valid slug is required.", "error");
+          return;
+        }
+
+        const payload = {
+          title: title,
+          title_sw: emptyToNull(editorForm.elements.namedItem("title_sw").value),
+          slug: slug,
+          category: emptyToNull(editorForm.elements.namedItem("category").value),
+          category_sw: emptyToNull(editorForm.elements.namedItem("category_sw").value),
+          summary: emptyToNull(editorForm.elements.namedItem("summary").value),
+          summary_sw: emptyToNull(editorForm.elements.namedItem("summary_sw").value),
+          description: emptyToNull(editorForm.elements.namedItem("description").value),
+          description_sw: emptyToNull(editorForm.elements.namedItem("description_sw").value),
+          cover_url: emptyToNull(editorForm.elements.namedItem("cover_url").value),
+          demo_url: emptyToNull(editorForm.elements.namedItem("demo_url").value),
+          source_url: emptyToNull(editorForm.elements.namedItem("source_url").value),
+          technologies: emptyToNull(editorForm.elements.namedItem("technologies").value),
+          status: editorForm.elements.namedItem("status").value || "development",
+          featured: editorForm.elements.namedItem("featured").checked,
+          published: editorForm.elements.namedItem("published").checked,
+          sort_order: parseInt(editorForm.elements.namedItem("sort_order").value, 10) || 0
+        };
+
+        const result = editingProject
+          ? await supabase.from("projects").update(payload).eq("id", editingProject.id)
+          : await supabase.from("projects").insert(payload);
+
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        closeEditor();
+        await loadProjects();
+        toast(editingProject ? "Project updated" : "Project created", "success");
+      }
+
+      async function savePost() {
+        const title = String(editorForm.elements.namedItem("title").value || "").trim();
+        if (!title) {
+          toast("Article title is required.", "error");
+          return;
+        }
+        const slug = slugify(editorForm.elements.namedItem("slug").value || title);
+        if (!slug) {
+          toast("A valid slug is required.", "error");
+          return;
+        }
+        const status = editorForm.elements.namedItem("status").value || "draft";
+        let publishedAt = fromLocalInput(editorForm.elements.namedItem("published_at").value);
+        if (status === "published" && !publishedAt) publishedAt = new Date().toISOString();
+        if (status === "draft") publishedAt = null;
+
+        const payload = {
+          title: title,
+          title_sw: emptyToNull(editorForm.elements.namedItem("title_sw").value),
+          slug: slug,
+          tags: emptyToNull(editorForm.elements.namedItem("tags").value),
+          excerpt: emptyToNull(editorForm.elements.namedItem("excerpt").value),
+          excerpt_sw: emptyToNull(editorForm.elements.namedItem("excerpt_sw").value),
+          content: emptyToNull(editorForm.elements.namedItem("content").value),
+          content_sw: emptyToNull(editorForm.elements.namedItem("content_sw").value),
+          cover_url: emptyToNull(editorForm.elements.namedItem("cover_url").value),
+          status: status,
+          published_at: publishedAt,
+          seo_title: emptyToNull(editorForm.elements.namedItem("seo_title").value),
+          seo_description: emptyToNull(editorForm.elements.namedItem("seo_description").value)
+        };
+
+        const result = editingPost
+          ? await supabase.from("posts").update(payload).eq("id", editingPost.id)
+          : await supabase.from("posts").insert(payload);
+
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        closeEditor();
+        await loadPosts();
+        toast(editingPost ? "Article updated" : "Article created", "success");
+      }
+
+      function emptyToNull(value) {
+        const text = String(value || "").trim();
+        return text ? text : null;
+      }
+
+      async function deleteProjectById(id) {
+        if (!window.confirm("Delete this project permanently?")) return;
+        const result = await supabase.from("projects").delete().eq("id", id);
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        await loadProjects();
+        toast("Project deleted", "success");
+      }
+
+      async function deletePostById(id) {
+        if (!window.confirm("Delete this article permanently?")) return;
+        const result = await supabase.from("posts").delete().eq("id", id);
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        await loadPosts();
+        toast("Article deleted", "success");
+      }
+
+      async function loadSettings() {
+        const result = await supabase.from("site_settings").select("*").eq("id", 1).maybeSingle();
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        if (!result.data) return;
+        Object.keys(result.data).forEach(function (key) {
+          const field = settingsForm.elements.namedItem(key);
+          if (field && key !== "id" && key !== "updated_at") field.value = result.data[key] || "";
+        });
+      }
+
+      settingsForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        settingsSaveBtn.disabled = true;
+        settingsSaveBtn.textContent = "Saving...";
+
+        const payload = {
+          id: 1,
+          hero_title: emptyToNull(settingsForm.elements.namedItem("hero_title").value),
+          hero_title_sw: emptyToNull(settingsForm.elements.namedItem("hero_title_sw").value),
+          hero_subtitle: emptyToNull(settingsForm.elements.namedItem("hero_subtitle").value),
+          hero_subtitle_sw: emptyToNull(settingsForm.elements.namedItem("hero_subtitle_sw").value),
+          about_text: emptyToNull(settingsForm.elements.namedItem("about_text").value),
+          about_text_sw: emptyToNull(settingsForm.elements.namedItem("about_text_sw").value),
+          email: emptyToNull(settingsForm.elements.namedItem("email").value),
+          phone: emptyToNull(settingsForm.elements.namedItem("phone").value),
+          whatsapp: emptyToNull(settingsForm.elements.namedItem("whatsapp").value),
+          location: emptyToNull(settingsForm.elements.namedItem("location").value),
+          seo_title: emptyToNull(settingsForm.elements.namedItem("seo_title").value),
+          seo_description: emptyToNull(settingsForm.elements.namedItem("seo_description").value)
+        };
+
+        const result = await supabase.from("site_settings").upsert(payload, { onConflict: "id" });
+        settingsSaveBtn.disabled = false;
+        settingsSaveBtn.textContent = "Save settings";
+
+        if (result.error) {
+          toast(result.error.message, "error");
+          return;
+        }
+        toast("Settings saved", "success");
+      });
     })();
   </script>
 </body>
