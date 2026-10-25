@@ -40,5 +40,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/ai-chat.js": {
+      "maxDuration": 30
+    }
+  }
 }
