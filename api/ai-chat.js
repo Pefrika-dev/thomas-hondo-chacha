@@ -395,6 +395,9 @@ module.exports = async function handler(req, res) {
     sendJson(res, 502, {
       error: "AI unavailable",
       code: lastStatus === 404 ? "model_unavailable" : "provider_error",
+      diag_status: lastStatus,
+      diag_model: lastModel,
+      diag_raw_start: lastData && typeof lastData === "string" ? lastData.slice(0, 300) : (lastData ? JSON.stringify(lastData).slice(0, 300) : "null"),
       fallback: fallbackFor(language)
     });
   } catch (error) {
