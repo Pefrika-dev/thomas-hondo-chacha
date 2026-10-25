@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /api/
 
-Sitemap: https://thomas-hondo-chacha.vercel.app/sitemap.xml
+Sitemap: https://www.thomashondochacha.co.ke/sitemap.xml
