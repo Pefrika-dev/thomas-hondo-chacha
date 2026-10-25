@@ -306,6 +306,9 @@ module.exports = async function handler(req, res) {
       const model = models[index];
       lastModel = model;
 
+      sendJson(res, 200, { reply: "loopstub-" + index, stubbed: true });
+      return;
+
       const requestOptions = {
         method: "POST",
         headers: {
