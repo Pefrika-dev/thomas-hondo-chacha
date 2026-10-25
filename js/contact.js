@@ -319,6 +319,27 @@
       return;
     }
 
+    var values = getValues();
+
+    // Save to database first
+    fetch('/api/submit-contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        full_name: values.name,
+        email: values.email,
+        phone: values.phone,
+        project_type: values.projectType,
+        project_description: values.description,
+        preferred_contact: values.contactMethod
+      })
+    }).catch(function(err) {
+      console.error('Failed to save submission:', err);
+      // Continue anyway to still open WhatsApp/email as fallback
+    });
+
     openReview();
   }
 
