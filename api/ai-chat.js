@@ -302,6 +302,7 @@ module.exports = async function handler(req, res) {
   let lastModel = models[0];
 
   try {
+    console.log("DIAG: apiKey length=" + (apiKey ? apiKey.length : "null") + ", model=" + (models[0] || "none"));
     for (let index = 0; index < models.length; index += 1) {
       const model = models[index];
       lastModel = model;
@@ -336,6 +337,7 @@ module.exports = async function handler(req, res) {
         GEMINI_ENDPOINT + "/" + encodeURIComponent(model) + ":generateContent",
         requestOptions
       );
+      console.log("DIAG response status=" + response.status + " model=" + model);
 
       const raw = await response.text();
       let data = null;
