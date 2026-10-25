@@ -45,5 +45,17 @@
     "api/ai-chat.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "http://thomashondochacha.co.ke/(.*)",
+      "destination": "https://www.thomashondochacha.co.ke/$1",
+      "permanent": true
+    },
+    {
+      "source": "https://thomashondochacha.co.ke/(.*)",
+      "destination": "https://www.thomashondochacha.co.ke/$1",
+      "permanent": true
+    }
+  ]
 }

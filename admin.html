@@ -752,6 +752,34 @@
           contactTd.appendChild(badge);
           tr.appendChild(contactTd);
 
+          const deleteTd = document.createElement("td");
+          deleteTd.style.textAlign = "right";
+          const deleteBtn = document.createElement("button");
+          deleteBtn.type = "button";
+          deleteBtn.textContent = "Delete";
+          deleteBtn.style.fontSize = "11px";
+          deleteBtn.style.padding = "2px 6px";
+          deleteBtn.addEventListener("click", async function () {
+            if (!confirm("Delete submission from " + submission.email + "?")) return;
+            try {
+              const r = await fetch("/api/delete-submission", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: submission.email })
+              });
+              if (!r.ok) {
+                toast("Delete failed: " + r.status, "error");
+                return;
+              }
+              tr.remove();
+              toast("Submission deleted", "success");
+            } catch (e) {
+              toast("Error deleting: " + e.message, "error");
+            }
+          });
+          deleteTd.appendChild(deleteBtn);
+          tr.appendChild(deleteTd);
+
           tableBody.appendChild(tr);
 
           if (descToggle) {
