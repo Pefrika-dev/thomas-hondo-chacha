@@ -1,7 +1,7 @@
 /* ==========================================================================
    Thomas Hondo Chacha — Project enquiry form
-   Validates locally, prepares a reviewable message and opens WhatsApp/email.
-   Nothing is transmitted by this website.
+   Validates locally, saves the enquiry, prepares a reviewable message and
+   opens WhatsApp/email as the chosen follow-up channel.
    ========================================================================== */
 (function () {
   "use strict";
@@ -12,7 +12,9 @@
     initialised: false,
     form: null,
     invalidFields: new Set(),
-    reviewOpen: false
+    reviewOpen: false,
+    lastSaveOk: null,
+    submitting: false
   };
 
   var fieldConfig = [
@@ -211,6 +213,26 @@
     return message;
   }
 
+  function updateSaveConfirmation() {
+    var element = document.querySelector("[data-review-confirmation]");
+    if (!element) {
+      return;
+    }
+
+    if (state.lastSaveOk === null) {
+      element.hidden = true;
+      element.textContent = "";
+      element.classList.remove("is-error");
+      return;
+    }
+
+    element.hidden = false;
+    element.classList.toggle("is-error", !state.lastSaveOk);
+    element.textContent = t(
+      state.lastSaveOk ? "contactPage.formSavedConfirmation" : "contactPage.formSaveFailed"
+    );
+  }
+
   function openReview() {
     var panel = document.querySelector("[data-review-panel]");
     var heading = document.getElementById("review-title");
@@ -232,6 +254,7 @@
       response.textContent = "";
     }
 
+    updateSaveConfirmation();
     panel.hidden = false;
     state.reviewOpen = true;
     panel.scrollIntoView({
@@ -312,33 +335,62 @@
     return true;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!validateAll()) {
+    if (state.submitting || !validateAll()) {
       return;
     }
 
-    var values = getValues();
+    state.submitting = true;
+    state.lastSaveOk = null;
 
-    // Save to database first
-    fetch('/api/submit-contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        full_name: values.name,
-        email: values.email,
-        phone: values.phone,
-        project_type: values.projectType,
-        project_description: values.description,
-        preferred_contact: values.contactMethod
-      })
-    }).catch(function(err) {
+    var values = getValues();
+    var submitButton = event.submitter || state.form.querySelector('button[type="submit"]');
+    var controller = typeof AbortController === "function" ? new AbortController() : null;
+    var timeout = window.setTimeout(function () {
+      if (controller) controller.abort();
+    }, 10000);
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.setAttribute("aria-busy", "true");
+    }
+
+    try {
+      var response = await fetch('/api/submit-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: values.name,
+          email: values.email,
+          phone: values.phone,
+          project_type: values.projectType,
+          project_description: values.description,
+          preferred_contact: values.contactMethod
+        }),
+        signal: controller ? controller.signal : undefined
+      });
+
+      state.lastSaveOk = response.ok;
+
+      if (!response.ok) {
+        console.error('Failed to save submission:', response.status);
+      }
+    } catch (err) {
+      state.lastSaveOk = false;
       console.error('Failed to save submission:', err);
-      // Continue anyway to still open WhatsApp/email as fallback
-    });
+    } finally {
+      window.clearTimeout(timeout);
+      state.submitting = false;
+
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.removeAttribute("aria-busy");
+      }
+    }
 
     openReview();
   }
@@ -382,6 +434,7 @@
     window.setTimeout(function () {
       clearAllErrors();
       closeReview(false);
+      state.lastSaveOk = null;
       var copyStatus = document.querySelector("[data-copy-status]");
       if (copyStatus) {
         copyStatus.textContent = "";
@@ -479,6 +532,7 @@
 
       if (state.reviewOpen) {
         updateReview();
+        updateSaveConfirmation();
       }
     });
   }

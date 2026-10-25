@@ -1814,6 +1814,28 @@ select.field__control {
   line-height: 1.6;
 }
 
+.review-confirmation {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--success) 25%, transparent);
+  background: var(--success-soft);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.review-confirmation.is-error {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.review-confirmation[hidden] {
+  display: none;
+}
+
 .review-message {
   width: 100%;
   min-height: 220px;

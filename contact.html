@@ -280,11 +280,6 @@
 
               <p class="field__hint" data-i18n="contactPage.formRequiredNote">Fields marked * are required.</p>
 
-              <div class="form-note">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
-                <span data-i18n="contactPage.formNote">This website saves your enquiry securely, then prepares the message in your browser and opens the contact method you choose. Only Thomas can access the saved details.</span>
-              </div>
-
               <p class="form-response" id="form-response" role="alert" hidden></p>
 
               <div class="form-actions">
@@ -305,6 +300,7 @@
                     <p data-i18n="contactPage.formReviewLede">Your enquiry has been saved. Choose how you want to continue. Your message will open in WhatsApp or your email app, where you can send it yourself.</p>
                   </div>
                 </div>
+                <p class="review-confirmation" data-review-confirmation role="status" aria-live="polite" hidden></p>
                 <label class="visually-hidden" for="review-message" data-i18n="contactPage.formReviewMessageLabel">Prepared message</label>
                 <textarea class="review-message" id="review-message" data-review-message readonly></textarea>
                 <div class="review-actions">
