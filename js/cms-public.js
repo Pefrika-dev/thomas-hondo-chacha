@@ -331,6 +331,13 @@
 
   function paintSettings() {
     if (!settingsCache) return;
+
+    document.querySelectorAll("[data-cms-setting-html]").forEach(function (element) {
+      var htmlKey = element.getAttribute("data-cms-setting-html");
+      var htmlValue = localized(settingsCache, htmlKey);
+      if (htmlValue) element.innerHTML = htmlValue;
+    });
+
     document.querySelectorAll("[data-cms-setting]").forEach(function (element) {
       var key = element.getAttribute("data-cms-setting");
       var value = localized(settingsCache, key);
@@ -368,6 +375,11 @@
       document.querySelectorAll('a[href*="wa.me/"]').forEach(function (link) {
         link.setAttribute("href", "https://wa.me/" + digits);
       });
+    }
+
+    if (lang() === "en" && document.body.getAttribute("data-page") === "home") {
+      if (settingsCache.seo_title) document.title = settingsCache.seo_title;
+      if (settingsCache.seo_description) setMeta("description", settingsCache.seo_description);
     }
   }
 
