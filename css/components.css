@@ -1316,7 +1316,7 @@
   min-width: 0;
   align-items: flex-start;
   gap: 0.85rem;
-  padding: 1.2rem;
+  padding: 1.35rem 1.1rem;
   border: 1px solid var(--line);
   background: var(--card-bg);
   border-radius: var(--radius-md);
@@ -1361,9 +1361,9 @@
 
 .contact-channel__value {
   display: block;
-  margin-top: 0.2rem;
+  margin-top: 0.35rem;
   overflow-wrap: anywhere;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 650;
   line-height: 1.4;
 }
