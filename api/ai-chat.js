@@ -4,7 +4,7 @@
    ========================================================================== */
 
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
-const DEFAULT_MODEL = "gemini-2.0-flash-exp";
+const DEFAULT_MODEL = "gemini-1.5-flash";
 const MAX_HISTORY_MESSAGES = 10;
 const MAX_MESSAGE_LENGTH = 1200;
 const MAX_TOTAL_LENGTH = 8000;
@@ -315,9 +315,6 @@ module.exports = async function handler(req, res) {
             "x-goog-api-key": apiKey
           },
           body: JSON.stringify({
-            system_instruction: {
-              parts: [{ text: systemText }]
-            },
             contents: buildContents(messages),
             generationConfig: {
               temperature: 0.35,
@@ -336,7 +333,6 @@ module.exports = async function handler(req, res) {
       );
 
       const raw = await response.text();
-      console.log("DIAG fetch model=" + model + " status=" + response.status + " body=" + raw.slice(0, 600));
       let data = null;
       try {
         data = JSON.parse(raw);
