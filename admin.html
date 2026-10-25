@@ -153,6 +153,10 @@
     .editor-actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--line); padding-top: 18px; margin-top: 4px; flex-wrap: wrap; }
 
     .settings-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px 24px; max-width: 980px; }
+    .settings-card--security { margin-top: 24px; }
+    .settings-card--security h3 { margin: 0 0 6px; font-size: 18px; }
+    .settings-card--security > p { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+    .settings-card--security .hint { display: block; color: var(--muted); font-size: 11px; margin: -4px 0 14px; }
     .toast {
       position: fixed; right: 22px; bottom: 22px; z-index: 100; max-width: 380px;
       background: #101828; color: #fff; padding: 12px 16px; border-radius: 9px; font-size: 13px;
@@ -341,6 +345,32 @@
             <button type="submit" class="btn-primary" id="settingsSaveBtn">Save settings</button>
           </div>
         </form>
+
+        <section class="settings-card settings-card--security" aria-labelledby="password-title">
+          <h3 id="password-title">Admin password</h3>
+          <p>Change the password you use to sign in to Content Studio.</p>
+          <form id="passwordForm">
+            <div class="field">
+              <label for="adminCurrentPassword">Current password</label>
+              <input id="adminCurrentPassword" name="currentPassword" type="password" autocomplete="current-password" required>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="adminNewPassword">New password</label>
+                <input id="adminNewPassword" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
+              </div>
+              <div class="field">
+                <label for="adminConfirmPassword">Confirm new password</label>
+                <input id="adminConfirmPassword" name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required>
+              </div>
+            </div>
+            <p class="hint">Use at least 8 characters. Choose a password you do not use anywhere else.</p>
+            <div class="error" id="passwordError" role="alert"></div>
+            <div class="editor-actions">
+              <button type="submit" class="btn-primary" id="passwordSaveBtn">Update password</button>
+            </div>
+          </form>
+        </section>
       </section>
     </main>
   </div>
@@ -486,6 +516,9 @@
       const postsCount = document.getElementById("postsCount");
       const settingsForm = document.getElementById("settingsForm");
       const settingsSaveBtn = document.getElementById("settingsSaveBtn");
+      const passwordForm = document.getElementById("passwordForm");
+      const passwordSaveBtn = document.getElementById("passwordSaveBtn");
+      const passwordError = document.getElementById("passwordError");
       const editorOverlay = document.getElementById("editorOverlay");
       const editorForm = document.getElementById("editorForm");
       const editorTitle = document.getElementById("editorTitle");
@@ -1086,6 +1119,74 @@
           return;
         }
         toast("Settings saved", "success");
+      });
+
+      function setPasswordError(message) {
+        passwordError.textContent = message || "";
+        passwordError.classList.toggle("show", Boolean(message));
+      }
+
+      passwordForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        setPasswordError("");
+
+        const currentPassword = passwordForm.elements.namedItem("currentPassword").value;
+        const newPassword = passwordForm.elements.namedItem("newPassword").value;
+        const confirmPassword = passwordForm.elements.namedItem("confirmPassword").value;
+
+        if (!sessionUser || !sessionUser.email) {
+          setPasswordError("Your session has expired. Please sign in again.");
+          return;
+        }
+
+        if (newPassword.length < 8) {
+          setPasswordError("The new password must be at least 8 characters.");
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          setPasswordError("The new passwords do not match.");
+          return;
+        }
+
+        if (newPassword === currentPassword) {
+          setPasswordError("Choose a password different from your current one.");
+          return;
+        }
+
+        passwordSaveBtn.disabled = true;
+        passwordSaveBtn.textContent = "Updating...";
+
+        try {
+          const verify = await supabase.auth.signInWithPassword({
+            email: sessionUser.email,
+            password: currentPassword
+          });
+
+          if (verify.error) {
+            setPasswordError("Current password is incorrect.");
+            return;
+          }
+
+          if (verify.data && verify.data.user) {
+            sessionUser = verify.data.user;
+          }
+
+          const result = await supabase.auth.updateUser({ password: newPassword });
+
+          if (result.error) {
+            setPasswordError(result.error.message);
+            return;
+          }
+
+          passwordForm.reset();
+          toast("Password updated. Use the new password next time you sign in.", "success");
+        } catch (err) {
+          setPasswordError("Could not update the password. Please try again.");
+        } finally {
+          passwordSaveBtn.disabled = false;
+          passwordSaveBtn.textContent = "Update password";
+        }
       });
     })();
   </script>
