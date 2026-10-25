@@ -340,6 +340,33 @@
       }
       element.textContent = value;
     });
+
+    var email = settingsCache.email;
+    if (email) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+        link.setAttribute("href", "mailto:" + email);
+        var label = link.querySelector("span");
+        if (label) label.textContent = email;
+      });
+    }
+
+    var phone = settingsCache.phone;
+    if (phone) {
+      var tel = String(phone).replace(/[^\d+]/g, "");
+      document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+        link.setAttribute("href", "tel:" + tel);
+        var label = link.querySelector("span");
+        if (label) label.textContent = phone;
+      });
+    }
+
+    var whatsapp = settingsCache.whatsapp;
+    if (whatsapp) {
+      var digits = String(whatsapp).replace(/\D/g, "");
+      document.querySelectorAll('a[href*="wa.me/"]').forEach(function (link) {
+        link.setAttribute("href", "https://wa.me/" + digits);
+      });
+    }
   }
 
   function renderProjectDetail() {
