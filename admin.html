@@ -956,6 +956,7 @@
           sort_order: parseInt(editorForm.elements.namedItem("sort_order").value, 10) || 0
         };
 
+        const isNew = !editingProject;
         const result = editingProject
           ? await supabase.from("projects").update(payload).eq("id", editingProject.id)
           : await supabase.from("projects").insert(payload);
@@ -966,7 +967,7 @@
         }
         closeEditor();
         await loadProjects();
-        toast(editingProject ? "Project updated" : "Project created", "success");
+        toast(isNew ? "Project created" : "Project updated", "success");
       }
 
       async function savePost() {
@@ -1001,6 +1002,7 @@
           seo_description: emptyToNull(editorForm.elements.namedItem("seo_description").value)
         };
 
+        const isNew = !editingPost;
         const result = editingPost
           ? await supabase.from("posts").update(payload).eq("id", editingPost.id)
           : await supabase.from("posts").insert(payload);
@@ -1011,7 +1013,7 @@
         }
         closeEditor();
         await loadPosts();
-        toast(editingPost ? "Article updated" : "Article created", "success");
+        toast(isNew ? "Article created" : "Article updated", "success");
       }
 
       function emptyToNull(value) {
