@@ -373,7 +373,13 @@
     if (whatsapp) {
       var digits = String(whatsapp).replace(/\D/g, "");
       document.querySelectorAll('a[href*="wa.me/"]').forEach(function (link) {
-        link.setAttribute("href", "https://wa.me/" + digits);
+        var search = "";
+        try {
+          search = new URL(link.href).search;
+        } catch (error) {
+          search = "";
+        }
+        link.setAttribute("href", "https://wa.me/" + digits + search);
       });
     }
 
