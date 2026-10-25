@@ -338,6 +338,7 @@ module.exports = async function handler(req, res) {
       );
 
       const raw = await response.text();
+      console.log("DIAG fetch model=" + model + " status=" + response.status + " body=" + raw.slice(0, 600));
       let data = null;
       try {
         data = JSON.parse(raw);
