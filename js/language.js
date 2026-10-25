@@ -31,6 +31,16 @@
           description: "Selected website projects, demonstrations and interface concepts by Thomas Hondo Chacha, with honest project statuses and technical case studies.",
           imageAlt: "Selected projects by Thomas Hondo Chacha"
         },
+        blog: {
+          title: "Blog — Thomas Hondo Chacha, Software Engineer",
+          description: "Notes on web design, software engineering, accessibility and building useful things for businesses in Kenya and beyond.",
+          imageAlt: "Blog by Thomas Hondo Chacha"
+        },
+        project: {
+          title: "Project — Thomas Hondo Chacha, Software Engineer",
+          description: "A project by Thomas Hondo Chacha, software engineer in Kenya.",
+          imageAlt: "Project by Thomas Hondo Chacha"
+        },
         services: {
           title: "Services — Thomas Hondo Chacha, Software Engineer",
           description: "Website design, landing pages, web applications, redesigns, API integration and technical improvements from Thomas Hondo Chacha in Kenya.",
@@ -575,6 +585,16 @@
           title: "Miradi — Thomas Hondo Chacha, Mhandisi wa Programu",
           description: "Miradi teule ya tovuti, onyesho na dhana za violesura za Thomas Hondo Chacha, zenye hali halisi na uchambuzi wa kiufundi.",
           imageAlt: "Miradi teule ya Thomas Hondo Chacha"
+        },
+        blog: {
+          title: "Blogu — Thomas Hondo Chacha, Mhandisi wa Programu",
+          description: "Maelezo kuhusu muundo wa tovuti, uhandisi wa programu, ufikivu na kujenga vitu vinavyofaa kwa biashara nchini Kenya na zaidi.",
+          imageAlt: "Blogu ya Thomas Hondo Chacha"
+        },
+        project: {
+          title: "Mradi — Thomas Hondo Chacha, Mhandisi wa Programu",
+          description: "Mradi wa Thomas Hondo Chacha, mhandisi wa programu nchini Kenya.",
+          imageAlt: "Mradi wa Thomas Hondo Chacha"
         },
         services: {
           title: "Huduma — Thomas Hondo Chacha, Mhandisi wa Programu",
