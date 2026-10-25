@@ -281,10 +281,12 @@
       }).join("");
     }
 
-    document.title = (post.seo_title || title) + " — Thomas Hondo Chacha";
-    setMeta("description", post.seo_description || excerpt || "");
-    setMeta("og:title", post.seo_title || title, "property");
-    setMeta("og:description", post.seo_description || excerpt || "", "property");
+    var pageTitle = lang() === "sw" ? title : (post.seo_title || title);
+    var pageDescription = lang() === "sw" ? (excerpt || "") : (post.seo_description || excerpt || "");
+    document.title = pageTitle + " — Thomas Hondo Chacha";
+    setMeta("description", pageDescription);
+    setMeta("og:title", pageTitle, "property");
+    setMeta("og:description", pageDescription, "property");
     if (post.cover_url) setMeta("og:image", post.cover_url, "property");
     var canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute("href", "https://www.thomashondochacha.co.ke/post.html?slug=" + encodeURIComponent(post.slug));
