@@ -1448,8 +1448,8 @@
 
 .contact-direct__value {
   display: block;
-  margin-top: 0.1rem;
-  font-size: 0.78rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
