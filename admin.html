@@ -761,20 +761,31 @@
           deleteBtn.style.padding = "2px 6px";
           deleteBtn.addEventListener("click", async function () {
             if (!confirm("Delete submission from " + submission.email + "?")) return;
+            deleteBtn.disabled = true;
             try {
-              const r = await fetch("/api/delete-submission", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: submission.email })
-              });
-              if (!r.ok) {
-                toast("Delete failed: " + r.status, "error");
+              const result = await supabase
+                .from("contact_submissions")
+                .delete()
+                .eq("id", submission.id)
+                .select("id");
+
+              if (result.error) {
+                toast("Delete failed: " + result.error.message, "error");
+                deleteBtn.disabled = false;
                 return;
               }
+
+              if (!result.data || !result.data.length) {
+                toast("Delete was blocked by the database policy. No rows were removed.", "error");
+                deleteBtn.disabled = false;
+                return;
+              }
+
               tr.remove();
               toast("Submission deleted", "success");
             } catch (e) {
               toast("Error deleting: " + e.message, "error");
+              deleteBtn.disabled = false;
             }
           });
           deleteTd.appendChild(deleteBtn);
