@@ -318,6 +318,7 @@ module.exports = async function handler(req, res) {
             "x-goog-api-key": apiKey
           },
           body: JSON.stringify({
+            systemInstruction: { parts: [{ text: systemText }] },
             contents: buildContents(messages),
             generationConfig: {
               temperature: 0.35,
