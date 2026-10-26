@@ -266,10 +266,11 @@
     }
 
     var observer = new IntersectionObserver(function (entries) {
-      document.documentElement.classList.toggle(
-        "floats-at-footer",
-        entries[0].isIntersecting
-      );
+      // Only step aside when the footer is actually covering the viewport
+      // edge and the visitor has scrolled; short pages keep the buttons.
+      var nearFooter = entries[0].isIntersecting && window.scrollY > 80;
+
+      document.documentElement.classList.toggle("floats-at-footer", nearFooter);
     });
 
     observer.observe(footerBottom);
