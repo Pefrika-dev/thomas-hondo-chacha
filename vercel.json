@@ -48,13 +48,26 @@
   },
   "redirects": [
     {
-      "source": "http://thomashondochacha.co.ke/(.*)",
-      "destination": "https://www.thomashondochacha.co.ke/$1",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "thomashondochacha.co.ke"
+        }
+      ],
+      "destination": "https://www.thomashondochacha.co.ke/:path*",
       "permanent": true
     },
     {
-      "source": "https://thomashondochacha.co.ke/(.*)",
-      "destination": "https://www.thomashondochacha.co.ke/$1",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-forwarded-proto",
+          "value": "http"
+        }
+      ],
+      "destination": "https://www.thomashondochacha.co.ke/:path*",
       "permanent": true
     }
   ]
