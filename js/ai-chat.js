@@ -366,6 +366,7 @@
     el.panel.hidden = false;
     el.root.classList.add("is-open");
     el.launcher.setAttribute("aria-expanded", "true");
+    document.documentElement.classList.add("ai-chat-open");
 
     window.setTimeout(function () {
       if (state.leadOpen) {
@@ -382,6 +383,7 @@
     el.panel.hidden = true;
     el.root.classList.remove("is-open");
     el.launcher.setAttribute("aria-expanded", "false");
+    document.documentElement.classList.remove("ai-chat-open");
     el.launcher.focus();
   }
 

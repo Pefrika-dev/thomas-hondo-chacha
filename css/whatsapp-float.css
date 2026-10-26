@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Thomas Hondo Chacha — floating WhatsApp button
+   Sits directly above the AI assistant launcher, theme-aware and responsive.
+   ========================================================================== */
+
+.wa-float {
+  position: fixed;
+  right: clamp(1rem, 2vw, 1.5rem);
+  bottom: calc(clamp(1rem, 2vw, 1.5rem) + 62px);
+  z-index: 89;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow:
+    0 10px 22px rgba(9, 76, 42, 0.24),
+    0 2px 6px rgba(9, 76, 42, 0.18);
+  transition:
+    transform var(--speed) var(--ease-out),
+    background-color var(--speed-fast) ease,
+    box-shadow var(--speed-fast) ease,
+    opacity var(--speed-fast) ease,
+    visibility var(--speed-fast) ease;
+}
+
+.wa-float:hover {
+  background: #1fbe5a;
+  box-shadow:
+    0 14px 28px rgba(9, 76, 42, 0.3),
+    0 2px 6px rgba(9, 76, 42, 0.2);
+  transform: translateY(-2px);
+}
+
+.wa-float:active {
+  transform: translateY(0);
+}
+
+.wa-float .icon {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.wa-float:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* Step aside while the AI panel is open so nothing overlaps. */
+html.ai-chat-open .wa-float {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+}
+
+@media (max-width: 560px) {
+  .wa-float {
+    right: 0.75rem;
+    bottom: calc(0.75rem + 60px);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    transition: none !important;
+  }
+}
+
+@media print {
+  .wa-float {
+    display: none !important;
+  }
+}
