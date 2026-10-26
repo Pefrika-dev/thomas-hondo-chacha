@@ -350,12 +350,46 @@
       element.textContent = value;
     });
 
+    var PHONE_PATTERN = /(\+?\d[\d\s().-]{7,}\d)/;
+    var EMAIL_PATTERN = /[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/;
+
+    // Never write text into an icon span: on contact cards the icon is the
+    // first span inside the link, and overwriting it destroyed the SVG.
+    function contactTextElement(link) {
+      var explicit = link.querySelector(
+        ".contact-channel__value, .contact-direct__value"
+      );
+      if (explicit) return explicit;
+
+      var spans = link.querySelectorAll("span");
+      for (var index = 0; index < spans.length; index += 1) {
+        var span = spans[index];
+        if (span.querySelector("svg")) continue;
+        if (span.classList.contains("contact-channel__icon")) continue;
+        if (span.classList.contains("contact-direct__icon")) continue;
+        return span;
+      }
+
+      return null;
+    }
+
+    function setContactText(link, value, pattern) {
+      var element = contactTextElement(link);
+      if (!element) return;
+
+      var current = element.textContent || "";
+      if (pattern.test(current)) {
+        element.textContent = current.replace(pattern, value);
+      } else if (!element.hasAttribute("data-i18n")) {
+        element.textContent = value;
+      }
+    }
+
     var email = settingsCache.email;
     if (email) {
       document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
         link.setAttribute("href", "mailto:" + email);
-        var label = link.querySelector("span");
-        if (label) label.textContent = email;
+        setContactText(link, email, EMAIL_PATTERN);
       });
     }
 
@@ -364,8 +398,7 @@
       var tel = String(phone).replace(/[^\d+]/g, "");
       document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
         link.setAttribute("href", "tel:" + tel);
-        var label = link.querySelector("span");
-        if (label) label.textContent = phone;
+        setContactText(link, phone, PHONE_PATTERN);
       });
     }
 
