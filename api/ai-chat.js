@@ -387,12 +387,22 @@ module.exports = async function handler(req, res) {
     );
 
     // Graceful fallback: chat widget remains functional even if Gemini fails.
-    const userMessage = messages.length ? messages[messages.length - 1].content : "";
-    sendJson(res, 200, {
+    const payload = {
       reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa — tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue — please contact Thomas via WhatsApp or the contact form."),
       fallback: true,
       note: "Gemini fetch failed with status " + lastStatus
-    });
+    };
+
+    if (body && body.debug === true) {
+      payload.providerStatus = lastStatus;
+      payload.providerMessage =
+        lastData && lastData.error && typeof lastData.error.message === "string"
+          ? lastData.error.message
+          : "";
+      payload.providerModel = lastModel;
+    }
+
+    sendJson(res, 200, payload);
   } catch (error) {
     if (error && error.name === "AbortError") {
       console.error("Gemini request timed out");
