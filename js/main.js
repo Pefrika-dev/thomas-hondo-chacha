@@ -261,19 +261,33 @@
   function initFloatingGuard() {
     var footerBottom = document.querySelector(".footer__bottom");
 
-    if (!footerBottom || !("IntersectionObserver" in window)) {
+    if (!footerBottom) {
       return;
     }
 
-    var observer = new IntersectionObserver(function (entries) {
-      // Only step aside when the footer is actually covering the viewport
-      // edge and the visitor has scrolled; short pages keep the buttons.
-      var nearFooter = entries[0].isIntersecting && window.scrollY > 80;
+    var scheduled = false;
 
-      document.documentElement.classList.toggle("floats-at-footer", nearFooter);
-    });
+    function refresh() {
+      scheduled = false;
+      var rect = footerBottom.getBoundingClientRect();
+      var footerOnScreen = rect.top < window.innerHeight;
+      var scrolled = window.scrollY > 80;
 
-    observer.observe(footerBottom);
+      document.documentElement.classList.toggle(
+        "floats-at-footer",
+        footerOnScreen && scrolled
+      );
+    }
+
+    function schedule() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(refresh);
+    }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    refresh();
   }
 
   function init() {
