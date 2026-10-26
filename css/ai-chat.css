@@ -10,6 +10,16 @@
   z-index: 90;
   color: var(--ink);
   font-family: var(--font-sans);
+  transition:
+    opacity var(--speed-fast) ease,
+    visibility var(--speed-fast) ease;
+}
+
+/* Step aside near the footer so links such as "Back to top" stay reachable. */
+html.floats-at-footer:not(.ai-chat-open) .ai-chat {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .ai-chat [hidden] {

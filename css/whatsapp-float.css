@@ -56,6 +56,14 @@ html.ai-chat-open .wa-float {
   transform: translateY(8px) scale(0.96);
 }
 
+/* Step aside near the footer so links such as "Back to top" stay reachable. */
+html.floats-at-footer .wa-float {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(0.96);
+}
+
 @media (max-width: 560px) {
   .wa-float {
     right: 0.75rem;

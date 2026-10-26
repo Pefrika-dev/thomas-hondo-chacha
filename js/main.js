@@ -257,6 +257,24 @@
     });
   }
 
+  // Keep the floating actions from covering the footer links (e.g. "Back to top").
+  function initFloatingGuard() {
+    var footerBottom = document.querySelector(".footer__bottom");
+
+    if (!footerBottom || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      document.documentElement.classList.toggle(
+        "floats-at-footer",
+        entries[0].isIntersecting
+      );
+    });
+
+    observer.observe(footerBottom);
+  }
+
   function init() {
     window.Language.init();
     window.Theme.init();
@@ -267,6 +285,7 @@
     updateWhatsAppLinks();
     initExternalLinks();
     initReveals();
+    initFloatingGuard();
 
     document.addEventListener("thc:projectsrendered", function () {
       initReveals();
