@@ -265,10 +265,7 @@
       return;
     }
 
-    var scheduled = false;
-
     function refresh() {
-      scheduled = false;
       var rect = footerBottom.getBoundingClientRect();
       var footerOnScreen = rect.top < window.innerHeight;
       var scrolled = window.scrollY > 80;
@@ -279,14 +276,8 @@
       );
     }
 
-    function schedule() {
-      if (scheduled) return;
-      scheduled = true;
-      window.requestAnimationFrame(refresh);
-    }
-
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    window.addEventListener("scroll", refresh, { passive: true });
+    window.addEventListener("resize", refresh);
     refresh();
   }
 
