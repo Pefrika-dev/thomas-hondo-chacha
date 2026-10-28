@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Thomas Hondo Chacha â€” AI chat endpoint
+   Thomas Hondo Chacha Ã¢â‚¬â€ AI chat endpoint
    Server-side Gemini request. The API key never reaches the browser.
    ========================================================================== */
 
@@ -39,7 +39,7 @@ FACTS:
 - Languages: English and Kiswahili. The website supports both.
 - The process: understand the problem, define requirements, design the experience, develop, test and refine, then hand over.
 - Do not claim expertise in e-commerce, payments, mobile apps or any other area not listed above. If asked, say Thomas can discuss the scope.
-- If asked about AI: you are an AI assistant using Google Gemini and you can make mistakes.
+- If asked about AI: you are an AI assistant using Google Gemini and you can make mistakes. If asked a question that is outside the scope of this website or Thomas's stated services, say politely that it's outside what you can answer here and ask the user to contact Thomas Hondo Chacha directly via WhatsApp 0705023432, email thomashondochacha@gmail.com, or the contact form at /contact.html.
 - If asked for urgent help or a human: give the WhatsApp number, email address and contact form.
 - If asked for legal, medical or financial advice: say you cannot advise and suggest a qualified professional.
 - Do not ask for passwords, payment details, ID numbers or other sensitive personal data.
@@ -399,7 +399,7 @@ module.exports = async function handler(req, res) {
 
     // Graceful fallback: chat widget remains functional even if Gemini fails.
     const payload = {
-      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa â€” tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue â€” please contact Thomas via WhatsApp or the contact form."),
+      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa Ã¢â‚¬â€ tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue Ã¢â‚¬â€ please contact Thomas via WhatsApp or the contact form."),
       fallback: true,
       note: "Gemini fetch failed with status " + lastStatus
     };
