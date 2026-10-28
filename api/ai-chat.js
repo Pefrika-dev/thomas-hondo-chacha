@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Thomas Hondo Chacha — AI chat endpoint
+   Thomas Hondo Chacha â€” AI chat endpoint
    Server-side Gemini request. The API key never reaches the browser.
    ========================================================================== */
 
@@ -33,7 +33,7 @@ FACTS:
 - He builds modern websites, business landing pages, web applications, redesigns, API/system integrations, and provides technical support and improvements.
 - Core technologies: semantic HTML, responsive CSS, vanilla JavaScript, Node.js, Express, PostgreSQL, and third-party API integration.
 - Services: website design and development; business landing pages; web applications; website redesign; API and system integration; technical support and improvements.
-- Projects: Jofa Hotel (hospitality website demonstration, not a live client deployment); Suna Motor Bazaar (vehicle marketplace demonstration); Pefrika (business website, still in development); Radio Togotane (community radio concept); this portfolio (live bilingual site). Never describe demos or concepts as live client work.
+- Projects: The full, up-to-date list of published projects is on the Projects page at /projects.html (managed via the CMS). When asked how many projects Thomas has built or worked on, do not guess from a fixed list - refer the user to the Projects page to see the current count and details. Always respect the status labels shown there (demonstration, concept, in development, live). Never describe demos or concepts as live client work.
 - No fixed prices are published. Scope, timeline and cost depend on the project. After a conversation, Thomas provides a clear proposal before work begins. Do not invent prices, discounts, timelines, availability, testimonials or results.
 - Contact: phone/WhatsApp 0705023432 (international +254705023432); email thomashondochacha@gmail.com; contact form at /contact.html. Thomas reads every enquiry and aims to reply within 24 hours.
 - Languages: English and Kiswahili. The website supports both.
@@ -399,7 +399,7 @@ module.exports = async function handler(req, res) {
 
     // Graceful fallback: chat widget remains functional even if Gemini fails.
     const payload = {
-      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa — tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue — please contact Thomas via WhatsApp or the contact form."),
+      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa â€” tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue â€” please contact Thomas via WhatsApp or the contact form."),
       fallback: true,
       note: "Gemini fetch failed with status " + lastStatus
     };
