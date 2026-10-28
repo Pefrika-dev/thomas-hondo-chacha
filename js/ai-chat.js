@@ -33,8 +33,6 @@
       lead: "Leave your details",
       whatsapp: "WhatsApp",
       contact: "Contact form",
-      disclaimer:
-        "AI can make mistakes. Messages are processed by Google Gemini. Do not share sensitive information.",
       leadTitle: "Leave your details",
       leadSub: "Thomas will reply within 24 hours.",
       back: "Back to chat",
@@ -78,8 +76,6 @@
       lead: "Acha taarifa zako",
       whatsapp: "WhatsApp",
       contact: "Fomu ya mawasiliano",
-      disclaimer:
-        "AI inaweza kukosea. Ujumbe husindikwa na Google Gemini. Usitume taarifa nyeti.",
       leadTitle: "Acha taarifa zako",
       leadSub: "Thomas atakujibu ndani ya saa 24.",
       back: "Rudi kwenye mazungumzo",
@@ -180,7 +176,6 @@
       '<a class="ai-chat__action" href="#" target="_blank" rel="noopener noreferrer" data-chat-whatsapp data-copy="whatsapp">WhatsApp</a>' +
       '<a class="ai-chat__action" href="contact.html" data-chat-contact data-copy="contact">Contact form</a>' +
       "</div>" +
-      '<p class="ai-chat__disclaimer" data-copy="disclaimer">AI can make mistakes. Messages are processed by Google Gemini. Do not share sensitive information.</p>' +
       "</div>" +
       '<div class="ai-chat__lead-view" data-chat-lead-view hidden>' +
       '<div class="ai-chat__lead-head">' +
