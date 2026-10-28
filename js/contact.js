@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Thomas Hondo Chacha — Project enquiry form
+   Thomas Hondo Chacha ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Project enquiry form
    Validates locally, saves the enquiry, then opens the preferred contact
    channel (WhatsApp or email) with the prepared message. A single Submit
    button drives the whole flow and the form clears itself afterwards.
@@ -289,9 +289,6 @@
       submitButton.setAttribute("aria-busy", "true");
     }
 
-    // Hand the message to WhatsApp or email straight away, before the network
-    // request, so browsers do not treat it as a blocked popup.
-    openPreparedChannel(values, message);
 
     var saved = false;
 
