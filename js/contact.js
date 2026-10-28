@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Thomas Hondo Chacha ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Project enquiry form
+   Thomas Hondo Chacha ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â Project enquiry form
    Validates locally, saves the enquiry, then opens the preferred contact
    channel (WhatsApp or email) with the prepared message. A single Submit
    button drives the whole flow and the form clears itself afterwards.
@@ -19,7 +19,7 @@
   var fieldConfig = [
     { name: "name", errorKey: "contactPage.formErrorName" },
     { name: "email", errorKey: "contactPage.formErrorEmail" },
-    { name: "phone", errorKey: "contactPage.formErrorPhone", optional: true },
+    { name: "phone", errorKey: "contactPage.formErrorPhone" },
     { name: "projectType", errorKey: "contactPage.formErrorProjectType" },
     { name: "description", errorKey: "contactPage.formErrorDescription" },
     { name: "contactMethod", errorKey: "contactPage.formErrorContact" }
@@ -57,11 +57,11 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
   }
 
-  // Phone numbers are optional, but when given they must strictly start with
+  // Phone number is required and they must strictly start with
   // a plus sign followed by 7 to 15 digits, e.g. +254705023432.
   function isValidPhone(value) {
     if (!value) {
-      return true;
+      return false;
     }
 
     var digits = value.replace(/\D/g, "");
@@ -201,37 +201,6 @@
 
   // Opens the chosen channel immediately, while the browser still sees a user
   // gesture, so the new tab or mail client is not blocked as a popup.
-  function openPreparedChannel(values, message) {
-    var link = document.createElement("a");
-    var href = "";
-
-    if (values.contactMethod === "whatsapp") {
-      href = "https://wa.me/" + PHONE_INTERNATIONAL + "?text=" + encodeURIComponent(message);
-    } else if (values.contactMethod === "email") {
-      var subject = t("contactPage.formEmailSubject", {
-        name: values.name,
-        projectType: projectTypeLabel(values.projectType)
-      });
-      href =
-        "mailto:" +
-        EMAIL_ADDRESS +
-        "?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(message);
-    } else {
-      return false;
-    }
-
-    link.href = href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    return true;
-  }
-
   function validateAll() {
     var values = getValues();
     var firstInvalid = null;
