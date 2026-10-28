@@ -13,7 +13,8 @@
 
   var copy = {
     en: {
-      launcher: "Ask AI",
+      launcher: "AI Assistant",
+      launcherAria: "Open the AI assistant chat",
       title: "AI assistant",
       status: "Online · replies instantly",
       greeting:
@@ -57,7 +58,8 @@
         "Hello Thomas, I visited your website and would like to discuss a project."
     },
     sw: {
-      launcher: "Uliza AI",
+      launcher: "Msaidizi AI",
+      launcherAria: "Fungua mazungumzo na msaidizi wa AI",
       title: "Msaidizi wa AI",
       status: "Yupo mtandaoni · hujibu papo hapo",
       greeting:
@@ -142,11 +144,11 @@
     root.className = "ai-chat";
     root.setAttribute("data-ai-chat", "true");
     root.innerHTML =
-      '<button class="ai-chat__launcher" type="button" data-chat-launcher data-copy-aria="launcher" aria-label="Ask AI" aria-expanded="false" aria-controls="ai-chat-panel" aria-haspopup="dialog">' +
+      '<button class="ai-chat__launcher" type="button" data-chat-launcher data-copy-aria="launcherAria" aria-label="Open the AI assistant chat" aria-expanded="false" aria-controls="ai-chat-panel" aria-haspopup="dialog">' +
       '<span class="ai-chat__launcher-icon" aria-hidden="true">' +
       '<svg class="icon" viewBox="0 0 24 24" focusable="false"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>' +
       "</span>" +
-      '<span class="ai-chat__launcher-text" data-copy="launcher">Ask AI</span>' +
+      '<span class="ai-chat__launcher-text" data-copy="launcher">AI Assistant</span>' +
       '<span class="ai-chat__launcher-dot" aria-hidden="true"></span>' +
       "</button>" +
       '<section class="ai-chat__panel" id="ai-chat-panel" role="dialog" aria-labelledby="ai-chat-title" hidden>' +
