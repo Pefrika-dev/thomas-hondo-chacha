@@ -1768,6 +1768,12 @@ select.field__control {
   line-height: 1.55;
 }
 
+.form-response.is-success {
+  border: 1px solid color-mix(in srgb, var(--success) 40%, transparent);
+  background: color-mix(in srgb, var(--success-soft) 45%, transparent);
+  color: var(--success);
+}
+
 .form-response:empty,
 .form-response[hidden] {
   display: none;

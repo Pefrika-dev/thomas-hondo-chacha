@@ -1,7 +1,8 @@
 /* ==========================================================================
    Thomas Hondo Chacha — Project enquiry form
-   Validates locally, saves the enquiry, prepares a reviewable message and
-   opens WhatsApp/email as the chosen follow-up channel.
+   Validates locally, saves the enquiry, then opens the preferred contact
+   channel (WhatsApp or email) with the prepared message. A single Submit
+   button drives the whole flow and the form clears itself afterwards.
    ========================================================================== */
 (function () {
   "use strict";
@@ -12,8 +13,6 @@
     initialised: false,
     form: null,
     invalidFields: new Set(),
-    reviewOpen: false,
-    lastSaveOk: null,
     submitting: false
   };
 
@@ -58,13 +57,15 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
   }
 
+  // Phone numbers are optional, but when given they must strictly start with
+  // a plus sign followed by 7 to 15 digits, e.g. +254705023432.
   function isValidPhone(value) {
     if (!value) {
       return true;
     }
 
     var digits = value.replace(/\D/g, "");
-    return /^[+()\d\s-]{7,24}$/.test(value) && digits.length >= 7 && digits.length <= 15;
+    return value.charAt(0) === "+" && digits.length >= 7 && digits.length <= 15;
   }
 
   function isFieldValid(name, values) {
@@ -113,17 +114,30 @@
     }
   }
 
+  function setResponse(message, ok) {
+    var response = document.getElementById("form-response");
+    if (!response) {
+      return;
+    }
+
+    if (!message) {
+      response.textContent = "";
+      response.hidden = true;
+      response.classList.remove("is-success");
+      return;
+    }
+
+    response.textContent = message;
+    response.hidden = false;
+    response.classList.toggle("is-success", Boolean(ok));
+  }
+
   function clearAllErrors() {
     state.invalidFields.clear();
     fieldConfig.forEach(function (config) {
       setFieldInvalid(config.name, false);
     });
-
-    var response = document.getElementById("form-response");
-    if (response) {
-      response.textContent = "";
-      response.hidden = true;
-    }
+    setResponse("", false);
   }
 
   function updateErrorCopy() {
@@ -136,18 +150,10 @@
       }
     });
 
-    var response = document.getElementById("form-response");
-
-    if (!response) {
-      return;
-    }
-
     if (state.invalidFields.size > 0) {
-      response.textContent = t("contactPage.formErrorSummary");
-      response.hidden = false;
+      setResponse(t("contactPage.formErrorSummary"), false);
     } else {
-      response.textContent = "";
-      response.hidden = true;
+      setResponse("", false);
     }
   }
 
@@ -178,117 +184,52 @@
     });
   }
 
-  function setReviewLinks(message, values) {
-    var whatsapp = document.querySelector("[data-review-whatsapp]");
-    var email = document.querySelector("[data-review-email]");
-    var reviewMessage = document.querySelector("[data-review-message]");
+  function clearForm() {
+    getControl("name").value = "";
+    getControl("email").value = "";
+    getControl("phone").value = "";
+    getControl("projectType").value = "";
+    getControl("description").value = "";
 
-    if (whatsapp) {
-      whatsapp.href = "https://wa.me/" + PHONE_INTERNATIONAL + "?text=" + encodeURIComponent(message);
+    var whatsappInput = state.form.querySelector(
+      'input[name="contactMethod"][value="whatsapp"]'
+    );
+    if (whatsappInput) {
+      whatsappInput.checked = true;
     }
+  }
 
-    if (email) {
+  // Opens the chosen channel immediately, while the browser still sees a user
+  // gesture, so the new tab or mail client is not blocked as a popup.
+  function openPreparedChannel(values, message) {
+    var link = document.createElement("a");
+    var href = "";
+
+    if (values.contactMethod === "whatsapp") {
+      href = "https://wa.me/" + PHONE_INTERNATIONAL + "?text=" + encodeURIComponent(message);
+    } else if (values.contactMethod === "email") {
       var subject = t("contactPage.formEmailSubject", {
         name: values.name,
         projectType: projectTypeLabel(values.projectType)
       });
-      email.href =
+      href =
         "mailto:" +
         EMAIL_ADDRESS +
         "?subject=" +
         encodeURIComponent(subject) +
         "&body=" +
         encodeURIComponent(message);
+    } else {
+      return false;
     }
 
-    if (reviewMessage) {
-      reviewMessage.value = message;
-    }
-  }
-
-  function updateReview() {
-    var values = getValues();
-    var message = buildMessage(values);
-    setReviewLinks(message, values);
-    return message;
-  }
-
-  function updateSaveConfirmation() {
-    var element = document.querySelector("[data-review-confirmation]");
-    if (!element) {
-      return;
-    }
-
-    if (state.lastSaveOk === null) {
-      element.hidden = true;
-      element.textContent = "";
-      element.classList.remove("is-error");
-      return;
-    }
-
-    element.hidden = false;
-    element.classList.toggle("is-error", !state.lastSaveOk);
-    element.textContent = t(
-      state.lastSaveOk ? "contactPage.formSavedConfirmation" : "contactPage.formSaveFailed"
-    );
-  }
-
-  function openReview() {
-    var panel = document.querySelector("[data-review-panel]");
-    var heading = document.getElementById("review-title");
-    var response = document.getElementById("form-response");
-    var copyStatus = document.querySelector("[data-copy-status]");
-    var values = getValues();
-    var message = updateReview();
-
-    if (!panel) {
-      return;
-    }
-
-    if (copyStatus) {
-      copyStatus.textContent = "";
-    }
-
-    if (response) {
-      response.hidden = true;
-      response.textContent = "";
-    }
-
-    updateSaveConfirmation();
-    panel.hidden = false;
-    state.reviewOpen = true;
-    panel.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-      block: "start"
-    });
-
-    window.setTimeout(function () {
-      if (heading) {
-        heading.focus({ preventScroll: true });
-      }
-    }, 100);
-
-    // Keep the message value in the field for assistive technology and manual
-    // review. It is never submitted to a server by this website.
-    var reviewMessage = document.querySelector("[data-review-message]");
-    if (reviewMessage && message) {
-      reviewMessage.value = message;
-    }
-  }
-
-  function closeReview(returnFocus) {
-    var panel = document.querySelector("[data-review-panel]");
-    if (panel) {
-      panel.hidden = true;
-    }
-    state.reviewOpen = false;
-
-    if (returnFocus) {
-      var name = getControl("name");
-      if (name) {
-        name.focus();
-      }
-    }
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    return true;
   }
 
   function validateAll() {
@@ -305,12 +246,8 @@
       setFieldInvalid(config.name, !valid);
     });
 
-    var response = document.getElementById("form-response");
     if (state.invalidFields.size > 0) {
-      if (response) {
-        response.textContent = t("contactPage.formErrorSummary");
-        response.hidden = false;
-      }
+      setResponse(t("contactPage.formErrorSummary"), false);
 
       if (firstInvalid) {
         var focusTarget =
@@ -323,15 +260,10 @@
         }
       }
 
-      closeReview(false);
       return false;
     }
 
-    if (response) {
-      response.hidden = true;
-      response.textContent = "";
-    }
-
+    setResponse("", false);
     return true;
   }
 
@@ -343,9 +275,9 @@
     }
 
     state.submitting = true;
-    state.lastSaveOk = null;
 
     var values = getValues();
+    var message = buildMessage(values);
     var submitButton = event.submitter || state.form.querySelector('button[type="submit"]');
     var controller = typeof AbortController === "function" ? new AbortController() : null;
     var timeout = window.setTimeout(function () {
@@ -357,11 +289,17 @@
       submitButton.setAttribute("aria-busy", "true");
     }
 
+    // Hand the message to WhatsApp or email straight away, before the network
+    // request, so browsers do not treat it as a blocked popup.
+    openPreparedChannel(values, message);
+
+    var saved = false;
+
     try {
-      var response = await fetch('/api/submit-contact', {
-        method: 'POST',
+      var response = await fetch("/api/submit-contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           full_name: values.name,
@@ -374,14 +312,14 @@
         signal: controller ? controller.signal : undefined
       });
 
-      state.lastSaveOk = response.ok;
+      saved = response.ok;
 
       if (!response.ok) {
-        console.error('Failed to save submission:', response.status);
+        console.error("Failed to save submission:", response.status);
       }
     } catch (err) {
-      state.lastSaveOk = false;
-      console.error('Failed to save submission:', err);
+      saved = false;
+      console.error("Failed to save submission:", err);
     } finally {
       window.clearTimeout(timeout);
       state.submitting = false;
@@ -392,7 +330,13 @@
       }
     }
 
-    openReview();
+    if (saved) {
+      clearForm();
+      clearAllErrors();
+      setResponse(t("contactPage.formSavedConfirmation"), true);
+    } else {
+      setResponse(t("contactPage.formSaveFailed"), false);
+    }
   }
 
   function handleBlur(event) {
@@ -430,60 +374,6 @@
     }
   }
 
-  function handleReset() {
-    window.setTimeout(function () {
-      clearAllErrors();
-      closeReview(false);
-      state.lastSaveOk = null;
-      var copyStatus = document.querySelector("[data-copy-status]");
-      if (copyStatus) {
-        copyStatus.textContent = "";
-      }
-    }, 0);
-  }
-
-  function copyMessage() {
-    var messageField = document.querySelector("[data-review-message]");
-    var copyStatus = document.querySelector("[data-copy-status]");
-    var message = messageField ? messageField.value : updateReview();
-
-    function showStatus(text) {
-      if (copyStatus) {
-        copyStatus.textContent = text;
-      }
-    }
-
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard
-        .writeText(message)
-        .then(function () {
-          showStatus(t("contactPage.formCopied"));
-        })
-        .catch(function () {
-          fallbackCopy(messageField, message, showStatus);
-        });
-    } else {
-      fallbackCopy(messageField, message, showStatus);
-    }
-  }
-
-  function fallbackCopy(messageField, message, showStatus) {
-    if (!messageField) {
-      showStatus(t("contactPage.formCopyError"));
-      return;
-    }
-
-    messageField.focus();
-    messageField.select();
-
-    try {
-      var success = document.execCommand("copy");
-      showStatus(success ? t("contactPage.formCopied") : t("contactPage.formCopyError"));
-    } catch (error) {
-      showStatus(t("contactPage.formCopyError"));
-    }
-  }
-
   function preselectService() {
     var select = getControl("projectType");
     if (!select) {
@@ -505,35 +395,12 @@
 
   function bindEvents() {
     state.form.addEventListener("submit", handleSubmit);
-    state.form.addEventListener("reset", handleReset);
     state.form.addEventListener("blur", handleBlur, true);
     state.form.addEventListener("input", handleInput);
     state.form.addEventListener("change", handleInput);
 
-    var copyButton = document.querySelector("[data-copy-message]");
-    if (copyButton) {
-      copyButton.addEventListener("click", copyMessage);
-    }
-
-    var editButton = document.querySelector("[data-edit-enquiry]");
-    if (editButton) {
-      editButton.addEventListener("click", function () {
-        closeReview(true);
-      });
-    }
-
     document.addEventListener("thc:languagechange", function () {
       updateErrorCopy();
-
-      var copyStatus = document.querySelector("[data-copy-status]");
-      if (copyStatus) {
-        copyStatus.textContent = "";
-      }
-
-      if (state.reviewOpen) {
-        updateReview();
-        updateSaveConfirmation();
-      }
     });
   }
 
