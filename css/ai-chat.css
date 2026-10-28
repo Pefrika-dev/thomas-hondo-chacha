@@ -7,7 +7,9 @@
   position: fixed;
   right: clamp(1rem, 2vw, 1.5rem);
   bottom: clamp(1rem, 2vw, 1.5rem);
-  z-index: 90;
+  /* Above the sticky site header (100) so the panel header and its close
+     button stay reachable on short viewports. The skip link stays on top. */
+  z-index: 120;
   color: var(--ink);
   font-family: var(--font-sans);
   transition:
