@@ -47,8 +47,6 @@
         "We couldn't save your details. Please use WhatsApp or the contact form so your message isn't lost.",
       leadSuccess:
         "Thank you. We have received your message and will reply within 24 hours.",
-      leadPrivacy:
-        "Your details are saved securely and visible only to Thomas. Chat messages are processed by Google Gemini.",
       required: "Please complete the required fields.",
       invalidEmail: "Please enter a valid email address.",
       shortDetails: "Please add a little more detail (at least 20 characters).",
@@ -90,8 +88,6 @@
         "Hatukuweza kuhifadhi taarifa zako. Tafadhali tumia WhatsApp au fomu ya mawasiliano ili ujumbe wako usipotee.",
       leadSuccess:
         "Asante. Tumepokea ujumbe wako na tutakujibu ndani ya saa 24.",
-      leadPrivacy:
-        "Taarifa zako huhifadhiwa kwa usalama na zinaonekana kwa Thomas pekee. Ujumbe wa mazungumzo husindikwa na Google Gemini.",
       required: "Tafadhali jaza sehemu zinazohitajika.",
       invalidEmail: "Tafadhali weka barua pepe sahihi.",
       shortDetails: "Tafadhali ongeza maelezo kidogo (angalau herufi 20).",
@@ -194,7 +190,6 @@
       '<label class="ai-chat__field" for="ai-chat-lead-details"><span data-copy="details">What do you need?</span><textarea id="ai-chat-lead-details" name="details" rows="4" minlength="20" maxlength="1200" required data-copy-placeholder="detailsPlaceholder"></textarea></label>' +
       '<p class="ai-chat__form-error" data-chat-form-error role="alert" hidden></p>' +
       '<button class="ai-chat__lead-submit" type="submit" data-chat-lead-submit data-copy="submit">Send details</button>' +
-      '<p class="ai-chat__disclaimer" data-copy="leadPrivacy">Your details are saved securely and visible only to Thomas. Chat messages are processed by Google Gemini.</p>' +
       '<div class="ai-chat__lead-links">' +
       '<a class="ai-chat__action" href="#" target="_blank" rel="noopener noreferrer" data-chat-whatsapp data-copy="whatsapp">WhatsApp</a>' +
       '<a class="ai-chat__action" href="contact.html" data-chat-contact data-copy="contact">Contact form</a>' +

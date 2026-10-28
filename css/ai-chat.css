@@ -390,7 +390,7 @@ html.floats-at-footer:not(.ai-chat-open) .ai-chat {
   height: 1rem;
 }
 
-/* ---------- Actions and disclaimer ---------- */
+/* ---------- Actions ---------- */
 .ai-chat__actions {
   display: flex;
   flex: 0 0 auto;
@@ -418,14 +418,6 @@ html.floats-at-footer:not(.ai-chat-open) .ai-chat {
 
 .ai-chat__action:hover {
   color: var(--highlight);
-}
-
-.ai-chat__disclaimer {
-  margin: 0;
-  padding: 0 0.95rem 0.8rem;
-  color: var(--ink-muted);
-  font-size: 0.61rem;
-  line-height: 1.45;
 }
 
 /* ---------- Lead view ---------- */
@@ -553,10 +545,6 @@ html.floats-at-footer:not(.ai-chat-open) .ai-chat {
   opacity: 0.5;
 }
 
-.ai-chat__lead-form .ai-chat__disclaimer {
-  padding: 0;
-}
-
 .ai-chat__lead-links {
   display: flex;
   flex-wrap: wrap;
@@ -638,10 +626,6 @@ html.floats-at-footer:not(.ai-chat-open) .ai-chat {
 
   .ai-chat__actions {
     padding: 0 0.8rem 0.45rem;
-  }
-
-  .ai-chat__disclaimer {
-    padding: 0 0.8rem 0.7rem;
   }
 
   .ai-chat__lead-view {
