@@ -271,15 +271,12 @@
     var tags = splitList(post.tags).map(function (tag) {
       return "<span>" + esc(tag) + "</span>";
     }).join("");
-    var html = "";
-
-    if (window.marked && typeof window.marked.parse === "function") {
-      html = window.marked.parse(content || "");
-    } else {
-      html = (content || "").split(/\n{2,}/).map(function (paragraph) {
-        return "<p>" + esc(paragraph).replace(/\n/g, "<br>") + "</p>";
-      }).join("");
-    }
+    // marked.parse() emits raw, unsanitized HTML from CMS content; without a
+    // sanitizer available, always build the escaped paragraph markup below so
+    // the post content cannot inject markup into the page.
+    var html = (content || "").split(/\n{2,}/).map(function (paragraph) {
+      return "<p>" + esc(paragraph).replace(/\n/g, "<br>") + "</p>";
+    }).join("");
 
     var pageTitle = lang() === "sw" ? title : (post.seo_title || title);
     var pageDescription = lang() === "sw" ? (excerpt || "") : (post.seo_description || excerpt || "");
@@ -335,7 +332,7 @@
     document.querySelectorAll("[data-cms-setting-html]").forEach(function (element) {
       var htmlKey = element.getAttribute("data-cms-setting-html");
       var htmlValue = localized(settingsCache, htmlKey);
-      if (htmlValue) element.innerHTML = htmlValue;
+      if (htmlValue) element.textContent = htmlValue;
     });
 
     document.querySelectorAll("[data-cms-setting]").forEach(function (element) {
@@ -473,14 +470,12 @@
     if (project.source_url) {
       actions += '<a class="btn btn--ghost" href="' + esc(project.source_url) + '" target="_blank" rel="noopener noreferrer">' + esc(translate("projectPage.source")) + "</a>";
     }
-    var html = "";
-    if (window.marked && typeof window.marked.parse === "function") {
-      html = window.marked.parse(description || "");
-    } else {
-      html = (description || "").split(/\n{2,}/).map(function (paragraph) {
-        return "<p>" + esc(paragraph).replace(/\n/g, "<br>") + "</p>";
-      }).join("");
-    }
+    // marked.parse() emits raw, unsanitized HTML from CMS content; without a
+    // sanitizer available, always build the escaped paragraph markup below so
+    // the project description cannot inject markup into the page.
+    var html = (description || "").split(/\n{2,}/).map(function (paragraph) {
+      return "<p>" + esc(paragraph).replace(/\n/g, "<br>") + "</p>";
+    }).join("");
 
     document.title = title + " — Thomas Hondo Chacha";
     setMeta("description", summary || "");
