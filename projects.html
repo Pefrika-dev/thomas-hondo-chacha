@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="js/theme.js"></script>
   <link rel="stylesheet" href="css/style.css?v=20261026">
-  <link rel="stylesheet" href="css/components.css?v=20261026">
+  <link rel="stylesheet" href="css/components.css?v=20261030b">
   <link rel="stylesheet" href="css/responsive.css?v=20261026">
   <link rel="stylesheet" href="css/ai-chat.css?v=20261028c">
   <link rel="stylesheet" href="css/whatsapp-float.css?v=20261026b">
@@ -154,6 +154,16 @@
           <p class="project-count" data-project-count aria-live="polite">Projects shown: 5</p>
         </div>
 
+        <aside class="note-callout" aria-labelledby="projects-note-title">
+          <span class="note-callout__badge" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11.5v5"/><path d="M12 7.6h.01"/></svg>
+          </span>
+          <div class="note-callout__content">
+            <h2 class="note-callout__title" id="projects-note-title" data-i18n="projectsPage.noteTitle">A note on links and visuals.</h2>
+            <p class="note-callout__text" data-i18n="projectsPage.noteText">Interface images on this page are illustrative design studies &mdash; not screenshots presented as deployed client sites. Demo and source links appear only where a public link has been configured.</p>
+          </div>
+        </aside>
+
         <div class="project-grid" data-projects-grid="all" id="project-grid">
           <noscript>
             <div class="note-panel">
@@ -182,10 +192,6 @@
           </div>
         </div>
 
-        <div class="note-panel projects-status-note">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
-          <p><strong data-i18n="projectsPage.noteTitle">A note on links and visuals.</strong> <span data-i18n="projectsPage.noteText">Interface images on this page are illustrative design studies — not screenshots presented as deployed client sites. Demo and source links appear only where a public link has been configured.</span></p>
-        </div>
       </div>
     </section>
 
@@ -270,7 +276,7 @@
     </div>
   </footer>
 
-  <script src="js/language.js" defer></script>
+  <script src="js/language.js?v=20261030" defer></script>
   <script src="js/projects.js" defer></script>
   <script src="js/contact.js" defer></script>
   <script src="js/cms-public.js?v=20261026b" defer></script>

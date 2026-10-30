@@ -823,7 +823,7 @@
         legendDevelopmentDesc: "Mradi ambao bado unajengwa au unaboreshwa.",
         legendLiveDesc: "Tovuti inayopatikana kwa umma. Hakuna mradi wa sasa unaowasilishwa kama tovuti hai.",
         noteTitle: "Kuhusu viungo na picha.",
-        noteText: "Picha za violesura kwenye ukurasa huu ni dhana za muundo — sio picha zinazowasilishwa kama tovuti za wateja zilizo hai. Viungo vya onyesho na msimbo vinaonekana tu pale kiungo cha umma kimewekwa.",
+        noteText: "Picha za violesura kwenye ukurasa huu ni dhana za muundo — si picha zinazowasilishwa kama tovuti za wateja zilizo hai. Viungo vya onyesho na msimbo huonekana pale tu kiungo cha umma kimewekwa.",
         modalProblem: "Tatizo",
         modalApproach: "Mtazamo",
         modalFeatures: "Vipengele muhimu",

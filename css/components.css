@@ -527,6 +527,59 @@
   font-weight: 650;
 }
 
+/* Editorial callout used for disclosures (e.g. projects page) */
+.note-callout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.85rem 1rem;
+  margin: 0 0 clamp(1.8rem, 3.5vw, 2.6rem);
+  padding: clamp(1.05rem, 2vw, 1.4rem) clamp(1.1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.note-callout__badge {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+}
+
+.note-callout__badge .icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.note-callout__content {
+  min-width: 0;
+}
+
+.note-callout__title {
+  margin: 0 0 0.35rem;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.note-callout__text {
+  margin: 0;
+  max-width: 72ch;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 /* ---------- Service rows (homepage) ---------- */
 .service-rows {
   border-top: 1px solid var(--line);
@@ -1056,10 +1109,6 @@
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   margin-bottom: 1.3rem;
-}
-
-.projects-status-note {
-  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 .project-list-section {
