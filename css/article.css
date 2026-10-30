@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Article + project detail pages (post.html, project.html)
+   Extracted from inline <style> blocks so the CSP can run without
+   'unsafe-inline' in style-src.
+   ========================================================================== */
+
+/* ---------- Blog post (post.html) ---------- */
+
+.post-shell { max-width: 820px; padding-top: 56px; padding-bottom: 80px; }
+.post-meta {
+  color: var(--ink-muted); font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .09em; text-transform: uppercase; margin-bottom: 14px;
+}
+.post-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 58px); line-height: 1.05; letter-spacing: -.01em; margin-bottom: 18px; }
+.post-lede { color: var(--ink-soft); font-size: clamp(17px, 2vw, 21px); line-height: 1.6; margin-bottom: 30px; }
+.post-cover { width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line); margin: 8px 0 34px; }
+.post-content { color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
+.post-content h2, .post-content h3 { color: var(--ink); font-family: var(--font-display); line-height: 1.2; margin: 38px 0 12px; }
+.post-content h2 { font-size: clamp(28px, 4vw, 38px); }
+.post-content h3 { font-size: clamp(23px, 3vw, 30px); }
+.post-content p { margin-bottom: 20px; }
+.post-content ul, .post-content ol { margin: 0 0 22px 24px; }
+.post-content li { margin-bottom: 8px; }
+.post-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.post-content blockquote {
+  margin: 28px 0; padding: 18px 22px; border-left: 3px solid var(--accent);
+  background: var(--bg-elevated); color: var(--ink-soft); border-radius: 0 12px 12px 0;
+}
+.post-content code {
+  font-family: var(--font-mono); font-size: .88em; background: var(--surface);
+  padding: 2px 6px; border-radius: 5px;
+}
+.post-content pre {
+  overflow-x: auto; background: var(--navy); color: var(--cream); padding: 20px;
+  border-radius: 12px; margin: 24px 0; font-size: 13px; line-height: 1.65;
+}
+.post-content pre code { background: transparent; padding: 0; color: inherit; }
+.post-content img { max-width: 100%; height: auto; border-radius: 12px; }
+.post-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 38px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+.post-tags span {
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+  color: var(--ink-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em;
+}
+.post-back { margin-top: 34px; }
+.cms-empty { padding: 50px 20px; text-align: center; color: var(--ink-muted); }
+@media (max-width: 700px) {
+  .post-shell { padding-top: 34px; padding-bottom: 56px; }
+  .post-content { font-size: 16px; }
+}
+
+/* ---------- Project detail (project.html) ---------- */
+
+.project-detail { max-width: 960px; padding-top: 48px; padding-bottom: 80px; }
+.project-detail__meta {
+  color: var(--ink-muted); font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: .09em; text-transform: uppercase; margin-bottom: 12px;
+}
+.project-detail__title { font-family: var(--font-display); font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -.01em; margin-bottom: 16px; }
+.project-detail__summary { color: var(--ink-soft); font-size: clamp(17px, 2vw, 21px); line-height: 1.65; margin-bottom: 28px; }
+.project-detail__cover { width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line); margin-bottom: 32px; }
+.project-detail__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
+.project-detail__body { color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
+.project-detail__body h2, .project-detail__body h3 { color: var(--ink); font-family: var(--font-display); line-height: 1.2; margin: 34px 0 12px; }
+.project-detail__body p { margin-bottom: 20px; }
+.project-detail__body ul, .project-detail__body ol { margin: 0 0 22px 24px; }
+.project-detail__body li { margin-bottom: 8px; }
+.project-detail__body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.project-detail__tech { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+.project-detail__tech span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--ink-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; }
+.project-detail__back { margin-top: 34px; }
+@media (max-width: 700px) {
+  .project-detail { padding-top: 30px; padding-bottom: 56px; }
+  .project-detail__body { font-size: 16px; }
+}
+
+/* ---------- Shared layout helper (replaces inline style attributes) ---------- */
+
+.breadcrumbs--article { padding-top: 28px; }

@@ -20,31 +20,7 @@
   <link rel="stylesheet" href="css/style.css?v=20261026">
   <link rel="stylesheet" href="css/components.css?v=20261026">
   <link rel="stylesheet" href="css/responsive.css?v=20261026">
-  <style>
-    .project-detail { max-width: 960px; padding-top: 48px; padding-bottom: 80px; }
-    .project-detail__meta {
-      color: var(--ink-muted); font-family: var(--font-mono); font-size: 11px;
-      letter-spacing: .09em; text-transform: uppercase; margin-bottom: 12px;
-    }
-    .project-detail__title { font-family: var(--font-display); font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -.01em; margin-bottom: 16px; }
-    .project-detail__summary { color: var(--ink-soft); font-size: clamp(17px, 2vw, 21px); line-height: 1.65; margin-bottom: 28px; }
-    .project-detail__cover { width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line); margin-bottom: 32px; }
-    .project-detail__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
-    .project-detail__body { color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
-    .project-detail__body h2, .project-detail__body h3 { color: var(--ink); font-family: var(--font-display); line-height: 1.2; margin: 34px 0 12px; }
-    .project-detail__body p { margin-bottom: 20px; }
-    .project-detail__body ul, .project-detail__body ol { margin: 0 0 22px 24px; }
-    .project-detail__body li { margin-bottom: 8px; }
-    .project-detail__body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-    .project-detail__tech { display: flex; flex-wrap: wrap; gap: 8px; margin: 30px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
-    .project-detail__tech span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--ink-muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: .04em; }
-    .project-detail__back { margin-top: 34px; }
-    .cms-empty { padding: 50px 20px; text-align: center; color: var(--ink-muted); }
-    @media (max-width: 700px) {
-      .project-detail { padding-top: 30px; padding-bottom: 56px; }
-      .project-detail__body { font-size: 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/article.css?v=20261030">
   <link rel="stylesheet" href="css/ai-chat.css?v=20261028c">
   <link rel="stylesheet" href="css/whatsapp-float.css?v=20261026b">
 </head>
@@ -100,7 +76,7 @@
 
   <main id="main-content">
     <div class="container">
-      <nav class="breadcrumbs" aria-label="Breadcrumb" data-i18n-aria-label="a11y.breadcrumbs" style="padding-top:28px">
+      <nav class="breadcrumbs breadcrumbs--article" aria-label="Breadcrumb" data-i18n-aria-label="a11y.breadcrumbs">
         <a href="index.html" data-i18n="nav.home">Home</a>
         <span aria-hidden="true">/</span>
         <a href="projects.html" data-i18n="nav.projects">Projects</a>

@@ -190,3 +190,6 @@
       .overlay__panel { border-radius: 10px; }
       .editor-form { padding: 18px 16px; }
     }
+/* ---------- Utilities (replace former inline style attributes) ---------- */
+.btn-block { width: 100%; }
+.admin-hidden { display: none; }.field textarea.tall.tall-xl { min-height: 300px; }

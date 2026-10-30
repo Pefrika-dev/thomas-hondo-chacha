@@ -23,7 +23,7 @@
           <label for="password">Password</label>
           <input type="password" id="password" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn" id="loginBtn" style="width:100%">Sign In</button>
+        <button type="submit" class="btn btn-block" id="loginBtn">Sign In</button>
         <div class="error" id="loginError"></div>
       </form>
     </div>
@@ -79,7 +79,7 @@
               <tbody id="tableBody"></tbody>
             </table>
           </div>
-          <div class="no-data" id="noData" style="display:none;">No submissions yet.</div>
+          <div class="no-data admin-hidden" id="noData">No submissions yet.</div>
         </div>
       </section>
 
@@ -103,7 +103,7 @@
               <tbody id="projectsBody"></tbody>
             </table>
           </div>
-          <div class="no-data" id="projectsNoData" style="display:none;">No projects yet. Create your first project.</div>
+          <div class="no-data admin-hidden" id="projectsNoData">No projects yet. Create your first project.</div>
         </div>
       </section>
 
@@ -127,7 +127,7 @@
               <tbody id="postsBody"></tbody>
             </table>
           </div>
-          <div class="no-data" id="postsNoData" style="display:none;">No articles yet. Write your first one.</div>
+          <div class="no-data admin-hidden" id="postsNoData">No articles yet. Write your first one.</div>
         </div>
       </section>
 
@@ -287,8 +287,8 @@
               <div class="field"><label for="b_excerpt_sw">Excerpt (Kiswahili)</label><textarea id="b_excerpt_sw" name="excerpt_sw"></textarea></div>
             </div>
             <div class="field-row">
-              <div class="field"><label for="b_content">Content (English)</label><textarea class="tall" id="b_content" name="content" style="min-height:300px"></textarea><span class="hint">Markdown supported.</span></div>
-              <div class="field"><label for="b_content_sw">Content (Kiswahili)</label><textarea class="tall" id="b_content_sw" name="content_sw" style="min-height:300px"></textarea></div>
+              <div class="field"><label for="b_content">Content (English)</label><textarea class="tall tall-xl" id="b_content" name="content"></textarea><span class="hint">Markdown supported.</span></div>
+              <div class="field"><label for="b_content_sw">Content (Kiswahili)</label><textarea class="tall tall-xl" id="b_content_sw" name="content_sw"></textarea></div>
             </div>
           </fieldset>
           <fieldset class="fieldset">
