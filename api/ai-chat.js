@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Thomas Hondo Chacha Ã¢â‚¬â€ AI chat endpoint
+   Thomas Hondo Chacha — AI chat endpoint
    Server-side Gemini request. The API key never reaches the browser.
    ========================================================================== */
 
@@ -399,7 +399,7 @@ module.exports = async function handler(req, res) {
 
     // Graceful fallback: chat widget remains functional even if Gemini fails.
     const payload = {
-      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa Ã¢â‚¬â€ tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue Ã¢â‚¬â€ please contact Thomas via WhatsApp or the contact form."),
+      reply: (language === "sw" ? "Asante kwa ujumbe wako. AI ina matatizo ya kiufundi kwa sasa — tafadhali wasiliana na Thomas kwa WhatsApp au fomu ya mawasiliano." : "Thanks for your message. The AI is temporarily unavailable due to a technical issue — please contact Thomas via WhatsApp or the contact form."),
       fallback: true,
       note: "Gemini fetch failed with status " + lastStatus
     };
