@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; img-src 'self' https://www.thomashondochacha.co.ke data: https://pumbpmgclnxisfkdaanm.supabase.co https://images.unsplash.com https://upload.wikimedia.org https://image.thum.io; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://pumbpmgclnxisfkdaanm.supabase.co wss://pumbpmgclnxisfkdaanm.supabase.co https://wa.me https://api.whatsapp.com https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; img-src 'self' https://www.thomashondochacha.co.ke data: https://pumbpmgclnxisfkdaanm.supabase.co https://images.unsplash.com https://upload.wikimedia.org https://commons.wikimedia.org https://image.thum.io; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://pumbpmgclnxisfkdaanm.supabase.co wss://pumbpmgclnxisfkdaanm.supabase.co https://wa.me https://api.whatsapp.com https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     }
