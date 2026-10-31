@@ -124,7 +124,7 @@
       },
       home: {
         eyebrow: "Software engineer · Kenya",
-        headline: "Turning ideas into <em>functional digital products.</em>",
+        headline: "Turning ideas into functional digital products.",
         lede: "I design and develop modern websites and interactive web experiences that help businesses present themselves professionally and serve their customers more effectively.",
         primaryCta: "View my projects",
         secondaryCta: "Contact me",
@@ -670,7 +670,7 @@
       },
       home: {
         eyebrow: "Mhandisi wa programu · Kenya",
-        headline: "Nabadilisha mawazo kuwa <em>bidhaa za kidijitali zinazofanya kazi.</em>",
+        headline: "Nabadilisha mawazo kuwa bidhaa za kidijitali zinazofanya kazi.",
         lede: "Nabuni na kuunda tovuti za kisasa na mifumo ya wavuti inayovutia, inayosaidia biashara kujitokeza kitaalamu na kuwahudumia wateja wao kwa ufanisi zaidi.",
         primaryCta: "Tazama miradi yangu",
         secondaryCta: "Wasiliana nami",

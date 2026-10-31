@@ -332,7 +332,9 @@
     document.querySelectorAll("[data-cms-setting-html]").forEach(function (element) {
       var htmlKey = element.getAttribute("data-cms-setting-html");
       var htmlValue = localized(settingsCache, htmlKey);
-      if (htmlValue) element.textContent = htmlValue;
+      // These values are rendered as text, so strip any markup that older
+      // entries may contain (for example <em> tags in the hero title).
+      if (htmlValue) element.textContent = String(htmlValue).replace(/<[^>]*>/g, "");
     });
 
     document.querySelectorAll("[data-cms-setting]").forEach(function (element) {

@@ -743,12 +743,6 @@ p {
   line-height: 0.94;
 }
 
-.hero__title em {
-  display: inline-block;
-  font-size: 1.04em;
-  letter-spacing: -0.045em;
-}
-
 .hero__lede {
   max-width: 55ch;
   margin-top: clamp(1.4rem, 2.5vw, 2rem);
