@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outreach sender — Thomas Hondo Chacha</title>
+<style>
+  :root { --ink:#15191e; --soft:#4d5359; --line:#d8d3c7; --bg:#f4f1e9; --card:#faf8f2; --accent:#173d62; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Segoe UI", system-ui, sans-serif; line-height:1.55; }
+  header { padding:2rem 1.25rem 1rem; max-width:860px; margin:0 auto; }
+  h1 { font-size:1.6rem; margin:0 0 .4rem; }
+  .lede { color:var(--soft); margin:0 0 1rem; }
+  .rules { background:#fff8e6; border:1px solid #e8d9a8; border-radius:12px; padding:.85rem 1rem; font-size:.9rem; }
+  .rules strong { color:#7a5b00; }
+  main { max-width:860px; margin:0 auto; padding:1rem 1.25rem 4rem; display:grid; gap:1rem; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:1.1rem 1.2rem; }
+  .card.done { opacity:.55; }
+  .row { display:flex; gap:.75rem; align-items:baseline; justify-content:space-between; flex-wrap:wrap; }
+  .name { font-weight:700; font-size:1.05rem; }
+  .num { font-family:Consolas, monospace; color:var(--soft); font-size:.9rem; }
+  .note { color:var(--soft); font-size:.85rem; margin:.2rem 0 .7rem; }
+  .msg { white-space:pre-wrap; background:#fff; border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; font-size:.92rem; }
+  .actions { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.8rem; align-items:center; }
+  a.send, button.copy { border:0; border-radius:999px; padding:.55rem 1.1rem; font:inherit; font-size:.9rem; cursor:pointer; text-decoration:none; display:inline-block; }
+  a.send { background:var(--accent); color:#fff; font-weight:600; }
+  a.send:hover { background:#0e2b48; }
+  button.copy { background:#e6e0d3; color:var(--ink); }
+  label.donebox { margin-left:auto; font-size:.85rem; color:var(--soft); display:flex; gap:.4rem; align-items:center; cursor:pointer; }
+  .mail { background:#27634b; }
+  footer { max-width:860px; margin:0 auto; padding:0 1.25rem 3rem; color:var(--soft); font-size:.85rem; }
+  code { background:#e6e0d3; padding:.1rem .35rem; border-radius:5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Outreach sender</h1>
+  <p class="lede">Click a button, WhatsApp opens with the message already written. You press Send. Then tick the box.</p>
+  <div class="rules">
+    <strong>Rules:</strong> max 5 first messages a day · 09:00–11:30 and 14:00–16:30 · one business per message ·
+    no forwards or groups · after sending, open <code>outreach/tracker.csv</code> and fill <code>first_send</code>.
+  </div>
+</header>
+<main id="list"></main>
+<footer>
+  If WhatsApp says the number is not on WhatsApp, call instead — do not guess another number.
+  Follow up on day 3 and day 8 only, then stop.
+</footer>
+
+<script>
+const leads = [
+  {
+    id: "daima",
+    name: "Daima Communications",
+    number: "0701 127 577",
+    note: "Warm — quotation already drafted, demo reviewed. Best first message.",
+    text: "Hello, this is Thomas Hondo Chacha. I built the Daima Communications catalogue demo that your team reviewed, and the quotation for the production shop is ready: M-Pesa checkout, stock control and order management on top of the 38-product catalogue. Could we take 10 minutes this week to agree what goes into phase one? If it is no longer a priority, just say so and I will not follow up. — Thomas, 0705 023 432"
+  },
+  {
+    id: "togotane",
+    name: "Radio Togotane 88.3 FM",
+    number: "0714 426 619",
+    note: "Existing client — domain, ad rates, presenter profiles. Settle which email to publish.",
+    text: "Hello, Thomas Hondo Chacha here. The station site is live. The next step I would suggest is your own domain, an advertising rates page and presenter profiles, so advertisers can reach you directly instead of through a post. Also: which email should be published, togotaneradiofm@gmail.com or info.togotaneradio@gmail.com? I can prepare both changes this week."
+  },
+  {
+    id: "hood",
+    name: "The Yads Hood Hotel",
+    number: "0785 859 400",
+    note: "Demo built, not commissioned. Offer to show it in person or send screenshots.",
+    text: "Hello, this is Thomas Hondo Chacha, a software engineer in Migori. I built a 10-page website and booking system for The Yads Hood Hotel: rooms, facilities, a booking form and an admin panel for the staff. It is not commissioned, so nothing is published and nothing is owed. I can show it to you in person or send screenshots. If it fits, we agree a scope; if not, that is fine. — Thomas, 0705 023 432"
+  },
+  {
+    id: "marowa",
+    name: "Marowa Store Hardware",
+    number: "0716 865 976",
+    note: "Demo live — send https://marowa-store-migori-demo.netlify.app/ only if they ask.",
+    text: "Hello, Thomas Hondo Chacha here. The Marowa storefront demo is live, and the production backend is written up: quotation requests, stock levels and an admin view so the counter and the website show the same numbers. Can we set 15 minutes to confirm what the first phase covers? If the timing is wrong, just tell me and I will stop. — Thomas, 0705 023 432"
+  },
+  {
+    id: "kimwanya",
+    name: "Kimwanya Enterprises",
+    number: "0718 266 967",
+    note: "Site and admin built, proposal ready. Do not send a link until the live URL is confirmed.",
+    text: "Hello, Thomas Hondo Chacha here. The Kimwanya site, property pages and admin are built, and the proposal is ready. Before we take it live I need to confirm the listings and where enquiries should land. When are you free for a short call? — Thomas, 0705 023 432"
+  },
+  {
+    id: "florence",
+    name: "Florence Hotel",
+    number: "0717 055 036",
+    note: "Publicly posted 'website coming soon'. Strongest cold lead.",
+    text: "Hello, this is Thomas Hondo Chacha, a software engineer in Migori. I saw the Florence Hotel post saying a website is coming soon. I build hotel sites where booking enquiries come straight to WhatsApp, with room pages and conference details, so you are not paying OTA commission on every guest. Would a 10-minute call this week be useful? Examples of my work: https://www.thomashondochacha.co.ke/projects.html?utm_source=whatsapp&utm_medium=outreach&utm_campaign=florence"
+  },
+  {
+    id: "kowuoke",
+    name: "Kowuoke Karabok Hardware",
+    number: "0710 174 742",
+    note: "Facebook only. Reuse the quotation-commerce pattern.",
+    text: "Hello, Thomas Hondo Chacha here, software engineer in Migori. I build hardware shop sites with product lists and quotation requests, and the structure is already built from a similar Migori shop. If you would like customers to see doors, cement and prices before they walk in, I can show you how it works in 10 minutes. If it is not useful, just say so. — Thomas, 0705 023 432"
+  },
+  {
+    id: "dela",
+    name: "Dela Boss Outfits",
+    number: "0758 102 552",
+    note: "14-page demo live. Offer the link before asking for anything.",
+    text: "Hello, Thomas Hondo Chacha here. I built a 14-page site for Dela Boss Outfits: collections, photos and WhatsApp order buttons. It is not live yet. Would you like the link to review it? If it fits, we agree a small scope to publish it; if not, just say so. — Thomas, 0705 023 432"
+  },
+  {
+    id: "justine",
+    name: "Justine De SALONIST",
+    number: "0794 393 827",
+    note: "9-page demo with booking admin, sends bookings to WhatsApp.",
+    text: "Hello, Thomas Hondo Chacha here. I built a 9-page site and booking admin for Justine De SALONIST: services, prices and a booking form that sends straight to WhatsApp. It is ready to review. Shall I send you the link? — Thomas, 0705 023 432"
+  }
+];
+
+const email = {
+  id: "sda",
+  name: "SDA Migori Central",
+  number: "sdamigoricentral@gmail.com",
+  subject: "Migori Central SDA — the church site needs a new domain",
+  body: "Dear Migori Central SDA Church,\n\nThomas Hondo Chacha here. I built the bilingual church website and the dashboard behind it, but the old address, sdamigoricentral.org, no longer resolves, so the site currently has no working home. I can move it to a new domain, reconnect the dashboard and hand over the login details so the church controls it.\n\nMay I send you the details and a price for the domain and the move? There is no obligation.\n\nThomas Hondo Chacha\n+254 705 023 432\nhttps://www.thomashondochacha.co.ke/"
+};
+
+const KEY = "thc-outreach-sent";
+const sent = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
+const list = document.getElementById("list");
+
+function mark(id, on) {
+  on ? sent.add(id) : sent.delete(id);
+  localStorage.setItem(KEY, JSON.stringify([...sent]));
+}
+
+function card(item) {
+  const el = document.createElement("section");
+  el.className = "card" + (sent.has(item.id) ? " done" : "");
+  const digits = item.number.replace(/\D/g, "").replace(/^0/, "254");
+  const href = item.subject
+    ? "mailto:" + item.number + "?subject=" + encodeURIComponent(item.subject) + "&body=" + encodeURIComponent(item.body)
+    : "https://wa.me/" + digits + "?text=" + encodeURIComponent(item.text);
+
+  const row = document.createElement("div");
+  row.className = "row";
+  const name = document.createElement("span");
+  name.className = "name";
+  name.textContent = item.name;
+  const num = document.createElement("span");
+  num.className = "num";
+  num.textContent = item.number;
+  row.append(name, num);
+
+  const note = document.createElement("p");
+  note.className = "note";
+  note.textContent = item.note || "";
+
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.textContent = item.subject ? item.subject + "\n\n" + item.body : item.text;
+
+  const actions = document.createElement("div");
+  actions.className = "actions";
+  const send = document.createElement("a");
+  send.className = "send" + (item.subject ? " mail" : "");
+  send.href = href;
+  send.target = "_blank";
+  send.rel = "noopener noreferrer";
+  send.textContent = item.subject ? "Open email" : "Open WhatsApp";
+  const copy = document.createElement("button");
+  copy.className = "copy";
+  copy.type = "button";
+  copy.textContent = "Copy text";
+  copy.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(item.subject ? item.subject + "\n\n" + item.body : item.text);
+      copy.textContent = "Copied";
+      setTimeout(() => (copy.textContent = "Copy text"), 1500);
+    } catch {
+      copy.textContent = "Select the text above";
+    }
+  });
+  const done = document.createElement("label");
+  done.className = "donebox";
+  const box = document.createElement("input");
+  box.type = "checkbox";
+  box.checked = sent.has(item.id);
+  box.addEventListener("change", () => {
+    mark(item.id, box.checked);
+    el.classList.toggle("done", box.checked);
+  });
+  done.append(box, document.createTextNode("Sent"));
+
+  actions.append(send, copy, done);
+  el.append(row, note, msg, actions);
+  return el;
+}
+
+leads.forEach((l) => list.append(card(l)));
+list.append(card(email));
+</script>
+</body>
+</html>
