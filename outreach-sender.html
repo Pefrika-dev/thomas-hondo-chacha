@@ -30,6 +30,18 @@
   .mail { background:#27634b; }
   footer { max-width:860px; margin:0 auto; padding:0 1.25rem 3rem; color:var(--soft); font-size:.85rem; }
   code { background:#e6e0d3; padding:.1rem .35rem; border-radius:5px; }
+
+  /* ---------- custom composer ---------- */
+  .composer { display:grid; gap:.8rem; }
+  .composer label { display:grid; gap:.35rem; font-size:.85rem; color:var(--soft); }
+  .composer input, .composer textarea {
+    font:inherit; font-size:.95rem; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:.6rem .75rem; width:100%; max-width:560px;
+  }
+  .composer textarea { min-height:110px; resize:vertical; }
+  .composer .row2 { display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; }
+  .composer .hint { font-size:.8rem; color:var(--soft); }
 </style>
 </head>
 <body>
@@ -131,13 +143,18 @@ function mark(id, on) {
   localStorage.setItem(KEY, JSON.stringify([...sent]));
 }
 
+function waHref(number, text) {
+  const digits = String(number).replace(/\D/g, "");
+  const intl = digits.startsWith("0") ? "254" + digits.slice(1) : digits;
+  return "https://wa.me/" + intl + "?text=" + encodeURIComponent(text);
+}
+
 function card(item) {
   const el = document.createElement("section");
   el.className = "card" + (sent.has(item.id) ? " done" : "");
-  const digits = item.number.replace(/\D/g, "").replace(/^0/, "254");
   const href = item.subject
     ? "mailto:" + item.number + "?subject=" + encodeURIComponent(item.subject) + "&body=" + encodeURIComponent(item.body)
-    : "https://wa.me/" + digits + "?text=" + encodeURIComponent(item.text);
+    : waHref(item.number, item.text);
 
   const row = document.createElement("div");
   row.className = "row";
@@ -196,6 +213,71 @@ function card(item) {
 
 leads.forEach((l) => list.append(card(l)));
 list.append(card(email));
+
+/* ---------- custom composer: send to any prospect ---------- */
+const customSection = document.createElement("section");
+customSection.className = "card";
+customSection.id = "composer";
+
+const cRow = document.createElement("div");
+cRow.className = "row";
+const cName = document.createElement("span");
+cName.className = "name";
+cName.textContent = "Custom outreach — any prospect";
+const cNum = document.createElement("span");
+cNum.className = "num";
+cNum.textContent = "manual";
+cRow.append(cName, cNum);
+customSection.append(cRow);
+
+const composer = document.createElement("div");
+composer.className = "composer";
+const label = document.createElement("label");
+label.innerHTML = "Recipient";
+const numInput = document.createElement("input");
+numInput.id = "new-number";
+numInput.type = "tel";
+numInput.placeholder = "0717 055 036 or +254717055036";
+const label2 = document.createElement("label");
+label2.innerHTML = "Message (WhatsApp text)";
+const textInput = document.createElement("textarea");
+textInput.id = "new-text";
+textInput.placeholder = "Hello, this is Thomas Hondo Chacha... I build hotel websites in Migori. Would you be open to a quick call?";
+const row2 = document.createElement("div");
+row2.className = "row2";
+const gen = document.createElement("button");
+gen.className = "copy";
+gen.type = "button";
+gen.textContent = "Generate WhatsApp link";
+gen.addEventListener("click", () => {
+  const number = numInput.value;
+  const text = textInput.value.trim();
+  if (!number || !text) {
+    gen.textContent = "Add a number and a message first";
+    setTimeout(() => (gen.textContent = "Generate WhatsApp link"), 1800);
+    return;
+  }
+  const href = waHref(number, text);
+  const send = document.getElementById("new-send");
+  send.setAttribute("href", href);
+  send.style.display = "inline-block";
+  gen.textContent = "Regenerate";
+});
+const send = document.createElement("a");
+send.id = "new-send";
+send.className = "send";
+send.href = "#";
+send.target = "_blank";
+send.rel = "noopener noreferrer";
+send.textContent = "Open WhatsApp";
+const hint = document.createElement("span");
+hint.className = "hint";
+hint.textContent = "Link is generated for the number you type; open it and send.";
+
+composer.append(label, numInput, label2, textInput, row2, send, hint);
+row2.append(gen);
+customSection.append(composer);
+list.prepend(customSection);
 </script>
 </body>
 </html>
