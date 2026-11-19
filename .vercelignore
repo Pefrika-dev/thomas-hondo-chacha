@@ -1,0 +1,6 @@
+# Internal material. Never upload it to the public site.
+*.md
+outreach/
+scripts/
+supabase/
+.github/
