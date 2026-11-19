@@ -7,7 +7,8 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="css/admin.css?v=20261119a">
+  <link rel="stylesheet" href="css/admin.css?v=20261119b">
+  <script src="js/outreach.js" defer></script>
 </head>
 <body>
   <div id="loginScreen" class="login-container">
@@ -43,6 +44,7 @@
         <button type="button" class="admin-nav__item" data-tab="projects">Projects</button>
         <button type="button" class="admin-nav__item" data-tab="posts">Blog</button>
         <button type="button" class="admin-nav__item" data-tab="growth">Growth</button>
+        <button type="button" class="admin-nav__item" data-tab="outreach">Outreach</button>
         <button type="button" class="admin-nav__item" data-tab="settings">Settings</button>
       </nav>
       <div class="header-actions">
@@ -236,6 +238,16 @@
             </div>
           </form>
         </section>
+      </section>
+
+      <section id="tab-outreach" class="tab-panel" aria-labelledby="outreach-title">
+        <div class="page-head">
+          <div>
+            <h2 id="outreach-title">Outreach</h2>
+            <p>Approved messages and a composer for any prospect. Send from your own WhatsApp, then tick Sent.</p>
+          </div>
+        </div>
+        <div id="outreachRoot" class="outreach-root"></div>
       </section>
     </main>
   </div>
