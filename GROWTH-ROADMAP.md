@@ -268,6 +268,7 @@ does not support.
 
 ## 8. Progress log
 
+- **2026-11-19 — Packages live (Module 2, partial).** Owner-confirmed prices published on services.html: Starter from KSh 25,000, Business from KSh 55,000, Commerce from KSh 120,000, Custom from KSh 150,000. Six-question pricing FAQ, Service/OfferCatalog + FAQPage schema, one tracked WhatsApp CTA per package, English and Kiswahili. Verified in production (2 columns at 800 px, no overflow, no console errors). Add-ons and payment terms are published in the FAQ.
 - **2026-11-19 — Module 1 live.** /blog/<slug> and /work/<slug> now return 200 with server-rendered content, unique metadata, Article/CreativeWork + BreadcrumbList JSON-LD. Unknown slugs return 404 + noindex. Legacy ?slug= URLs 308-redirect. Verified in production and in a browser (no console errors, no loading flash).
 - **2026-11-19 — Module 3 code shipped.** api/track.js, js/telemetry.js, supabase/analytics.sql and an admin Growth tab. Events are only stored after the owner runs supabase/analytics.sql in Supabase. No cookies, DNT respected, IP never stored.
-- **2026-11-19 — Pending owner input.** Real KES package figures (G2) before any price is published; outreach approval (G3) before contacting the prospects in PROSPECTS.md.
+- **2026-11-19 — Pending owner input.** Outreach approval (G3) before contacting the prospects in PROSPECTS.md. Owner must still run supabase/analytics.sql.
