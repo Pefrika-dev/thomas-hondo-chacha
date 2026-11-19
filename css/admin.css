@@ -224,4 +224,9 @@
 .outreach-fields input,.outreach-fields textarea{font:inherit;font-size:.9rem;padding:.55rem .7rem;border:1px solid var(--line,#e2e2e2);border-radius:8px;background:var(--bg,#fff);color:inherit;width:100%;}
 .outreach-fields textarea{min-height:110px;resize:vertical;}
 .outreach-composer .outreach-actions{margin-top:.2rem;}
+.outreach-queuebar{display:grid;gap:.5rem;background:#eef4fb;border:1px solid #bcd3ea;border-radius:12px;padding:.85rem 1rem;}
+.outreach-queuebar strong{font-size:.95rem;}
+.outreach-queue-status{font-size:.85rem;color:#33506e;}
+.outreach-queuebar .outreach-actions{margin-top:.1rem;}
+.outreach-queue-btn{background:#e3edf7;}
 @media (max-width:600px){.outreach-done{margin-left:0;}}

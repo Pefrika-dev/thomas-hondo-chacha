@@ -94,6 +94,37 @@
     try { localStorage.setItem(KEY, JSON.stringify([...sent])); } catch { /* storage disabled */ }
   }
 
+  /* ---------- send queue ---------- */
+  const QUEUE_KEY = "thc-outreach-queue";
+  const customItems = [];
+  let queue;
+  try { queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]"); } catch { queue = []; }
+  if (!Array.isArray(queue)) queue = [];
+  queue = queue.filter(function (id) { return String(id).indexOf("custom-") !== 0; });
+
+  function saveQueue() {
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(queue)); } catch { /* storage disabled */ }
+  }
+
+  function allItems() { return leads.concat([emailLead], customItems); }
+  function findItem(id) { return allItems().find(function (i) { return i.id === id; }); }
+
+  function nextQueued() {
+    for (const id of queue) {
+      const item = findItem(id);
+      if (item && !sent.has(id)) return item;
+    }
+    return null;
+  }
+
+  function queueToggle(id) {
+    const at = queue.indexOf(id);
+    if (at === -1) queue.push(id);
+    else queue.splice(at, 1);
+    saveQueue();
+    renderQueue();
+  }
+
   function waHref(number, text) {
     const digits = String(number).replace(/\D/g, "");
     const intl = digits.startsWith("0") ? "254" + digits.slice(1) : digits;
@@ -112,6 +143,7 @@
   function card(item) {
     const el = document.createElement("section");
     el.className = "outreach-card" + (sent.has(item.id) ? " is-done" : "");
+    el.dataset.cardId = item.id;
 
     const row = document.createElement("div");
     row.className = "outreach-row";
@@ -159,18 +191,30 @@
       }
     });
 
+    const queued = document.createElement("button");
+    queued.className = "outreach-copy outreach-queue-btn";
+    queued.type = "button";
+    queued.dataset.queueId = item.id;
+    queued.textContent = queue.indexOf(item.id) === -1 ? "+ Queue" : "In queue ✓";
+    queued.addEventListener("click", () => {
+      queueToggle(item.id);
+      queued.textContent = queue.indexOf(item.id) === -1 ? "+ Queue" : "In queue ✓";
+    });
+
     const done = document.createElement("label");
     done.className = "outreach-done";
     const box = document.createElement("input");
     box.type = "checkbox";
+    box.dataset.boxId = item.id;
     box.checked = sent.has(item.id);
     box.addEventListener("change", () => {
       mark(item.id, box.checked);
       el.classList.toggle("is-done", box.checked);
+      renderQueue();
     });
     done.append(box, document.createTextNode("Sent"));
 
-    actions.append(send, copy, done);
+    actions.append(send, copy, queued, done);
     el.append(row, note, msg, actions);
     return el;
   }
@@ -232,13 +276,119 @@
       gen.textContent = "Regenerate";
     });
 
-    actions.append(gen, link, hint);
+    const queueBtn = document.createElement("button");
+    queueBtn.className = "outreach-copy";
+    queueBtn.type = "button";
+    queueBtn.textContent = "Add to queue";
+    queueBtn.addEventListener("click", () => {
+      const number = numInput.value.trim();
+      const text = textInput.value.trim();
+      if (!number || !text) {
+        hint.textContent = "Add a number and a message first.";
+        return;
+      }
+      const id = "custom-" + Date.now();
+      customItems.push({ id: id, name: number, number: number, text: text });
+      queue.push(id);
+      saveQueue();
+      link.href = waHref(number, text);
+      hint.textContent = "Added " + number + " to the queue.";
+      renderQueue();
+    });
+
+    actions.append(gen, link, queueBtn, hint);
     fields.append(numLabel, numInput, textLabel, textInput, actions);
     el.append(row, fields);
     return el;
   }
 
-  root.append(rules(), composer());
+  function renderQueue() {
+    const status = document.getElementById("outreachQueueStatus");
+    if (!status) return;
+    const item = nextQueued();
+    const doneCount = queue.filter(function (id) { return sent.has(id); }).length;
+    if (item) {
+      status.textContent = "Next: " + item.name + " · " + doneCount + "/" + queue.length + " sent";
+    } else if (queue.length) {
+      status.textContent = "All queued prospects sent · " + doneCount + "/" + queue.length;
+    } else {
+      status.textContent = "Queue empty — add prospects with “+ Queue”.";
+    }
+    root.querySelectorAll("[data-queue-id]").forEach(function (b) {
+      b.textContent = queue.indexOf(b.dataset.queueId) === -1 ? "+ Queue" : "In queue ✓";
+    });
+  }
+
+  function queueBar() {
+    const bar = document.createElement("section");
+    bar.className = "outreach-queuebar";
+
+    const title = document.createElement("strong");
+    title.textContent = "Send queue";
+
+    const status = document.createElement("span");
+    status.className = "outreach-queue-status";
+    status.id = "outreachQueueStatus";
+
+    const actions = document.createElement("div");
+    actions.className = "outreach-actions";
+
+    const open = document.createElement("button");
+    open.className = "outreach-send";
+    open.type = "button";
+    open.textContent = "Open next";
+    open.addEventListener("click", function () {
+      const item = nextQueued();
+      if (!item) {
+        status.textContent = "Queue empty — add prospects with “+ Queue”.";
+        return;
+      }
+      const href = item.subject
+        ? "mailto:" + item.number + "?subject=" + encodeURIComponent(item.subject) + "&body=" + encodeURIComponent(item.body)
+        : waHref(item.number, item.text);
+      const win = window.open(href, "_blank", "noopener,noreferrer");
+      status.textContent = win
+        ? "Opened " + item.name + " — press Send there, then click “Sent & next”."
+        : "Popup blocked — allow popups for this site, then try again.";
+    });
+
+    const next = document.createElement("button");
+    next.className = "outreach-copy";
+    next.type = "button";
+    next.textContent = "Sent & next";
+    next.addEventListener("click", function () {
+      const item = nextQueued();
+      if (!item) {
+        status.textContent = "Nothing waiting in the queue.";
+        return;
+      }
+      mark(item.id, true);
+      const cardEl = root.querySelector('[data-card-id="' + item.id + '"]');
+      if (cardEl) cardEl.classList.add("is-done");
+      const box = root.querySelector('[data-box-id="' + item.id + '"]');
+      if (box) box.checked = true;
+      renderQueue();
+      status.textContent = "Marked " + item.name + " as sent. Click “Open next” for the next prospect.";
+    });
+
+    const clear = document.createElement("button");
+    clear.className = "outreach-copy";
+    clear.type = "button";
+    clear.textContent = "Clear queue";
+    clear.addEventListener("click", function () {
+      queue = [];
+      saveQueue();
+      renderQueue();
+      status.textContent = "Queue cleared.";
+    });
+
+    actions.append(open, next, clear);
+    bar.append(title, status, actions);
+    return bar;
+  }
+
+  root.append(rules(), queueBar(), composer());
   leads.forEach((lead) => root.append(card(lead)));
   root.append(card(emailLead));
+  renderQueue();
 })();
