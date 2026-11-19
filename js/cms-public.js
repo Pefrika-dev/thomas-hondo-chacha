@@ -94,12 +94,18 @@
     return project.status === "concept" ? "concept" : "website";
   }
 
+  function detailSlug(kind) {
+    var match = window.location.pathname.match(new RegExp("^/" + kind + "/([A-Za-z0-9-]+)/?$"));
+    if (match) return match[1];
+    return new URLSearchParams(window.location.search).get("slug") || "";
+  }
+
   function projectCard(project) {
     var slug = project.slug || project.id;
-    var url = "project.html?slug=" + encodeURIComponent(slug);
+    var url = "/work/" + encodeURIComponent(slug);
     var category = localized(project, "category");
     var summary = localized(project, "summary");
-    var cover = project.cover_url || "assets/images/project-portfolio.svg";
+    var cover = project.cover_url || "/assets/images/project-portfolio.svg";
     var technologies = splitList(project.technologies);
     var techHtml = technologies.map(function (tech) {
       return "<li>" + esc(tech) + "</li>";
@@ -178,7 +184,7 @@
 
   function blogCard(post) {
     var slug = post.slug || post.id;
-    var url = "post.html?slug=" + encodeURIComponent(slug);
+    var url = "/blog/" + encodeURIComponent(slug);
     var title = localized(post, "title");
     var excerpt = localized(post, "excerpt");
     if (!excerpt) {
@@ -240,7 +246,7 @@
     if (!container) return;
 
     var params = new URLSearchParams(window.location.search);
-    var slug = params.get("slug");
+    var slug = detailSlug("blog") || params.get("slug");
     if (!slug) {
       container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
       return;
@@ -286,7 +292,7 @@
     setMeta("og:description", pageDescription, "property");
     if (post.cover_url) setMeta("og:image", post.cover_url, "property");
     var canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute("href", "https://www.thomashondochacha.co.ke/post.html?slug=" + encodeURIComponent(post.slug));
+    if (canonical) canonical.setAttribute("href", "https://www.thomashondochacha.co.ke/blog/" + encodeURIComponent(post.slug));
 
     container.innerHTML =
       '<p class="post-meta">' + esc(formatDate(post.published_at)) + "</p>" +
@@ -426,7 +432,7 @@
     if (!container) return;
 
     var params = new URLSearchParams(window.location.search);
-    var slug = params.get("slug");
+    var slug = detailSlug("work") || params.get("slug");
     if (!slug) {
       container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
       return;
@@ -485,7 +491,7 @@
     setMeta("og:description", summary || "", "property");
     if (project.cover_url) setMeta("og:image", project.cover_url, "property");
     var canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute("href", "https://www.thomashondochacha.co.ke/project.html?slug=" + encodeURIComponent(project.slug));
+    if (canonical) canonical.setAttribute("href", "https://www.thomashondochacha.co.ke/work/" + encodeURIComponent(project.slug));
 
     container.innerHTML =
       '<p class="project-detail__meta">' + esc(category || "") + " · " + esc(statusLabel(project.status)) + "</p>" +

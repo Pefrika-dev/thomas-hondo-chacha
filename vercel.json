@@ -1,4 +1,23 @@
 {
+  "buildCommand": "node build.mjs",
+  "redirects": [
+    {
+      "source": "/post.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[A-Za-z0-9-]+)" }],
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[A-Za-z0-9-]+)" }],
+      "destination": "/work/:slug",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/api/render?type=post&slug=:slug" },
+    { "source": "/work/:slug", "destination": "/api/render?type=project&slug=:slug" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
