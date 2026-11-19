@@ -247,23 +247,39 @@
 
     var params = new URLSearchParams(window.location.search);
     var slug = detailSlug("blog") || params.get("slug");
+
+    /* The server renders the article, its metadata and its JSON-LD. Never
+       replace that with a loading or error state: keep the rendered page and
+       only repaint for Swahili, where the CMS supplies localised copy. */
+    var serverRendered = !!container.querySelector("h1");
+
     if (!slug) {
-      container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+      if (!serverRendered) {
+        container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+      }
       return;
     }
 
-    container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.loading")) + "</p>";
+    if (serverRendered && lang() === "en") return;
+
+    if (!serverRendered) {
+      container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.loading")) + "</p>";
+    }
 
     api("posts?select=*&status=eq.published&slug=eq." + encodeURIComponent(slug) + "&limit=1")
       .then(function (rows) {
         if (!rows || !rows.length) {
-          container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+          if (!serverRendered) {
+            container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+          }
           return;
         }
         paintPost(rows[0], container);
       })
       .catch(function () {
-        container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+        if (!serverRendered) {
+          container.innerHTML = '<p class="cms-empty">' + esc(translate("blogPage.notFound")) + "</p>";
+        }
       });
   }
 
@@ -433,29 +449,43 @@
 
     var params = new URLSearchParams(window.location.search);
     var slug = detailSlug("work") || params.get("slug");
+
+    /* Same rule as articles: keep the server-rendered case study in place. */
+    var serverRendered = !!container.querySelector("h1");
+
     if (!slug) {
-      container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+      if (!serverRendered) {
+        container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+      }
       return;
     }
+
+    if (serverRendered && lang() === "en") return;
 
     if (projectDetailCache && projectDetailCache.slug === slug) {
       paintProjectDetail(projectDetailCache, container);
       return;
     }
 
-    container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.loading")) + "</p>";
+    if (!serverRendered) {
+      container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.loading")) + "</p>";
+    }
 
     api("projects?select=*&published=eq.true&slug=eq." + encodeURIComponent(slug) + "&limit=1")
       .then(function (rows) {
         if (!rows || !rows.length) {
-          container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+          if (!serverRendered) {
+            container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+          }
           return;
         }
         projectDetailCache = rows[0];
         paintProjectDetail(projectDetailCache, container);
       })
       .catch(function () {
-        container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+        if (!serverRendered) {
+          container.innerHTML = '<p class="cms-empty">' + esc(translate("projectPage.notFound")) + "</p>";
+        }
       });
   }
 

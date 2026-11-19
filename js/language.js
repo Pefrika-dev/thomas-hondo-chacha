@@ -1202,16 +1202,24 @@
     var locale = currentLanguage === "sw" ? "sw_KE" : "en_KE";
     var alternateLocale = currentLanguage === "sw" ? "en_KE" : "sw_KE";
 
-    document.title = title;
-    setMeta("name", "description", description);
-    setMeta("property", "og:title", title);
-    setMeta("property", "og:description", description);
+    /* Article and case-study pages are rendered on the server with their own
+       title and description. A page-level generic title must never replace
+       them, otherwise every article would share one title once JavaScript runs. */
+    var detailHeading = document.querySelector("[data-post] h1, [data-project] h1");
+
+    if (!detailHeading) {
+      document.title = title;
+      setMeta("name", "description", description);
+      setMeta("property", "og:title", title);
+      setMeta("property", "og:description", description);
+      setMeta("name", "twitter:title", title);
+      setMeta("name", "twitter:description", description);
+      setMeta("property", "og:image:alt", imageAlt);
+      setMeta("name", "twitter:image:alt", imageAlt);
+    }
+
     setMeta("property", "og:locale", locale);
     setMeta("property", "og:locale:alternate", alternateLocale);
-    setMeta("property", "og:image:alt", imageAlt);
-    setMeta("name", "twitter:title", title);
-    setMeta("name", "twitter:description", description);
-    setMeta("name", "twitter:image:alt", imageAlt);
   }
 
   function updateLanguageButtons() {
