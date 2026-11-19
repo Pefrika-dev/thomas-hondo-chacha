@@ -300,6 +300,9 @@
       clearForm();
       clearAllErrors();
       setResponse(t("contactPage.formSavedConfirmation"), true);
+      if (typeof window.thcTrack === "function") {
+        window.thcTrack("enquiry_submit", { placement: "contact-form" });
+      }
     } else {
       setResponse(t("contactPage.formSaveFailed"), false);
     }

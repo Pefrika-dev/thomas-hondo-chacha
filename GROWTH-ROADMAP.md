@@ -265,3 +265,9 @@ no prospect is contacted, and no money is spent without the owner's explicit app
 Fake traffic, click farms, bots, purchased followers, artificial clicks, scraped private
 contact data, bulk unsolicited messaging, and any claim of growth that the instrumentation
 does not support.
+
+## 8. Progress log
+
+- **2026-11-19 — Module 1 live.** /blog/<slug> and /work/<slug> now return 200 with server-rendered content, unique metadata, Article/CreativeWork + BreadcrumbList JSON-LD. Unknown slugs return 404 + noindex. Legacy ?slug= URLs 308-redirect. Verified in production and in a browser (no console errors, no loading flash).
+- **2026-11-19 — Module 3 code shipped.** api/track.js, js/telemetry.js, supabase/analytics.sql and an admin Growth tab. Events are only stored after the owner runs supabase/analytics.sql in Supabase. No cookies, DNT respected, IP never stored.
+- **2026-11-19 — Pending owner input.** Real KES package figures (G2) before any price is published; outreach approval (G3) before contacting the prospects in PROSPECTS.md.
