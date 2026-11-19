@@ -2128,7 +2128,7 @@ select.field__control {
 .field--honeypot{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden;}
 
 /* ---------- Packages ---------- */
-.package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.package-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:1.5rem;}
 .package-card{position:relative;display:flex;flex-direction:column;gap:.85rem;padding:1.6rem 1.4rem;border:1px solid var(--line);border-radius:18px;background:var(--bg-elevated);}
 .package-card--featured{border-color:var(--accent);background:var(--bg);box-shadow:0 18px 40px rgba(21,25,30,.08);}
 .package-card__badge{position:absolute;top:-.7rem;left:1.2rem;margin:0;padding:.2rem .6rem;border-radius:999px;background:var(--accent);color:#fdfbf7;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;}
