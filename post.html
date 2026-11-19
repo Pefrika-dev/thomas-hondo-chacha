@@ -155,7 +155,7 @@
   <script src="js/main.js?v=20261026d" defer></script>
   <script>
     (function () {
-      var url = window.location.href.split("#")[0];
+      var url = window.location.origin + window.location.pathname;
       var canonical = document.getElementById("canonical-url");
       if (canonical) canonical.setAttribute("href", url);
     })();
