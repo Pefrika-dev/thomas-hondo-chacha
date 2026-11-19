@@ -1,0 +1,11 @@
+id,business,contact_confidence,channel,contact,status,approved_on,first_send,follow_up_1,follow_up_2,reply,outcome,evidence,notes
+1,Daima Communications,verified,WhatsApp or call,0701 127 577,approved,2026-11-19,,,,,,quotation.html:302-305 plus public TikTok post,Follow up on the drafted e-commerce quotation; demo already reviewed
+2,Radio Togotane 88.3 FM,supplied by the station,WhatsApp,0714 426 619,approved,2026-11-19,,,,,,radio.ke listing plus station README,Existing client; domain ad rates and presenter profiles; confirm which email to publish
+3,The Yads Hood Hotel,verified,WhatsApp or call,0785 859 400,approved,2026-11-19,,,,,,hotel Facebook page,Demo built and not commissioned; offer to show it in person or send screenshots
+4,Marowa Store Hardware,supplied for the proposal,WhatsApp,0716 865 976,approved,2026-11-19,,,,,,local README plus marowastore.com,Demo live; production backend documented; send demo link only if asked
+5,Kimwanya Enterprises,supplied by the client,WhatsApp or call,+254 718 266 967,approved,2026-11-19,,,,,,local README,Site and admin built; live URL unverified; do not send a link until confirmed
+6,Florence Hotel,verified,WhatsApp or call,0717 055 036,approved,2026-11-19,,,,,,hotel Facebook post,Publicly posted website coming soon; strongest cold lead
+7,Kowuoke Karabok Hardware,verified,WhatsApp or call,0710 174 742,approved,2026-11-19,,,,,,business Facebook post,Facebook only; reuse the Marowa quotation-commerce pattern
+8,Dela Boss Outfits,supplied for the proposal,WhatsApp,0758 102 552,approved,2026-11-19,,,,,,local proposal README,14-page demo live; 14 pages and WhatsApp order buttons
+9,Justine De SALONIST,supplied for the proposal,WhatsApp,0794 393 827,approved,2026-11-19,,,,,,local proposal README,9-page demo with booking admin; offer the link
+10,SDA Migori Central,verified,Email,sdamigoricentral@gmail.com,approved,2026-11-19,,,,,,church Facebook page,Old domain no longer resolves; concrete reason to make contact

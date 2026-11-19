@@ -255,7 +255,7 @@ no prospect is contacted, and no money is spent without the owner's explicit app
 | --- | --- |
 | G1 | Deploying any module to production (`git push` / Vercel) |
 | G2 | Confirming prices, packages, response times, testimonials — none are invented |
-| G3 | Contacting any prospect, even one already known |
+| G3 | Contacting any prospect, even one already known. **Approved 2026-11-19:** approved contacts in `outreach/messages.md`, sent manually by the owner, one business at a time. Unverified contacts stay excluded. |
 | G4 | Publishing any article or social post |
 | G5 | Spending any advertising money |
 | G6 | Adding GA4/GSC IDs or any third-party script |
@@ -271,4 +271,5 @@ does not support.
 - **2026-11-19 — Packages live (Module 2, partial).** Owner-confirmed prices published on services.html: Starter from KSh 25,000, Business from KSh 55,000, Commerce from KSh 120,000, Custom from KSh 150,000. Six-question pricing FAQ, Service/OfferCatalog + FAQPage schema, one tracked WhatsApp CTA per package, English and Kiswahili. Verified in production (2 columns at 800 px, no overflow, no console errors). Add-ons and payment terms are published in the FAQ.
 - **2026-11-19 — Module 1 live.** /blog/<slug> and /work/<slug> now return 200 with server-rendered content, unique metadata, Article/CreativeWork + BreadcrumbList JSON-LD. Unknown slugs return 404 + noindex. Legacy ?slug= URLs 308-redirect. Verified in production and in a browser (no console errors, no loading flash).
 - **2026-11-19 — Module 3 code shipped.** api/track.js, js/telemetry.js, supabase/analytics.sql and an admin Growth tab. Events are only stored after the owner runs supabase/analytics.sql in Supabase. No cookies, DNT respected, IP never stored.
-- **2026-11-19 — Pending owner input.** Outreach approval (G3) before contacting the prospects in PROSPECTS.md. Owner must still run supabase/analytics.sql.
+- **2026-11-19 — Outreach approved (G3).** Owner approved contact with the ten leads that have verified or supplied details. `outreach/README.md` holds the rules and daily sequence, `outreach/messages.md` the English and Kiswahili text per lead, `outreach/tracker.csv` the log. Nothing sends automatically; Thomas sends from his own WhatsApp or email. Unverified contacts (Excel Academy, Tina Beauty Hub, PreMara, Kehancha Mixed, Anjego, Funguo, Victory Fabricators) remain excluded.
+- **2026-11-19 — Analytics still blocked.** `public.analytics_events` does not exist (PostgREST returns PGRST205). No Supabase management token or database credential exists on this machine, and DDL cannot be run with the publishable key. The table must be created by running `supabase/analytics.sql` in the Supabase SQL editor, or by supplying a management token.

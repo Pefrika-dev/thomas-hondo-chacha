@@ -5,7 +5,9 @@ Contact details are labelled **verified** (published by the business itself or c
 by a second public source), **supplied** (given to Thomas for the proposal, not independently
 corroborated), or **unverified** (found in a third-party directory or a demo placeholder).
 
-**No prospect has been contacted.** Outreach requires the owner's approval per lead (gate G3).
+**Owner approved outreach on 2026-11-19.** Nothing has been sent yet: the approved text lives
+in `outreach/messages.md` and is sent manually by Thomas from his own WhatsApp or email, one
+business at a time, logged in `outreach/tracker.csv`. Unverified contacts below remain excluded.
 Only publicly published business contact details are listed — no private personal data.
 
 ---
