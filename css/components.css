@@ -2123,3 +2123,6 @@ select.field__control {
 }
 .blog-card .text-link { margin-top: auto; }
 .cms-empty { grid-column: 1 / -1; padding: 46px 20px; text-align: center; color: var(--ink-muted); }
+
+/* ---------- Honeypot (contact form) ---------- */
+.field--honeypot{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden;}

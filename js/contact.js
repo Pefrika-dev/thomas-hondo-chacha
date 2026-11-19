@@ -49,7 +49,8 @@
       phone: (getControl("phone").value || "").trim(),
       projectType: getControl("projectType").value,
       description: (getControl("description").value || "").trim(),
-      contactMethod: getRadioValue("contactMethod")
+      contactMethod: getRadioValue("contactMethod"),
+      companyWebsite: (getControl("company_website").value || "").trim()
     };
   }
 
@@ -273,7 +274,8 @@
           phone: values.phone,
           project_type: values.projectType,
           project_description: values.description,
-          preferred_contact: values.contactMethod
+          preferred_contact: values.contactMethod,
+          company_website: values.companyWebsite
         }),
         signal: controller ? controller.signal : undefined
       });
