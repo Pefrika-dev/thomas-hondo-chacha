@@ -278,6 +278,17 @@
   margin: 0;
 }
 
+.proposal-document__desc {
+  margin: .45rem 0 0;
+  color: #4d5359;
+}
+
+.proposal-document__payment-note {
+  margin: .45rem 0 0;
+  color: #61666b;
+  font-size: .8rem;
+}
+
 .proposal-document ul {
   margin: 0;
   padding-left: 1.1rem;
