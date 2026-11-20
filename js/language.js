@@ -85,6 +85,9 @@
         projectDialog: "Project case study",
         externalLink: "Opens in a new tab"
       },
+      protection: {
+        toast: "This content is protected. Please ask Thomas for permission before reusing it."
+      },
       theme: {
         light: "Light mode",
         dark: "Dark mode"
@@ -732,6 +735,9 @@
         switchToLanguage: "Badilisha kwenda {language}",
         projectDialog: "Uchambuzi wa mradi",
         externalLink: "Hufunguka kwenye kichupo kipya"
+      },
+      protection: {
+        toast: "Maudhui haya yamelindwa. Tafadhali muulize Thomas ruhusa kabla ya kuyatumia tena."
       },
       theme: {
         light: "Mandhari ya mwanga",

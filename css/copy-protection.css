@@ -1,0 +1,57 @@
+/* ==========================================================================
+   Copy / drag deterrent for public pages.
+   Form fields stay fully usable so visitors can still type and paste their own
+   details. Admin pages never load this file.
+   ========================================================================== */
+
+body:not([data-page="admin"]) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body:not([data-page="admin"]) input,
+body:not([data-page="admin"]) textarea,
+body:not([data-page="admin"]) select,
+body:not([data-page="admin"]) [contenteditable="true"],
+body:not([data-page="admin"]) [contenteditable=""] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+img,
+a {
+  -webkit-user-drag: none;
+}
+
+.copy-toast {
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 1.25rem;
+  width: max-content;
+  max-width: min(90vw, 32rem);
+  padding: .8rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 999px;
+  background: #111827;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
+  color: #fff;
+  font-size: .9rem;
+  line-height: 1.45;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 1rem);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.copy-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy-toast {
+    transition: none;
+  }
+}
