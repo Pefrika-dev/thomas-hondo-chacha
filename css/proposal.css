@@ -1,0 +1,451 @@
+/* ==========================================================================
+   Instant project scope & proposal generator
+   Layout, input controls and a print-clean A4 document.
+   Uses the core design tokens from style.css / components.css.
+   ========================================================================== */
+
+.proposal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.proposal-form {
+  position: sticky;
+  top: calc(var(--header-height) + 1rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.proposal-form__head {
+  margin-bottom: 1.4rem;
+}
+
+.proposal-form__head h2 {
+  margin: 0 0 .55rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.proposal-form__head p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.proposal-form .form-grid {
+  gap: 1rem;
+}
+
+.proposal-addons {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.proposal-addons legend {
+  margin-bottom: .7rem;
+}
+
+.proposal-addons__grid {
+  display: grid;
+  gap: .55rem;
+}
+
+.addon-option {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  padding: .75rem .85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color var(--speed-fast), background var(--speed-fast);
+}
+
+.addon-option:hover {
+  border-color: var(--line-strong);
+}
+
+.addon-option.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.addon-option input {
+  margin: .2rem 0 0;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+
+.addon-option__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.addon-option__title {
+  display: block;
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+.addon-option__hint {
+  display: block;
+  margin-top: .1rem;
+  color: var(--ink-muted);
+  font-size: .78rem;
+  line-height: 1.4;
+}
+
+.addon-option__price {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.addon-option__quantity {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin-top: .55rem;
+  font-size: .8rem;
+  color: var(--ink-soft);
+}
+
+.addon-option__quantity input {
+  width: 4.5rem;
+  margin: 0;
+  padding: .35rem .5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  background: var(--input-bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+
+.proposal-form__note {
+  margin: 1.1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+.proposal-preview {
+  min-width: 0;
+}
+
+.proposal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+  margin-bottom: 1rem;
+}
+
+.proposal-toolbar .button {
+  flex: 1 1 15rem;
+  justify-content: center;
+}
+
+.proposal-document {
+  width: 100%;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: #15191e;
+  box-shadow: var(--shadow-lg);
+  font-size: .92rem;
+  line-height: 1.6;
+}
+
+.proposal-document__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 3px solid #173d62;
+}
+
+.proposal-document__brand {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.proposal-document__mark {
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 10px;
+  background: #173d62;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .04em;
+}
+
+.proposal-document__brand-name {
+  display: block;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.proposal-document__brand-role {
+  display: block;
+  color: #4d5359;
+  font-size: .78rem;
+}
+
+.proposal-document__date {
+  text-align: right;
+  color: #4d5359;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+}
+
+.proposal-document__date strong {
+  display: block;
+  color: #15191e;
+  font-size: .9rem;
+}
+
+.proposal-document h2 {
+  margin: 0 0 1.3rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.proposal-document h3 {
+  margin: 0 0 .7rem;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid #d8dce0;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #173d62;
+}
+
+.proposal-document__block {
+  margin-bottom: 1.35rem;
+  break-inside: avoid;
+}
+
+.proposal-document__parties {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.proposal-document__label {
+  display: block;
+  margin-bottom: .15rem;
+  color: #61666b;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.proposal-document__value {
+  display: block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.proposal-document ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.proposal-document li {
+  margin-bottom: .35rem;
+}
+
+.proposal-document li::marker {
+  color: #173d62;
+}
+
+.proposal-document__summary {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+
+.proposal-document__summary th,
+.proposal-document__summary td {
+  padding: .5rem .2rem;
+  border-bottom: 1px solid #e4e7ea;
+  text-align: left;
+}
+
+.proposal-document__summary th {
+  font-weight: 600;
+}
+
+.proposal-document__summary td:last-child,
+.proposal-document__summary th:last-child {
+  text-align: right;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.proposal-document__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .9rem;
+  padding: .85rem 1rem;
+  border-radius: 10px;
+  background: #f1ede3;
+}
+
+.proposal-document__total span {
+  font-weight: 700;
+}
+
+.proposal-document__total strong {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.proposal-document__fineprint {
+  margin: .8rem 0 0;
+  color: #61666b;
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.proposal-document__foot {
+  margin-top: 1.6rem;
+  padding-top: .9rem;
+  border-top: 1px solid #d8dce0;
+  color: #61666b;
+  font-size: .72rem;
+}
+
+@media (max-width: 900px) {
+  .proposal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .proposal-form {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .proposal-document__parties {
+    grid-template-columns: 1fr;
+  }
+
+  .proposal-document__head {
+    flex-direction: column;
+  }
+
+  .proposal-document__date {
+    text-align: left;
+  }
+}
+
+/* ---------- Print / Save as PDF ---------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 15mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #15191e !important;
+  }
+
+  .site-header,
+  .site-footer,
+  .page-hero,
+  .proposal-form,
+  .proposal-toolbar,
+  .skip-link,
+  .wa-float,
+  .ai-chat,
+  [data-section="proposal-builder"] > .section-heading {
+    display: none !important;
+  }
+
+  .section,
+  .section--surface,
+  .section--bordered {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: #fff !important;
+  }
+
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .proposal-layout,
+  .proposal-preview {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .proposal-document {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    color: #15191e !important;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .proposal-document__head {
+    border-bottom-color: #173d62 !important;
+  }
+
+  .proposal-document h2 {
+    font-size: 24pt;
+  }
+
+  .proposal-document__block,
+  .proposal-document li {
+    break-inside: avoid;
+  }
+
+  .proposal-document__total,
+  .proposal-document__mark {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

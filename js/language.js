@@ -51,6 +51,11 @@
           description: "Contact Thomas Hondo Chacha by phone, WhatsApp or email to discuss a website, web application or digital project.",
           imageAlt: "Contact Thomas Hondo Chacha"
         },
+        proposal: {
+          title: "Instant Project Scope & Proposal Generator — Thomas Hondo Chacha",
+          description: "Build a formal project scope and indicative proposal in seconds. Pick a package, add optional services, print a clean A4 PDF or discuss it on WhatsApp.",
+          imageAlt: "Instant project scope and proposal generator"
+        },
         notFound: {
           title: "Page not found — Thomas Hondo Chacha",
           description: "The page you are looking for could not be found. Return to the portfolio of Thomas Hondo Chacha, Software Engineer.",
@@ -482,6 +487,8 @@
         pkgCustomItem4: "Quoted after a written brief",
         packagesNote: "Every package includes a written scope, testing, handover and a support period. Hosting and domain can be added for KSh 10,000 a year. The final quote is confirmed after a short brief.",
         packagesGuide: "Read the full 2026 website cost guide",
+        proposalCta: "Generate an instant proposal",
+        proposalLink: "Build an instant scope and proposal",
         faqKicker: "Pricing questions",
         faqTitle: "Straight answers about <em>cost and timing.</em>",
         faqQ1: "Is KSh 25,000 the final price?",
@@ -646,6 +653,11 @@
           title: "Mawasiliano — Thomas Hondo Chacha, Mhandisi wa Programu",
           description: "Wasiliana na Thomas Hondo Chacha kwa simu, WhatsApp au barua pepe kuzungumzia tovuti, mfumo wa wavuti au mradi wa kidijitali.",
           imageAlt: "Wasiliana na Thomas Hondo Chacha"
+        },
+        proposal: {
+          title: "Jenga Pendekezo la Mradi Papo Hapo — Thomas Hondo Chacha",
+          description: "Tayarisha maelezo ya kazi na pendekezo la awali ndani ya sekunde chache. Chagua kifurushi, ongeza huduma, chapisha PDF ya A4 au lijadili kwa WhatsApp.",
+          imageAlt: "Zana ya kuunda pendekezo la mradi papo hapo"
         },
         notFound: {
           title: "Ukurasa haupatikani — Thomas Hondo Chacha",
@@ -1078,6 +1090,8 @@
         pkgCustomItem4: "Bei hutolewa baada ya maelezo ya kazi",
         packagesNote: "Kila kifurushi kinajumuisha maelezo ya kazi yaliyoandikwa, upimaji, makabidhiano na kipindi cha msaada. Hosting na domain vinaweza kuongezwa kwa KSh 10,000 kwa mwaka. Bei ya mwisho huthibitishwa baada ya maelezo mafupi.",
         packagesGuide: "Soma mwongozo kamili wa gharama za tovuti 2026",
+        proposalCta: "Tayarisha pendekezo papo hapo",
+        proposalLink: "Jenga maelezo ya kazi na pendekezo papo hapo",
         faqKicker: "Maswali kuhusu bei",
         faqTitle: "Majibu ya moja kwa moja kuhusu <em>gharama na muda.</em>",
         faqQ1: "Je, KSh 25,000 ni bei ya mwisho?",
