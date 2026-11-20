@@ -90,6 +90,7 @@
         projects: "Projects",
         blog: "Blog",
         services: "Services",
+        proposal: "Proposal",
         contact: "Contact",
         startProject: "Start a project"
       },
@@ -693,6 +694,7 @@
         projects: "Miradi",
         blog: "Blogu",
         services: "Huduma",
+        proposal: "Pendekezo",
         contact: "Mawasiliano",
         startProject: "Anzisha mradi"
       },
