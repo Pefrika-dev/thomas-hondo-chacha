@@ -16,13 +16,18 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <script src="js/theme.js"></script>
-  <link rel="stylesheet" href="css/style.css?v=20261031b">
-  <link rel="stylesheet" href="css/components.css?v=20261119c">
-  <link rel="stylesheet" href="css/responsive.css?v=20261026">
-  <link rel="stylesheet" href="css/article.css?v=20261030">
-  <link rel="stylesheet" href="css/ai-chat.css?v=20261028c">
-  <link rel="stylesheet" href="css/whatsapp-float.css?v=20261026b">
+  <script>!function(){"use strict";var t="thc-theme",e=document.documentElement,n=window.matchMedia?window.matchMedia("(prefers-color-scheme: dark)"):null,a=[],c=!1;function i(){try{var e=window.localStorage.getItem(t);return"light"===e||"dark"===e?e:null}catch(t){return null}}e.classList.add("js");var r=i()||(n&&n.matches?"dark":"light");function o(t){var e=document.getElementById("meta-theme-color");e&&e.setAttribute("content","dark"===t?"#0b1015":"#f4f1e9")}function d(){a.forEach(function(t){var e=t.getAttribute("data-theme-value");t.setAttribute("aria-pressed",e===r?"true":"false"),t.classList.toggle("is-active",e===r)})}function u(n,a){if(r="dark"===n?"dark":"light",e.setAttribute("data-theme",r),e.style.colorScheme=r,o(r),a)try{window.localStorage.setItem(t,r)}catch(t){}d(),c&&document.dispatchEvent(new CustomEvent("thc:themechange",{detail:{theme:r,persisted:Boolean(a)}}))}function l(t,e){u(t,!1!==e)}function s(){(a=Array.prototype.slice.call(document.querySelectorAll("[data-theme-value]"))).forEach(function(t){"true"!==t.dataset.themeBound&&(t.dataset.themeBound="true",t.addEventListener("click",function(){l(t.getAttribute("data-theme-value"),!0)}))}),d()}function h(t){i()||u(t.matches?"dark":"light",!1)}u(r,!1),window.Theme={init:function(){c=!0,s(),o(r),n&&("function"==typeof n.addEventListener?n.addEventListener("change",h):"function"==typeof n.addListener&&n.addListener(h))},get:function(){return r},set:l,toggle:function(){l("dark"===r?"light":"dark",!0)},bind:s,sync:d}}();</script>
+  <link rel="stylesheet" href="css/style.css?v=20261120">
+  <link rel="preload" as="style" href="css/components.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/components.css?v=20261120"></noscript>
+  <link rel="preload" as="style" href="css/responsive.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/responsive.css?v=20261120"></noscript>
+  <link rel="preload" as="style" href="css/article.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/article.css?v=20261120"></noscript>
+  <link rel="preload" as="style" href="css/ai-chat.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/ai-chat.css?v=20261120"></noscript>
+  <link rel="preload" as="style" href="css/whatsapp-float.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/whatsapp-float.css?v=20261120"></noscript>
 </head>
 <body id="top" data-page="blog">
   <a class="skip-link" href="#main-content" data-i18n="a11y.skip">Skip to content</a>
@@ -149,11 +154,11 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
-  <script src="js/telemetry.js?v=20261119a" defer></script>
-  <script src="js/language.js?v=20261119c" defer></script>
-  <script src="js/cms-public.js?v=20261119b" defer></script>
-  <script src="js/whatsapp-float.js?v=20261026" defer></script>
-  <script src="js/main.js?v=20261026d" defer></script>
+  <script src="js/telemetry.min.js?v=20261120" defer></script>
+  <script src="js/language.min.js?v=20261120" defer></script>
+  <script src="js/cms-public.js?v=20261120" defer></script>
+  <script src="js/whatsapp-float.min.js?v=20261120" defer></script>
+  <script src="js/main.min.js?v=20261120" defer></script>
   <script>
     (function () {
       var url = window.location.origin + window.location.pathname;
@@ -161,6 +166,6 @@
       if (canonical) canonical.setAttribute("href", url);
     })();
   </script>
-  <script src="js/ai-chat.js?v=20261028c" defer></script>
+  <script src="js/ai-chat.min.js?v=20261120" defer></script>
 </body>
 </html>

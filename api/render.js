@@ -9,6 +9,7 @@
    the browser renders the content exactly as it did before this existed.
    ========================================================================== */
 const shell = require('./_lib/shell.js');
+const { optimiseImageUrl } = require('../lib/images.js');
 
 const SITE = shell.siteUrl;
 const SLUG = /^[a-z0-9][a-z0-9-]{0,119}$/i;
@@ -113,7 +114,7 @@ function renderPost(post) {
   const image = post.cover_url || `${SITE}/assets/images/og-cover.png`;
   const tags = splitList(post.tags);
   const cover = post.cover_url
-    ? `<img class="post-cover" src="${esc(post.cover_url)}" alt="${esc(post.title)}" loading="eager" decoding="async">`
+    ? `<img class="post-cover" src="${esc(optimiseImageUrl(post.cover_url, 960))}" alt="${esc(post.title)}" loading="eager" decoding="async">`
     : '';
 
   const body =
@@ -166,7 +167,7 @@ function renderProject(project) {
   const image = project.cover_url || `${SITE}/assets/images/og-cover.png`;
   const tech = splitList(project.technologies);
   const cover = project.cover_url
-    ? `<img class="project-detail__cover" src="${esc(project.cover_url)}" alt="${esc(title)}" loading="eager" decoding="async">`
+    ? `<img class="project-detail__cover" src="${esc(optimiseImageUrl(project.cover_url, 960))}" alt="${esc(title)}" loading="eager" decoding="async">`
     : '';
   const actions =
     (project.demo_url ? `<a class="btn" href="${esc(project.demo_url)}" target="_blank" rel="noopener noreferrer">Open live site</a>` : '') +

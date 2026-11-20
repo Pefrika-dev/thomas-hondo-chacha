@@ -77,6 +77,41 @@
       .filter(Boolean);
   }
 
+  /* Keep the browser-rendered cards as light as the server-rendered ones. */
+  function imageUrl(value, width) {
+    var target = Number(width) || 640;
+    var raw = String(value || "").trim();
+    if (!raw) return "";
+    try {
+      var url = new URL(raw, location.href);
+      var host = url.hostname.replace(/^www\./, "");
+      if (host === "images.unsplash.com") {
+        url.searchParams.set("w", String(target));
+        url.searchParams.set("fm", "webp");
+        url.searchParams.set("q", "70");
+        url.searchParams.set("fit", "crop");
+        url.searchParams.delete("auto");
+        return url.toString();
+      }
+      if (host === "commons.wikimedia.org") {
+        if (!url.searchParams.has("width")) url.searchParams.set("width", String(target));
+        return url.toString();
+      }
+      if (host === "upload.wikimedia.org") {
+        var parts = url.pathname.split("/").filter(Boolean);
+        var file = decodeURIComponent(parts[parts.length - 1] || "");
+        if (file) return "https://commons.wikimedia.org/wiki/Special:FilePath/" + encodeURIComponent(file).replace(/%20/g, "_") + "?width=" + target;
+      }
+      if (host === "image.thum.io") {
+        return raw.replace(/\/width\/\d+/, "/width/" + target).replace(/\/crop\/\d+/, "/crop/" + Math.round(target * 0.75));
+      }
+      if (host === "thomashondochacha.co.ke" || raw.indexOf("/assets/") === 0 || raw.indexOf("assets/") === 0) {
+        if (/\.(png|jpe?g)$/i.test(url.pathname)) return raw.replace(/\.(png|jpe?g)$/i, ".webp");
+      }
+    } catch (error) { /* Leave unusual URLs untouched. */ }
+    return raw;
+  }
+
   function statusLabel(status) {
     var fallback = {
       demo: lang() === "sw" ? "Onyesho linalofanya kazi" : "Working demonstration",
@@ -123,7 +158,7 @@
       '<article class="project-card reveal" data-project-card data-project-id="' + esc(project.id) + '" data-project-type="' + esc(projectType(project)) + '">' +
         '<a class="project-card__visual" href="' + esc(url) + '">' +
           '<span class="project-card__image-wrap">' +
-            '<img class="project-card__image" src="' + esc(cover) + '" alt="' + esc(localized(project, "title")) + '" width="1200" height="900" loading="lazy" decoding="async">' +
+            '<img class="project-card__image" src="' + esc(imageUrl(cover, 640)) + '" alt="' + esc(localized(project, "title")) + '" width="640" height="480" loading="lazy" decoding="async">' +
           "</span>" +
           '<span class="project-card__visual-top">' +
             '<span class="project-card__visual-tag">' + esc(category || (lang() === "sw" ? "Mradi" : "Project")) + "</span>" +
@@ -191,7 +226,7 @@
       excerpt = localized(post, "content").replace(/[#*_>`\[\]]/g, "").slice(0, 170);
     }
     var cover = post.cover_url
-      ? '<a class="blog-card__media" href="' + esc(url) + '"><img src="' + esc(post.cover_url) + '" alt="' + esc(title) + '" loading="lazy" decoding="async"></a>'
+      ? '<a class="blog-card__media" href="' + esc(url) + '"><img src="' + esc(imageUrl(post.cover_url, 640)) + '" alt="' + esc(title) + '" width="640" height="360" loading="lazy" decoding="async"></a>'
       : "";
     var tags = splitList(post.tags).map(function (tag) {
       return "<span>" + esc(tag) + "</span>";
@@ -288,7 +323,7 @@
     var content = localized(post, "content");
     var excerpt = localized(post, "excerpt");
     var cover = post.cover_url
-      ? '<img class="post-cover" src="' + esc(post.cover_url) + '" alt="' + esc(title) + '" loading="eager" decoding="async">'
+      ? '<img class="post-cover" src="' + esc(imageUrl(post.cover_url, 960)) + '" alt="' + esc(title) + '" loading="eager" decoding="async">'
       : "";
     var tags = splitList(post.tags).map(function (tag) {
       return "<span>" + esc(tag) + "</span>";
@@ -495,7 +530,7 @@
     var summary = localized(project, "summary");
     var description = localized(project, "description");
     var cover = project.cover_url
-      ? '<img class="project-detail__cover" src="' + esc(project.cover_url) + '" alt="' + esc(title) + '" loading="eager" decoding="async">'
+      ? '<img class="project-detail__cover" src="' + esc(imageUrl(project.cover_url, 960)) + '" alt="' + esc(title) + '" loading="eager" decoding="async">'
       : "";
     var technologies = splitList(project.technologies);
     var techHtml = technologies.map(function (tech) {
