@@ -1,0 +1,357 @@
+/* ==========================================================================
+   Website audit checker — form, score and check cards.
+   Uses the core tokens from style.css / components.css.
+   ========================================================================== */
+
+.audit-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.audit-form {
+  position: sticky;
+  top: calc(var(--header-height) + 1rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.audit-form__head {
+  margin-bottom: 1.4rem;
+}
+
+.audit-form__head h2 {
+  margin: 0 0 .55rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.audit-form__head p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.audit-form__label {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+}
+
+.audit-input {
+  width: 100%;
+  padding: .85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  color: var(--ink);
+  font: inherit;
+}
+
+.audit-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.audit-form__hint {
+  margin: .55rem 0 0;
+  color: var(--ink-soft);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+
+.audit-form__actions {
+  margin-top: 1rem;
+}
+
+.audit-form__actions .button {
+  width: 100%;
+}
+
+.audit-form__note {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: .85rem;
+  line-height: 1.55;
+}
+
+.audit-panel [hidden] {
+  display: none !important;
+}
+
+.audit-panel {
+  min-height: 420px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-md);
+}
+
+.audit-empty,
+.audit-loading,
+.audit-error {
+  display: flex;
+  min-height: 360px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem;
+  text-align: center;
+}
+
+.audit-empty__icon,
+.audit-error__icon {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 1.6rem;
+}
+
+.audit-empty h3,
+.audit-error h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 400;
+}
+
+.audit-empty p,
+.audit-error p {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.audit-spinner {
+  width: 46px;
+  height: 46px;
+  border: 3px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: audit-spin .8s linear infinite;
+}
+
+@keyframes audit-spin {
+  to { transform: rotate(360deg); }
+}
+
+.audit-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.audit-score {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.audit-score__number {
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 9vw, 5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+
+.audit-score__number span {
+  font-size: .32em;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+}
+
+.audit-score__label {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+
+.audit-score__label strong {
+  font-size: 1.05rem;
+}
+
+.audit-score__label small {
+  color: var(--ink-soft);
+}
+
+.audit-score--good .audit-score__number { color: var(--success); }
+.audit-score--warn .audit-score__number { color: #b54708; }
+.audit-score--bad .audit-score__number { color: var(--danger); }
+
+.audit-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.audit-pill {
+  padding: .35rem .7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: .8rem;
+  white-space: nowrap;
+}
+
+.audit-checks {
+  display: grid;
+  gap: .7rem;
+  margin-top: 1.25rem;
+}
+
+.audit-check {
+  --audit-state: var(--success);
+  --audit-soft: var(--success-soft);
+  padding: .9rem 1rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--audit-state);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+
+.audit-check--warn {
+  --audit-state: #b54708;
+  --audit-soft: color-mix(in srgb, #b54708 10%, var(--bg));
+}
+
+.audit-check--fail {
+  --audit-state: var(--danger);
+  --audit-soft: var(--danger-soft);
+}
+
+.audit-check__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+}
+
+.audit-check__title {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.audit-check__badge {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--audit-soft);
+  color: var(--audit-state);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.audit-check__status {
+  flex: 0 0 auto;
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  background: var(--audit-soft);
+  color: var(--audit-state);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.audit-check__group {
+  margin: .25rem 0 0;
+  color: var(--ink-soft);
+  font-size: .75rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.audit-check p {
+  margin: .5rem 0 0;
+  color: var(--ink-soft);
+  font-size: .92rem;
+  line-height: 1.55;
+}
+
+.audit-check__fix {
+  padding: .55rem .75rem;
+  border-radius: var(--radius-sm);
+  background: var(--audit-soft);
+  color: var(--ink);
+}
+
+.audit-cta {
+  margin-top: 1.5rem;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-elevated));
+}
+
+.audit-cta h3 {
+  margin: 0 0 .45rem;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.audit-cta p {
+  margin: 0 0 1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.audit-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+}
+
+.audit-error .button {
+  margin-top: .4rem;
+}
+
+@media (max-width: 900px) {
+  .audit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-form {
+    position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .audit-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .audit-cta__actions .button {
+    width: 100%;
+  }
+}

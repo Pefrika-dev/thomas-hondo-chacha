@@ -39,6 +39,7 @@ function xml(posts, projects, today) {
     ['/', '1.0', 'weekly'],
     ['/services.html', '0.9', 'monthly'],
     ['/proposal.html', '0.8', 'monthly'],
+    ['/audit.html', '0.8', 'monthly'],
     ['/projects.html', '0.9', 'weekly'],
     ['/blog.html', '0.8', 'weekly'],
     ['/about.html', '0.7', 'monthly'],

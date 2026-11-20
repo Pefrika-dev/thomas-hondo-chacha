@@ -155,5 +155,5 @@ inject('blog.html', 'blog-list', posts.map(blogCard).join('\n          '));
 inject('projects.html', 'project-list', projects.map(projectCard).join('\n          '));
 
 console.log(`build: ${posts.length} articles, ${projects.length} case studies`);
-console.log(`build: sitemap served live at /sitemap.xml (${posts.length + projects.length + 6} URLs)`);
+console.log(`build: sitemap served live at /sitemap.xml (${posts.length + projects.length + 8} URLs)`);
 console.log('build: api/_lib/shell.js, blog.html, projects.html written');
