@@ -372,7 +372,7 @@
         '<div class="proposal-document__parties">' +
           '<div><span class="proposal-document__label">' + escapeHtml(doc.preparedFor) + '</span>' +
           '<strong class="proposal-document__value">' + escapeHtml(state.client || doc.notProvided) + '</strong>' +
-          '<span class="proposal-document__label" style="margin-top:.5rem">' + escapeHtml(c.wa.contact) + '</span>' +
+          '<span class="proposal-document__label proposal-document__label--spaced">' + escapeHtml(c.wa.contact) + '</span>' +
           '<span class="proposal-document__value">' + escapeHtml(state.contact || doc.notProvided) + '</span></div>' +
           '<div><span class="proposal-document__label">' + escapeHtml(doc.preparedBy) + '</span>' +
           '<strong class="proposal-document__value">' + escapeHtml(doc.byName) + '</strong>' +
@@ -380,11 +380,11 @@
         '</div>' +
       '</div>' +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.packageLabel) + '</h3>' +
-        '<p style="margin:0"><strong>' + escapeHtml(pkg.name) + '</strong> — ' + escapeHtml(doc.fromLabel) + ' ' + money(pkg.price) + '</p></div>' +
+        '<p class="proposal-document__line"><strong>' + escapeHtml(pkg.name) + '</strong> — ' + escapeHtml(doc.fromLabel) + ' ' + money(pkg.price) + '</p></div>' +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.scopeLabel) + '</h3><ul>' + listItems(state.deliverables) + '</ul></div>' +
       addonBlock +
-      '<div class="proposal-document__block"><h3>' + escapeHtml(doc.timelineLabel) + '</h3><p style="margin:0">' + escapeHtml(pkg.timeline) + '</p></div>' +
-      '<div class="proposal-document__block"><h3>' + escapeHtml(doc.paymentLabel) + '</h3><p style="margin:0">' + escapeHtml(doc.paymentText) + '</p></div>' +
+      '<div class="proposal-document__block"><h3>' + escapeHtml(doc.timelineLabel) + '</h3><p class="proposal-document__line">' + escapeHtml(pkg.timeline) + '</p></div>' +
+      '<div class="proposal-document__block"><h3>' + escapeHtml(doc.paymentLabel) + '</h3><p class="proposal-document__line">' + escapeHtml(doc.paymentText) + '</p></div>' +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.investmentLabel) + '</h3>' +
         '<table class="proposal-document__summary"><tbody>' + summaryRows + '</tbody></table>' +
         '<div class="proposal-document__total"><span>' + escapeHtml(doc.investmentLabel) + ' (' + escapeHtml(doc.fromLabel) + ')</span>' +
