@@ -160,6 +160,11 @@
       return;
     }
 
+    if (!window.fetch) {
+      renderError(T('auditPage.errorFallback'));
+      return;
+    }
+
     setState('loading');
     setBusy(true);
     if (window.thcTrack) {
@@ -183,7 +188,9 @@
       .catch(function (error) {
         renderError(error && error.message ? error.message : T('auditPage.errorFallback'));
       })
-      .finally(function () {
+      .then(function () {
+        setBusy(false);
+      }, function () {
         setBusy(false);
       });
   });
