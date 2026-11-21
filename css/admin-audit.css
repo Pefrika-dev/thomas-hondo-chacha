@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Admin audit tab — variable mapping for the public audit styles + a clean
+   full-screen "client view" so results can be shown live during a conversation.
+   ========================================================================== */
+
+#tab-audit {
+  --bg: var(--surface);
+  --bg-elevated: var(--surface);
+  --input-bg: #ffffff;
+  --ink-soft: var(--muted);
+  --accent: var(--brand);
+  --accent-strong: var(--brand-dark);
+  --accent-soft: #eff6ff;
+  --success-soft: #ecfdf3;
+  --danger-soft: #fef3f2;
+  --radius-sm: 8px;
+  --radius-lg: 12px;
+  --shadow-md: var(--shadow);
+  --font-display: inherit;
+  --header-height: 64px;
+}
+
+#tab-audit .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 0 0 .5rem;
+  color: var(--brand);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+#tab-audit .eyebrow__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+#tab-audit .audit-form__head h3 {
+  margin: 0 0 .5rem;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+#tab-audit .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: .7rem 1rem;
+  font-size: .9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#tab-audit .button--primary { background: var(--brand); color: #ffffff; }
+#tab-audit .button--soft { background: #eff6ff; color: var(--brand-dark); }
+#tab-audit .button--ghost { background: #ffffff; border-color: var(--line); color: var(--ink); }
+#tab-audit .button:disabled { opacity: .6; cursor: not-allowed; }
+
+#tab-audit .audit-panel { min-height: 360px; }
+
+.present-bar {
+  display: none;
+  position: fixed;
+  z-index: 60;
+  top: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 12px 24px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: .9rem;
+}
+
+.present-bar strong { letter-spacing: .02em; }
+.present-bar .btn-logout { color: #ffffff; border-color: rgba(255, 255, 255, .4); }
+
+body.audit-present .header { display: none; }
+body.audit-present .present-bar { display: flex; }
+body.audit-present .container { max-width: none; padding: 0; }
+
+body.audit-present #tab-audit {
+  min-height: 100vh;
+  padding: 76px 24px 48px;
+  background: var(--canvas);
+}
+
+body.audit-present #tab-audit .page-head,
+body.audit-present #tab-audit .audit-layout {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.audit-present #tab-audit .page-head { margin-bottom: 22px; }
+body.audit-present #tab-audit .page-head h2 { font-size: 28px; }
+body.audit-present #tab-audit .audit-panel { min-height: 520px; }
+body.audit-present #tab-audit .audit-score__number { font-size: clamp(4rem, 10vw, 6rem); }
+body.audit-present #tab-audit .audit-check { padding: 1rem 1.15rem; }
+
+@media (max-width: 700px) {
+  body.audit-present #tab-audit { padding: 70px 14px 36px; }
+  .present-bar { padding: 10px 14px; font-size: .82rem; }
+}

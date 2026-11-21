@@ -7,8 +7,12 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="stylesheet" href="css/admin.css?v=20261120">
-  <script src="js/outreach.min.js?v=20261120" defer></script>
+  <link rel="stylesheet" href="css/admin.css?v=20261121a">
+  <link rel="stylesheet" href="css/audit.css?v=20261121a">
+  <link rel="stylesheet" href="css/admin-audit.css?v=20261121a">
+  <script src="js/language.min.js?v=20261121a" defer></script>
+  <script src="js/audit.min.js?v=20261121a" defer></script>
+  <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
   <div id="loginScreen" class="login-container">
@@ -31,6 +35,10 @@
   </div>
 
   <div id="dashboard" class="dashboard">
+    <div id="presentBar" class="present-bar">
+      <strong>Live website audit — client view</strong>
+      <button class="btn-logout" id="auditExitPresentBtn" type="button">Exit client view</button>
+    </div>
     <header class="header">
       <div class="header-brand">
         <span class="brand-mark" aria-hidden="true">THC</span>
@@ -45,6 +53,7 @@
         <button type="button" class="admin-nav__item" data-tab="posts">Blog</button>
         <button type="button" class="admin-nav__item" data-tab="growth">Growth</button>
         <button type="button" class="admin-nav__item" data-tab="outreach">Outreach</button>
+        <button type="button" class="admin-nav__item" data-tab="audit">Audit</button>
         <button type="button" class="admin-nav__item" data-tab="settings">Settings</button>
       </nav>
       <div class="header-actions">
@@ -163,6 +172,86 @@
             </table>
           </div>
           <div class="no-data admin-hidden" id="growthNoData">No analytics yet. Run supabase/analytics.sql in Supabase, then visit the site.</div>
+        </div>
+      </section>
+
+      <section id="tab-audit" class="tab-panel" aria-labelledby="audit-title">
+        <div class="page-head">
+          <div>
+            <h2 id="audit-title">Live website audit</h2>
+            <p>Run the same public checker here while the client watches. Nothing is stored or shared.</p>
+          </div>
+          <div class="page-head__actions">
+            <button class="btn-primary" id="auditPresentBtn" type="button">Present to client</button>
+            <a class="btn-link" href="audit.html" target="_blank" rel="noopener">Open public checker ↗</a>
+          </div>
+        </div>
+        <div class="audit-layout">
+          <form class="audit-form" id="audit-form" novalidate>
+            <div class="audit-form__head">
+              <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="auditPage.eyebrow">Free website audit</span></p>
+              <h3 id="audit-form-title" data-i18n="auditPage.formTitle">Check a website</h3>
+              <p data-i18n="auditPage.formLede">No sign-up. No data stored. Just a clear picture of what is helping or hurting your site.</p>
+            </div>
+            <label class="audit-form__label" for="audit-url" data-i18n="auditPage.label">Website address</label>
+            <input class="audit-input" id="audit-url" name="url" type="text" inputmode="url" autocomplete="url" spellcheck="false" maxlength="300" placeholder="example.co.ke" data-i18n-placeholder="auditPage.placeholder">
+            <p class="audit-form__hint" data-i18n="auditPage.hint">We add https:// automatically. Only public websites can be checked.</p>
+            <div class="audit-form__actions">
+              <button class="button button--primary" id="audit-submit" type="submit" aria-busy="false">
+                <span id="audit-button-label" data-i18n="auditPage.analyze">Analyze Website</span>
+              </button>
+            </div>
+            <p class="audit-form__note" data-i18n="auditPage.note">The scan runs from our server in Kenya, so response time is a guide rather than a guarantee. Results are not stored or shared.</p>
+          </form>
+
+          <div class="audit-panel" id="audit-panel" aria-live="polite">
+            <div class="audit-empty" id="audit-empty">
+              <span class="audit-empty__icon" aria-hidden="true">?</span>
+              <h3 data-i18n="auditPage.emptyTitle">Ready when you are</h3>
+              <p data-i18n="auditPage.emptyBody">Add a website address on the left and run the free check. Your score and recommendations will appear here.</p>
+            </div>
+            <div class="audit-loading" id="audit-loading" hidden>
+              <span class="audit-spinner" aria-hidden="true"></span>
+              <h3 data-i18n="auditPage.loadingTitle">Checking the website</h3>
+              <p data-i18n="auditPage.loadingBody">We are testing HTTPS, response time, security headers and the basics Google reads. This takes about 10 seconds.</p>
+            </div>
+            <div class="audit-error" id="audit-error" hidden>
+              <span class="audit-error__icon" aria-hidden="true">!</span>
+              <h3 data-i18n="auditPage.errorTitle">We could not complete the scan</h3>
+              <p id="audit-error-message"></p>
+              <button class="button button--soft" type="button" data-audit-reset data-i18n="auditPage.tryAgain">Try another website</button>
+            </div>
+            <div class="audit-results" id="audit-results" hidden>
+              <div class="audit-summary" id="audit-summary">
+                <div class="audit-score">
+                  <div class="audit-score__number" id="audit-score-number">0<span>/100</span></div>
+                  <div class="audit-score__label" id="audit-score-label"><strong></strong></div>
+                </div>
+                <div class="audit-meta" id="audit-meta"></div>
+              </div>
+              <p class="audit-response-note" data-i18n="auditPage.responseNote">This check measures homepage response time only. For full page-load analysis, use Google PageSpeed Insights.</p>
+              <div class="audit-roadmap" id="audit-roadmap"></div>
+              <h3 class="audit-section-title" data-i18n="auditPage.checksTitle">Detailed results and fix guides</h3>
+              <div class="audit-checks" id="audit-checks"></div>
+              <div class="audit-results__actions">
+                <button class="button button--ghost audit-print" type="button" data-audit-print>
+                  <span data-i18n="auditPage.printReport">Print / save as PDF</span>
+                </button>
+              </div>
+              <div class="audit-cta">
+                <h3 data-i18n="auditPage.ctaTitle">Want Thomas to fix these issues and speed up your website?</h3>
+                <p id="audit-cta-message"></p>
+                <div class="audit-cta__actions">
+                  <a class="button button--primary" id="audit-whatsapp" href="https://wa.me/254705023432" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="auditPage.whatsapp">Discuss the results on WhatsApp</span>
+                  </a>
+                  <a class="button button--ghost" href="contact.html">
+                    <span data-i18n="common.contactMe">Contact me</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1248,6 +1337,18 @@
           passwordSaveBtn.disabled = false;
           passwordSaveBtn.textContent = "Update password";
         }
+      });
+
+      const presentBtn = document.getElementById("auditPresentBtn");
+      const exitPresentBtn = document.getElementById("auditExitPresentBtn");
+      const setPresent = function (on) {
+        document.body.classList.toggle("audit-present", on);
+        if (on) switchTab("audit");
+      };
+      if (presentBtn) presentBtn.addEventListener("click", function () { setPresent(true); });
+      if (exitPresentBtn) exitPresentBtn.addEventListener("click", function () { setPresent(false); });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && document.body.classList.contains("audit-present")) setPresent(false);
       });
     })();
   </script>
