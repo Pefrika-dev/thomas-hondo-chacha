@@ -1,0 +1,318 @@
+/* Client audit fix workbench — scoped to the admin audit tab. */
+#tab-audit .audit-workbench {
+  margin: 1rem 0 1.25rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--navy-line, rgba(148, 163, 184, .22));
+  border-radius: var(--radius-lg, 16px);
+  background: var(--bg-elevated, #111827);
+  box-shadow: var(--shadow-md, 0 12px 30px rgba(0, 0, 0, .18));
+}
+
+#tab-audit .audit-workbench__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+#tab-audit .audit-workbench__head h3 {
+  margin: .1rem 0 .3rem;
+  color: var(--ink, #f9fafb);
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.15rem;
+}
+
+#tab-audit .audit-workbench__head p {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+#tab-audit .audit-workbench__setup {
+  flex: 0 0 auto;
+  padding: .35rem .7rem;
+  border: 1px solid rgba(245, 158, 11, .4);
+  border-radius: 999px;
+  background: rgba(245, 158, 11, .1);
+  color: #fcd34d;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+#tab-audit .audit-workbench__setup.is-ready {
+  border-color: rgba(16, 185, 129, .45);
+  background: rgba(16, 185, 129, .1);
+  color: #6ee7b7;
+}
+
+#tab-audit .audit-workbench__bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr)) minmax(150px, .9fr) auto auto;
+  gap: .75rem;
+  align-items: end;
+}
+
+#tab-audit .audit-workbench__bar label {
+  display: grid;
+  gap: .35rem;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+#tab-audit .audit-workbench__bar input,
+#tab-audit .audit-workbench__bar select,
+#tab-audit .audit-workbench__message textarea,
+#tab-audit .audit-workbench__row select {
+  width: 100%;
+  min-height: 40px;
+  padding: .55rem .7rem;
+  border: 1px solid var(--navy-line, rgba(148, 163, 184, .22));
+  border-radius: var(--radius-sm, 10px);
+  background: var(--input-bg, #0b1220);
+  color: var(--ink, #f9fafb);
+  font: inherit;
+  font-size: .8rem;
+  text-transform: none;
+}
+
+#tab-audit .audit-workbench__bar input:focus-visible,
+#tab-audit .audit-workbench__bar select:focus-visible,
+#tab-audit .audit-workbench__message textarea:focus-visible,
+#tab-audit .audit-workbench__row select:focus-visible,
+#tab-audit .audit-workbench button:focus-visible {
+  outline: 2px solid var(--accent, #10b981);
+  outline-offset: 2px;
+}
+
+#tab-audit .audit-workbench__paid {
+  display: flex !important;
+  align-items: center;
+  gap: .5rem;
+  min-height: 40px;
+  padding: 0 .7rem;
+  border: 1px solid rgba(16, 185, 129, .35);
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(16, 185, 129, .07);
+  color: #d1fae5 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  white-space: nowrap;
+}
+
+#tab-audit .audit-workbench__paid input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: #10b981;
+}
+
+#tab-audit .audit-workbench__feedback {
+  min-height: 1.2rem;
+  margin: .75rem 0 0;
+  color: #6ee7b7;
+  font-size: .75rem;
+}
+
+#tab-audit .audit-workbench__feedback.is-error { color: #fca5a5; }
+
+#tab-audit .audit-workbench__gate {
+  margin-top: 1rem;
+  padding: .8rem 1rem;
+  border: 1px dashed rgba(245, 158, 11, .45);
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(245, 158, 11, .06);
+  color: #fde68a;
+  font-size: .78rem;
+  line-height: 1.6;
+}
+
+#tab-audit .audit-workbench__gate strong { color: #fcd34d; }
+
+#tab-audit .audit-workbench__plan { margin-top: 1.1rem; }
+
+#tab-audit .audit-workbench__planHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--navy-line, rgba(148, 163, 184, .22));
+}
+
+#tab-audit .audit-workbench__planHead h4 {
+  margin: 0;
+  color: var(--ink, #f9fafb);
+  font-size: .85rem;
+}
+
+#tab-audit .audit-workbench__columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: .9rem;
+}
+
+#tab-audit .audit-workbench__column {
+  min-width: 0;
+  padding: .9rem;
+  border: 1px solid var(--navy-line, rgba(148, 163, 184, .22));
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(2, 6, 23, .28);
+}
+
+#tab-audit .audit-workbench__column > h4 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 0 .75rem;
+  color: var(--ink, #f9fafb);
+  font-size: .8rem;
+}
+
+#tab-audit .audit-workbench__count {
+  display: inline-grid;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, .16);
+  color: #6ee7b7;
+  font-size: .68rem;
+}
+
+#tab-audit .audit-workbench__count.is-collab {
+  background: rgba(245, 158, 11, .16);
+  color: #fcd34d;
+}
+
+#tab-audit .audit-workbench__row {
+  display: grid;
+  gap: .5rem;
+  padding: .7rem 0;
+  border-top: 1px solid rgba(148, 163, 184, .14);
+}
+
+#tab-audit .audit-workbench__row:first-of-type { border-top: 0; padding-top: 0; }
+
+#tab-audit .audit-workbench__rowTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .6rem;
+}
+
+#tab-audit .audit-workbench__rowTitle {
+  color: var(--ink, #f9fafb);
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#tab-audit .audit-workbench__price {
+  flex: 0 0 auto;
+  color: #6ee7b7;
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+#tab-audit .audit-workbench__evidence {
+  margin: 0;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .7rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+#tab-audit .audit-workbench__rowActions {
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#tab-audit .audit-workbench__rowActions select { width: auto; min-width: 130px; }
+
+#tab-audit .audit-workbench__empty {
+  margin: 0;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .76rem;
+  line-height: 1.6;
+}
+
+#tab-audit .audit-workbench__message {
+  margin-top: 1rem;
+  padding: .9rem;
+  border: 1px solid var(--navy-line, rgba(148, 163, 184, .22));
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(2, 6, 23, .28);
+}
+
+#tab-audit .audit-workbench__messageHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .7rem;
+}
+
+#tab-audit .audit-workbench__messageHead h4 {
+  margin: 0;
+  color: var(--ink, #f9fafb);
+  font-size: .8rem;
+}
+
+#tab-audit .audit-workbench__messageTools { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+#tab-audit .audit-workbench__message textarea {
+  min-height: 230px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+#tab-audit .audit-workbench__note {
+  margin: .6rem 0 0;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .7rem;
+  line-height: 1.6;
+}
+
+#tab-audit .audit-workbench .button--tiny {
+  min-height: 32px;
+  padding: .4rem .7rem;
+  font-size: .7rem;
+}
+
+#tab-audit .audit-workbench .button--tiny.is-active {
+  border-color: #6ee7b7;
+  color: #6ee7b7;
+}
+
+body.audit-present #tab-audit .audit-workbench { display: none !important; }
+
+@media (max-width: 1080px) {
+  #tab-audit .audit-workbench__bar {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  #tab-audit .audit-workbench__head,
+  #tab-audit .audit-workbench__planHead,
+  #tab-audit .audit-workbench__messageHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #tab-audit .audit-workbench__bar,
+  #tab-audit .audit-workbench__columns { grid-template-columns: 1fr; }
+  #tab-audit .audit-workbench__setup { align-self: flex-start; }
+}
+
+@media print {
+  #tab-audit .audit-workbench { display: none !important; }
+}

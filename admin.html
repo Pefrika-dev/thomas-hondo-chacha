@@ -10,9 +10,11 @@
   <link rel="stylesheet" href="css/admin.css?v=20261121a">
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
   <link rel="stylesheet" href="css/admin-audit.css?v=20261121d">
+  <link rel="stylesheet" href="css/admin-audit-workflow.css?v=20261121a">
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
   <script src="js/admin-audit-proof.min.js?v=20261121f" defer></script>
+  <script src="js/admin-audit-workflow.min.js?v=20261121a" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
@@ -180,13 +182,94 @@
         <div class="page-head">
           <div>
             <h2 id="audit-title">Live website audit</h2>
-            <p>Run the same public checker here while the client watches. Nothing is stored or shared.</p>
+            <p>Run the same public checker here while the client watches. Paid fix jobs can be saved in the workbench above.</p>
           </div>
           <div class="page-head__actions">
             <button class="btn-primary" id="auditPresentBtn" type="button">Present to client</button>
             <a class="btn-link" href="audit.html" target="_blank" rel="noopener">Open public checker ↗</a>
           </div>
         </div>
+
+        <div class="audit-workbench" data-audit-workbench>
+          <div class="audit-workbench__head">
+            <div>
+              <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Client fix workflow</p>
+              <h3>Paid audit → fix plan</h3>
+              <p>Mark the payment, run the audit below, then handle what you can and copy the rest for the client. Nothing is sent automatically.</p>
+            </div>
+            <span class="audit-workbench__setup" data-wm-setup>Checking Supabase…</span>
+          </div>
+
+          <div class="audit-workbench__bar">
+            <label>Client name
+              <input data-wm-name type="text" maxlength="120" autocomplete="name" placeholder="e.g. Jane Doe">
+            </label>
+            <label>Phone
+              <input data-wm-phone type="tel" maxlength="32" autocomplete="tel" placeholder="+254712345678">
+            </label>
+            <label>Email
+              <input data-wm-email type="email" maxlength="200" autocomplete="email" placeholder="jane@example.com">
+            </label>
+            <label>Payment received via
+              <select data-wm-payment>
+                <option value="">Not specified</option>
+                <option value="mpesa_buy_goods">M-Pesa Buy Goods 8729928</option>
+                <option value="kcb_bank">KCB Bank Business No. 522522</option>
+                <option value="mpesa_send_money">M-Pesa Send Money 0705023432</option>
+                <option value="other">Other — confirmed manually</option>
+              </select>
+            </label>
+            <label>Amount (KSh)
+              <input data-wm-amount type="number" min="0" max="10000000" step="1" placeholder="25000">
+            </label>
+            <label class="audit-workbench__paid">
+              <input data-wm-paid type="checkbox">
+              Client has paid
+            </label>
+            <button class="btn-primary" data-wm-save type="button">Save job</button>
+          </div>
+
+          <p class="audit-workbench__feedback" data-wm-feedback aria-live="polite"></p>
+
+          <div class="audit-workbench__gate" data-wm-gate hidden>
+            <strong>Payment is not marked yet.</strong> Mark the client as paid to unlock the fix plan and the message.
+          </div>
+
+          <div class="audit-workbench__plan" data-wm-plan hidden>
+            <div class="audit-workbench__planHead">
+              <h4>Fix plan from the latest scan</h4>
+              <div class="audit-workbench__messageTools">
+                <button class="btn-secondary" data-wm-rescan type="button">Re-run scan</button>
+                <button class="btn-secondary" data-wm-generate type="button">Generate message</button>
+              </div>
+            </div>
+
+            <div class="audit-workbench__columns">
+              <section class="audit-workbench__column">
+                <h4>I handle these <span class="audit-workbench__count" data-wm-auto-count>0</span></h4>
+                <div data-wm-auto-list></div>
+              </section>
+              <section class="audit-workbench__column">
+                <h4>Needs client help <span class="audit-workbench__count is-collab" data-wm-collab-count>0</span></h4>
+                <div data-wm-collab-list></div>
+              </section>
+            </div>
+
+            <div class="audit-workbench__message">
+              <div class="audit-workbench__messageHead">
+                <h4>Message to client</h4>
+                <div class="audit-workbench__messageTools">
+                  <button class="btn-secondary button--tiny is-active" data-wm-lang="en" type="button">EN</button>
+                  <button class="btn-secondary button--tiny" data-wm-lang="sw" type="button">SW</button>
+                  <button class="btn-primary button--tiny" data-wm-copy-message type="button">Copy message</button>
+                </div>
+              </div>
+              <textarea data-wm-message rows="12" aria-label="Message to client"></textarea>
+              <p class="audit-workbench__note">Edit this message, then copy and send it yourself on WhatsApp or email. Nothing is sent automatically.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="audit-layout">
           <form class="audit-form" id="audit-form" novalidate>
             <div class="audit-form__head">
