@@ -24,6 +24,7 @@
       checking: 'Checking Supabase…',
       ready: 'Supabase ready',
       missing: 'Run supabase/client-audit-jobs.sql',
+      loginRequired: 'Log in to the admin first',
       noSession: 'Log in to the admin first',
       gate: 'Payment is not marked yet. Mark the client as paid to unlock the fix plan and the message.',
       runFirst: 'Run the audit first.',
@@ -79,6 +80,7 @@
       checking: 'Inakagua Supabase…',
       ready: 'Supabase iko tayari',
       missing: 'Endesha supabase/client-audit-jobs.sql',
+      loginRequired: 'Ingia kwanza kwenye admin',
       noSession: 'Ingia kwanza kwenye admin',
       gate: 'Malipo bado hayaija alama. Weka alama kuwa client amelipa ili uone mpango wa kurekebisha na ujumbe.',
       runFirst: 'Endesha uchambuzi kwanza.',
@@ -467,11 +469,27 @@
       return;
     }
     client.from(TABLE).select('id').limit(1).then(function (response) {
+      var words = c(state.messageLang);
       state.tableReady = !response.error;
-      if (el.setup) {
-        el.setup.textContent = state.tableReady ? c('en').ready : c('en').missing;
-        el.setup.classList.toggle('is-ready', state.tableReady);
+      if (!el.setup) return;
+      if (!response.error) {
+        el.setup.textContent = words.ready;
+        el.setup.classList.add('is-ready');
+        return;
       }
+      var message = String(response.error.message || '');
+      el.setup.textContent = /client_audit_jobs|42P01|relation/i.test(message)
+        ? words.missing
+        : words.loginRequired;
+      el.setup.classList.remove('is-ready');
+    });
+  }
+
+  function watchAuth() {
+    var client = supabase();
+    if (!client || !client.auth || !client.auth.onAuthStateChange) return;
+    client.auth.onAuthStateChange(function (event, session) {
+      if (session) checkSetup();
     });
   }
 
@@ -550,7 +568,7 @@
       if (response.data && response.data.id) state.jobId = response.data.id;
       state.tableReady = true;
       if (el.setup) {
-        el.setup.textContent = c('en').ready;
+        el.setup.textContent = words.ready;
         el.setup.classList.add('is-ready');
       }
       feedback(words.saved, false);
@@ -646,5 +664,6 @@
   restoreDraft();
   bind();
   checkSetup();
+  watchAuth();
   render();
 })();
