@@ -557,6 +557,12 @@
       var submit = document.getElementById('audit-submit');
       if (submit) submit.click();
     });
+    var openWorkbench = document.querySelector('[data-audit-open-workbench]');
+    if (openWorkbench) {
+      openWorkbench.addEventListener('click', function () {
+        if (root.scrollIntoView) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
     [el.autoList, el.collabList].forEach(function (list) {
       list.addEventListener('change', function (event) {
         var select = event.target.closest('[data-status]');

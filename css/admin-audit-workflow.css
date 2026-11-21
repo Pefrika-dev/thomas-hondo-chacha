@@ -293,6 +293,53 @@
   color: #6ee7b7;
 }
 
+#tab-audit .audit-admin-handoff {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid rgba(16, 185, 129, .28);
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(16, 185, 129, .06);
+}
+
+#tab-audit .audit-admin-handoff strong {
+  color: var(--ink, #f9fafb);
+  font-size: .82rem;
+}
+
+#tab-audit .audit-admin-handoff p {
+  margin: .25rem 0 0;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .74rem;
+  line-height: 1.6;
+}
+
+body:not(.audit-present) #tab-audit .audit-cta { display: none; }
+body.audit-present #tab-audit .audit-admin-handoff { display: none; }
+
+body.audit-present #tab-audit .audit-cta {
+  margin-top: 1rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(16, 185, 129, .3);
+  border-radius: var(--radius-sm, 10px);
+  background: rgba(16, 185, 129, .07);
+}
+
+body.audit-present #tab-audit .audit-cta h3 {
+  margin: 0 0 .35rem;
+  color: var(--ink, #f9fafb);
+  font-family: var(--font-display, Georgia, serif);
+}
+
+body.audit-present #tab-audit .audit-cta p {
+  margin: 0 0 .9rem;
+  color: var(--ink-soft, #9ca3af);
+  font-size: .8rem;
+}
+
 body.audit-present #tab-audit .audit-workbench { display: none !important; }
 
 @media (max-width: 1080px) {
