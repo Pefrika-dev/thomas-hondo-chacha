@@ -8,7 +8,6 @@
 
   var WHATSAPP_NUMBER = "254705023432";
   var PACKAGE_KEYS = ["starter", "business", "commerce", "custom"];
-  var ADDON_KEYS = ["domain", "mpesa", "booking", "copy"];
   var BRIEF_SELECTS = {
     need: [
       ["new", "needNew"], ["redesign", "needRedesign"], ["commerce", "needCommerce"],
@@ -446,20 +445,8 @@
       .replace(/'/g, "&#039;");
   }
 
-  function interpolate(text, values) {
-    return String(text).replace(/\{([a-zA-Z0-9_]+)\}/g, function (match, key) {
-      return Object.prototype.hasOwnProperty.call(values, key) ? String(values[key]) : match;
-    });
-  }
-
   function listItems(items) {
     return items.map(function (item) { return "<li>" + escapeHtml(item) + "</li>"; }).join("");
-  }
-
-  function addonQuantity(input) {
-    var parsed = parseInt(input ? input.value : "1", 10);
-    if (!Number.isFinite(parsed) || parsed < 1) return 1;
-    return Math.min(parsed, 50);
   }
 
   function fieldValue(form, name) {
@@ -472,30 +459,13 @@
     var packageKey = form.elements.namedItem("package").value;
     if (PACKAGE_KEYS.indexOf(packageKey) === -1) packageKey = "starter";
 
-    var pagesInput = form.querySelector("#proposal-copy-pages");
-    var selected = ADDON_KEYS.filter(function (key) {
-      var field = form.elements.namedItem("addon-" + key);
-      return Boolean(field && field.checked);
-    });
-
-    var rows = [];
     var deliverables = c.packages[packageKey].deliverables.concat([c.doc.commonDeliverable]);
     var total = c.packages[packageKey].price;
-
-    selected.forEach(function (key) {
-      var addon = c.addons[key];
-      var amount = key === "copy" ? addon.price * addonQuantity(pagesInput) : addon.price;
-      total += amount;
-      rows.push({ label: addon.title, amount: amount });
-      deliverables.push(interpolate(addon.deliverable, { pages: addonQuantity(pagesInput) }));
-    });
 
     return {
       client: String(form.elements.namedItem("client").value || "").trim(),
       contact: String(form.elements.namedItem("contact").value || "").trim(),
       packageKey: packageKey,
-      selected: selected,
-      rows: rows,
       deliverables: deliverables,
       total: total,
       industry: fieldValue(form, "industry"),
@@ -560,14 +530,7 @@
       '</div>';
 
     var summaryRows =
-      '<tr><th scope="row">' + escapeHtml(doc.packageLabel) + '</th><td>' + money(pkg.price) + '</td></tr>' +
-      state.rows.map(function (row) {
-        return '<tr><th scope="row">' + escapeHtml(row.label) + '</th><td>' + money(row.amount) + '</td></tr>';
-      }).join('');
-
-    var addonBlock = state.rows.length
-      ? '<div class="proposal-document__block"><h3>' + escapeHtml(doc.addonsLabel) + '</h3><ul>' + listItems(state.rows.map(function (row) { return row.label; })) + '</ul></div>'
-      : '';
+      '<tr><th scope="row">' + escapeHtml(doc.packageLabel) + '</th><td>' + money(pkg.price) + '</td></tr>';
 
     target.innerHTML =
       '<div class="proposal-document__head">' +
@@ -598,7 +561,6 @@
         '<p class="proposal-document__line"><strong>' + escapeHtml(pkg.name) + '</strong> — ' + escapeHtml(doc.fromInline) + ' ' + money(pkg.price) + '</p>' +
         '<p class="proposal-document__desc">' + escapeHtml(pkg.description) + '</p></div>' +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.scopeLabel) + '</h3><ul>' + listItems(state.deliverables) + '</ul></div>' +
-      addonBlock +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.timelineLabel) + '</h3><p class="proposal-document__line">' + escapeHtml(pkg.timeline) + '</p></div>' +
       '<div class="proposal-document__block"><h3>' + escapeHtml(doc.paymentLabel) + '</h3>' +
         '<p class="proposal-document__line">' + escapeHtml(doc.paymentText) + '</p>' +
@@ -638,10 +600,7 @@
       if (state.auditIssues) lines.push(c.doc.auditIssues + ': ' + state.auditIssues);
     }
 
-    lines.push(
-      c.wa.addons + ': ' + (state.rows.length ? state.rows.map(function (row) { return row.label; }).join(', ') : c.wa.none),
-      c.wa.scope + ':'
-    );
+    lines.push(c.wa.scope + ':');
     state.deliverables.forEach(function (item) { lines.push('- ' + item); });
     lines.push('');
     lines.push(c.wa.timeline + ': ' + pkg.timeline);
@@ -697,17 +656,6 @@
     applyCopy(form);
     renderDocument(form, documentTarget);
     whatsappLink.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(whatsappMessage(form));
-
-    ADDON_KEYS.forEach(function (key) {
-      var field = form.elements.namedItem("addon-" + key);
-      if (field && field.closest) {
-        field.closest(".addon-option").classList.toggle("is-selected", Boolean(field.checked));
-      }
-    });
-
-    var quantity = document.getElementById("proposal-copy-pages");
-    var copyField = form.elements.namedItem("addon-copy");
-    if (quantity && copyField) quantity.disabled = !copyField.checked;
   }
 
   function applyPrefill(form) {
@@ -729,20 +677,6 @@
       setField("package", requestedPackage, 30);
     }
 
-    var addons = String(params.get("addons") || "").split(",").map(function (key) {
-      return "addon-" + key.trim();
-    });
-    ADDON_KEYS.forEach(function (key) {
-      var field = form.elements.namedItem("addon-" + key);
-      if (field) field.checked = addons.indexOf("addon-" + key) !== -1;
-    });
-
-    var pages = parseInt(params.get("pages"), 10);
-    if (Number.isFinite(pages) && pages >= 1 && pages <= 50) {
-      var pagesInput = document.getElementById("proposal-copy-pages");
-      if (pagesInput) pagesInput.value = pages;
-    }
-
     form.dataset.auditDomain = String(params.get("domain") || "").slice(0, 200);
     form.dataset.auditScore = String(params.get("score") || "").slice(0, 10);
     form.dataset.auditIssues = String(params.get("issues") || "").slice(0, 1200);
@@ -754,15 +688,6 @@
     var whatsappLink = document.getElementById("proposal-whatsapp");
     var printButton = document.getElementById("proposal-print");
     if (!form || !documentTarget || !whatsappLink) return;
-
-    ADDON_KEYS.forEach(function (key) {
-      var field = form.elements.namedItem("addon-" + key);
-      if (field) {
-        field.addEventListener("change", function () {
-          update(form, documentTarget, whatsappLink);
-        });
-      }
-    });
 
     form.addEventListener("input", function () { update(form, documentTarget, whatsappLink); });
     form.addEventListener("change", function () { update(form, documentTarget, whatsappLink); });
