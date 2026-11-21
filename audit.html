@@ -39,6 +39,7 @@
   <noscript><link rel="stylesheet" href="css/responsive.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/audit.css?v=20261121a" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/audit.css?v=20261121a"></noscript>
+  <link rel="stylesheet" href="css/audit-public-proof.css?v=20261121a">
   <link rel="preload" as="style" href="css/ai-chat.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/ai-chat.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/whatsapp-float.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
@@ -194,6 +195,81 @@
             <h3 class="audit-section-title" data-i18n="auditPage.checksTitle">Detailed results and fix guides</h3>
             <div class="audit-checks" id="audit-checks"></div>
 
+            <div class="audit-public-proof" id="auditPublicProof">
+              <div class="audit-public-proof__head">
+                <div>
+                  <h3 id="appTitle">See the proof live</h3>
+                  <p id="appIntro">Pick any issue below to see the real evidence, then leave your details if you want Thomas to fix it.</p>
+                </div>
+                <a class="button button--ghost" id="appAttackLink" href="attack-demo.html" target="_blank" rel="noopener noreferrer">
+                  <span id="appAttackLabel">Open full attack demo</span>
+                </a>
+              </div>
+
+              <p class="audit-public-proof__notice" id="appNotice"></p>
+              <div class="audit-public-proof__evidence" id="appEvidence"></div>
+
+              <div class="audit-public-proof__preview" id="appPreview" hidden>
+                <div class="audit-public-proof__previewHead">
+                  <strong id="appPreviewTitle">Live preview</strong>
+                  <button class="button button--ghost" type="button" id="appPreviewClose">
+                    <span id="appCloseLabel">Close</span>
+                  </button>
+                </div>
+                <div class="audit-public-proof__frame" id="appFrameWrap">
+                  <iframe id="appFrame" title="Live website preview" sandbox="" referrerpolicy="no-referrer"></iframe>
+                  <div class="audit-public-proof__overlay" id="appOverlay" hidden></div>
+                </div>
+                <p class="audit-public-proof__previewNote" id="appPreviewNote"></p>
+              </div>
+
+              <form class="audit-public-proof__form" id="appForm" novalidate>
+                <h4 id="appFormTitle">Save my details for a free follow-up</h4>
+                <div class="audit-public-proof__grid">
+                  <label><span id="appNameLabel">Full name</span>
+                    <input id="appName" name="full_name" type="text" autocomplete="name" maxlength="120" required>
+                  </label>
+                  <label><span id="appPhoneLabel">Phone number</span>
+                    <input id="appPhone" name="phone" type="tel" autocomplete="tel" maxlength="32" required>
+                  </label>
+                  <label><span id="appEmailLabel">Email address</span>
+                    <input id="appEmail" name="email" type="email" autocomplete="email" maxlength="200" required>
+                  </label>
+                  <label><span id="appPackageLabel">Suggested package</span>
+                    <select id="appPackage" name="package">
+                      <option value="starter">Starter — from KSh 25,000</option>
+                      <option value="business" selected>Business — from KSh 55,000</option>
+                      <option value="commerce">Commerce — from KSh 120,000</option>
+                      <option value="custom">Custom — from KSh 150,000</option>
+                    </select>
+                  </label>
+                  <label><span id="appContactLabel">Preferred follow-up</span>
+                    <select id="appContact" name="preferred_contact">
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="phone">Phone call</option>
+                      <option value="email">Email</option>
+                    </select>
+                  </label>
+                </div>
+                <label class="audit-public-proof__consent">
+                  <input id="appConsent" type="checkbox" required>
+                  <span id="appConsentLabel">I agree to be contacted about this audit.</span>
+                </label>
+                <div class="audit-public-proof__hp" aria-hidden="true">
+                  <input id="appHoneypot" name="company_website" type="text" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="audit-public-proof__actions">
+                  <button class="button button--primary" id="appSave" type="submit">
+                    <span id="appSaveLabel">Send my details</span>
+                  </button>
+                  <a class="button button--ghost" id="appProposal" href="proposal.html" target="_blank" rel="noopener noreferrer" hidden>
+                    <span id="appProposalLabel">Open my ready proposal</span>
+                  </a>
+                  <span id="appFeedback" aria-live="polite"></span>
+                </div>
+              </form>
+            </div>
+
             <div class="audit-results__actions">
               <button class="button button--ghost audit-print" type="button" data-audit-print>
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
@@ -285,6 +361,7 @@
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/main.min.js?v=20261120" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
+  <script src="js/audit-proof-public.min.js?v=20261121a" defer></script>
   <script src="js/whatsapp-float.min.js?v=20261120" defer></script>
   <script src="js/ai-chat.min.js?v=20261120" defer></script>
 </body>
