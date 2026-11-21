@@ -24,7 +24,9 @@
   var phoneInput = document.getElementById('leadPhone');
   var emailInput = document.getElementById('leadEmail');
   var contactInput = document.getElementById('leadContact');
+  var packageInput = document.getElementById('leadPackage');
   var consentInput = document.getElementById('leadConsent');
+  var proposalLink = document.getElementById('auditProposalLink');
   var saveBtn = document.getElementById('leadSaveBtn');
   var feedback = document.getElementById('leadFeedback');
 
@@ -54,6 +56,7 @@
       'Website: ' + (data.domain || 'n/a'),
       'Final URL: ' + (data.finalUrl || 'n/a'),
       'Score: ' + data.score + '/100 (' + data.overallLabel + ')',
+      'Suggested package: ' + (packageInput ? packageInput.value : 'business'),
       'Checked at: ' + (data.checkedAt || 'n/a')
     ];
     issues().forEach(function (item) {
@@ -210,6 +213,19 @@
       db.from('contact_submissions').insert([payload]).then(function (result) {
         if (result && result.error) throw result.error;
         feedback.textContent = 'Saved. Follow up with ' + fullName + ' via ' + labelForContact(contact) + '.';
+
+        if (proposalLink && window.URLSearchParams) {
+          var params = new URLSearchParams();
+          params.set('client', fullName);
+          params.set('contact', phone + ' · ' + email);
+          params.set('package', packageInput ? packageInput.value : 'business');
+          params.set('domain', data.domain || '');
+          params.set('score', String(data.score));
+          params.set('issues', issues().map(function (item) { return item.label; }).join(' | '));
+          proposalLink.href = 'proposal.html?' + params.toString();
+          proposalLink.hidden = false;
+        }
+
         form.reset();
       }, function (error) {
         feedback.textContent = 'Could not save: ' + (error && error.message ? error.message : 'please try again.');
@@ -229,6 +245,7 @@
     overlay.innerHTML = '';
     if (form) form.reset();
     if (feedback) feedback.textContent = '';
+    if (proposalLink) proposalLink.hidden = true;
     render();
   });
 })();

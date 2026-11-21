@@ -9,10 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/admin.css?v=20261121a">
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
-  <link rel="stylesheet" href="css/admin-audit.css?v=20261121c">
+  <link rel="stylesheet" href="css/admin-audit.css?v=20261121d">
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
-  <script src="js/admin-audit-proof.min.js?v=20261121d" defer></script>
+  <script src="js/admin-audit-proof.min.js?v=20261121e" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
@@ -302,6 +302,14 @@
                   <option value="email">Email</option>
                 </select>
               </label>
+              <label>Suggested package
+                <select id="leadPackage" name="package">
+                  <option value="starter">Starter — from KSh 25,000</option>
+                  <option value="business" selected>Business — from KSh 55,000</option>
+                  <option value="commerce">Commerce — from KSh 120,000</option>
+                  <option value="custom">Custom — from KSh 150,000</option>
+                </select>
+              </label>
             </div>
             <label class="audit-live__consent">
               <input id="leadConsent" type="checkbox" required>
@@ -309,6 +317,7 @@
             </label>
             <div class="audit-live__actions">
               <button class="btn-primary" id="leadSaveBtn" type="submit">Save client & follow up</button>
+              <a class="btn-primary" id="auditProposalLink" href="proposal.html" target="_blank" rel="noopener noreferrer" hidden>Open ready proposal</a>
               <span id="leadFeedback" class="audit-live__feedback" aria-live="polite"></span>
             </div>
           </form>

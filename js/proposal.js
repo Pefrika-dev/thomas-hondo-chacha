@@ -124,13 +124,17 @@
         fineprint: "The prices above are starting points for a defined scope, not fixed quotes. After a short conversation you receive a written scope and a final figure before any work begins.",
         foot: "Thomas Hondo Chacha · Software Engineer · Kenya · thomashondochacha@gmail.com · +254 705 023 432",
         notProvided: "To be confirmed",
-        none: "No optional add-ons selected."
+        none: "No optional add-ons selected.",
+        auditTitle: "Website audit snapshot",
+        auditScore: "Live score",
+        auditIssues: "Issues found"
       },
       wa: {
         intro: "Hello Thomas, I generated this project scope on your website and would like to discuss it.",
         client: "Client / company",
         contact: "Contact person",
         package: "Package",
+        audit: "Website audit",
         addons: "Add-ons",
         scope: "Scope",
         timeline: "Timeline",
@@ -253,13 +257,17 @@
         fineprint: "Bei zilizo juu ni mahali pa kuanzia kwa kazi iliyoelezwa wazi, si bei zisizobadilika. Baada ya mazungumzo mafupi unapokea maelezo ya kazi na bei ya mwisho kabla kazi yoyote kuanza.",
         foot: "Thomas Hondo Chacha · Mhandisi wa Programu · Kenya · thomashondochacha@gmail.com · +254 705 023 432",
         notProvided: "Bado kuthibitishwa",
-        none: "Hakuna huduma za ziada zilizoteuliwa."
+        none: "Hakuna huduma za ziada zilizoteuliwa.",
+        auditTitle: "Matokeo ya uchambuzi wa tovuti",
+        auditScore: "Alama halisi",
+        auditIssues: "Matatizo yaliyopatikana"
       },
       wa: {
         intro: "Hujambo Thomas, nimetayarisha upeo wa mradi kwenye tovuti yako na ningependa kujadili.",
         client: "Mteja / kampuni",
         contact: "Mtu wa mawasiliano",
         package: "Kifurushi",
+        audit: "Uchambuzi wa tovuti",
         addons: "Huduma za ziada",
         scope: "Upeo",
         timeline: "Muda",
@@ -337,7 +345,10 @@
       selected: selected,
       rows: rows,
       deliverables: deliverables,
-      total: total
+      total: total,
+      auditDomain: form.dataset.auditDomain || "",
+      auditScore: form.dataset.auditScore || "",
+      auditIssues: form.dataset.auditIssues || ""
     };
   }
 
@@ -352,6 +363,16 @@
     var doc = c.doc;
     var state = selectedState(form);
     var pkg = c.packages[state.packageKey];
+
+    var auditPoints = state.auditIssues.split("|").map(function (issue) {
+      return issue.trim();
+    }).filter(Boolean);
+    var auditBlock = state.auditDomain
+      ? '<div class="proposal-document__block"><h3>' + escapeHtml(doc.auditTitle) + '</h3>' +
+        '<p class="proposal-document__line"><strong>' + escapeHtml(state.auditDomain) + '</strong> — ' +
+        escapeHtml(doc.auditScore) + ': ' + escapeHtml(state.auditScore || "0") + '/100</p>' +
+        (auditPoints.length ? '<ul>' + listItems(auditPoints) + '</ul>' : '') + '</div>'
+      : '';
 
     var summaryRows =
       '<tr><th scope="row">' + escapeHtml(doc.packageLabel) + '</th><td>' + money(pkg.price) + '</td></tr>' +
@@ -373,6 +394,7 @@
         '<div class="proposal-document__date"><span>' + escapeHtml(doc.dateLabel) + '</span><strong>' + escapeHtml(dateLabel()) + '</strong></div>' +
       '</div>' +
       '<h2>' + escapeHtml(doc.title) + '</h2>' +
+      auditBlock +
       '<div class="proposal-document__block">' +
         '<h3>' + escapeHtml(doc.preparedFor) + ' / ' + escapeHtml(doc.preparedBy) + '</h3>' +
         '<div class="proposal-document__parties">' +
@@ -412,9 +434,17 @@
       c.wa.client + ': ' + (state.client || c.doc.notProvided),
       c.wa.contact + ': ' + (state.contact || c.doc.notProvided),
       c.wa.package + ': ' + pkg.name + ' (' + c.doc.fromInline + ' ' + money(pkg.price) + ')',
-      c.wa.addons + ': ' + (state.rows.length ? state.rows.map(function (row) { return row.label; }).join(', ') : c.wa.none),
-      c.wa.scope + ':',
     ];
+
+    if (state.auditDomain) {
+      lines.push(c.wa.audit + ': ' + state.auditDomain + ' — ' + state.auditScore + '/100');
+      if (state.auditIssues) lines.push(c.doc.auditIssues + ': ' + state.auditIssues);
+    }
+
+    lines.push(
+      c.wa.addons + ': ' + (state.rows.length ? state.rows.map(function (row) { return row.label; }).join(', ') : c.wa.none),
+      c.wa.scope + ':'
+    );
     state.deliverables.forEach(function (item) { lines.push('- ' + item); });
     lines.push('');
     lines.push(c.wa.timeline + ': ' + pkg.timeline);
@@ -449,6 +479,11 @@
       return '<option value="' + key + '">' + escapeHtml(c.packages[key].name + ' — ' + c.doc.fromLabel + ' ' + money(c.packages[key].price)) + '</option>';
     }).join('');
     if (PACKAGE_KEYS.indexOf(current) !== -1) select.value = current;
+    var saved = form.dataset.prefillPackage;
+    if (PACKAGE_KEYS.indexOf(saved) !== -1) {
+      select.value = saved;
+      delete form.dataset.prefillPackage;
+    }
   }
 
   function update(form, documentTarget, whatsappLink) {
@@ -466,6 +501,44 @@
     var quantity = document.getElementById("proposal-copy-pages");
     var copyField = form.elements.namedItem("addon-copy");
     if (quantity && copyField) quantity.disabled = !copyField.checked;
+  }
+
+  function applyPrefill(form) {
+    if (!window.URLSearchParams) return;
+    var params = new URLSearchParams(window.location.search);
+    if (!params.toString()) return;
+
+    var setField = function (name, value, max) {
+      var field = form.elements.namedItem(name);
+      if (field && value) field.value = String(value).slice(0, max || 100);
+    };
+
+    setField("client", params.get("client"), 100);
+    setField("contact", params.get("contact"), 100);
+
+    var requestedPackage = String(params.get("package") || "");
+    if (PACKAGE_KEYS.indexOf(requestedPackage) !== -1) {
+      form.dataset.prefillPackage = requestedPackage;
+      setField("package", requestedPackage, 30);
+    }
+
+    var addons = String(params.get("addons") || "").split(",").map(function (key) {
+      return "addon-" + key.trim();
+    });
+    ADDON_KEYS.forEach(function (key) {
+      var field = form.elements.namedItem("addon-" + key);
+      if (field) field.checked = addons.indexOf("addon-" + key) !== -1;
+    });
+
+    var pages = parseInt(params.get("pages"), 10);
+    if (Number.isFinite(pages) && pages >= 1 && pages <= 50) {
+      var pagesInput = document.getElementById("proposal-copy-pages");
+      if (pagesInput) pagesInput.value = pages;
+    }
+
+    form.dataset.auditDomain = String(params.get("domain") || "").slice(0, 200);
+    form.dataset.auditScore = String(params.get("score") || "").slice(0, 10);
+    form.dataset.auditIssues = String(params.get("issues") || "").slice(0, 1200);
   }
 
   function init() {
@@ -498,6 +571,7 @@
       });
     }
 
+    applyPrefill(form);
     update(form, documentTarget, whatsappLink);
   }
 

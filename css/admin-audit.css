@@ -459,6 +459,7 @@ body.audit-present #tab-audit .audit-check { padding: 1rem 1.15rem; }
   cursor: pointer;
 }
 
+#auditLive #auditProposalLink[hidden] { display: none !important; }
 #auditLive .audit-live__actions { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
 #auditLive .audit-live__feedback { color: var(--brand-dark); font-size: .8rem; font-weight: 600; }
 
