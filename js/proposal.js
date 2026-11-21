@@ -179,8 +179,8 @@
         addonsLabel: "Optional add-ons",
         timelineLabel: "Estimated timeline",
         paymentLabel: "Payment terms",
-        paymentText: "50% deposit to start and 50% before the site goes live.",
-        paymentNote: "Projects above KSh 100,000 are split 40%, 30% and 30%. A 5% discount applies when the full amount is paid upfront.",
+        paymentText: "M-Pesa Buy Goods Till 8729928 · KCB M-Pesa 522522, Account 1321947844 · Send Money 0705023432 — Thomas Hondo Chacha.",
+        paymentNote: "50% deposit starts the work; 50% before go-live. Above KSh 100,000: 40%, 30%, 30%. Full upfront payment earns 5% off. Automatic payment is coming soon; Thomas confirms payment manually.",
         investmentLabel: "Total investment",
         fromLabel: "From",
         fromInline: "from",
@@ -389,8 +389,8 @@
         addonsLabel: "Huduma za ziada",
         timelineLabel: "Muda unaokadiriwa",
         paymentLabel: "Masharti ya malipo",
-        paymentText: "Asilimia 50 mwanzo na asilimia 50 kabla ya tovuti kuanza kufanya kazi.",
-        paymentNote: "Miradi zaidi ya KSh 100,000 hugawanywa 40%, 30% na 30%. Punguzo la 5% hutolewa kwa malipo yote kabla ya kazi kuanza.",
+        paymentText: "M-Pesa Lipa Bidhaa Till 8729928 · KCB M-Pesa 522522, Akaunti 1321947844 · Tuma Pesa 0705023432 — Thomas Hondo Chacha.",
+        paymentNote: "Asilimia 50 mwanzo na 50% kabla ya kuanza kufanya kazi. Zaidi ya KSh 100,000: 40%, 30%, 30%. Malipo yote kabla ya kazi hupata punguzo la 5%. Malipo ya moja kwa moja yanakuja hivi karibuni; Thomas anathibitisha malipo kwa mkono.",
         investmentLabel: "Jumla ya uwekezaji",
         fromLabel: "Kuanzia",
         fromInline: "kuanzia",
@@ -749,6 +749,9 @@
   function update(form, documentTarget, whatsappLink) {
     applyCopy(form);
     renderDocument(form, documentTarget);
+    document.dispatchEvent(new CustomEvent("thc:proposaltotal", {
+      detail: { total: selectedState(form).total }
+    }));
     whatsappLink.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(whatsappMessage(form));
   }
 
