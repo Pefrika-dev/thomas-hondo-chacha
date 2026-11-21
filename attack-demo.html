@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Clickjacking Proof — Thomas Hondo Chacha</title>
+  <title>Live Website Attack Proof — Thomas Hondo Chacha</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/attack-demo.css?v=20261121b">
+  <link rel="stylesheet" href="css/attack-demo.css?v=20261121c">
 </head>
 <body>
   <div class="demo-banner">
     <strong>SAFE LIVE PROOF</strong>
-    <span>This page demonstrates what a malicious site could do. No data is sent and the framed website is not changed.</span>
+    <span>This page turns the issues from your audit into a live demonstration: clickjacking, missing security headers, mobile layout and slow response. No data is sent and the framed website is not changed.</span>
   </div>
 
   <header class="attacker-head">
@@ -28,8 +28,8 @@
 
   <main class="attacker-main">
     <section class="attacker-hero">
-      <h1>You have 1 free reward waiting</h1>
-      <p>Confirm your details below to claim it now. This offer disappears when the timer ends.</p>
+      <h1>See what a malicious page could do on your website</h1>
+      <p>The reward centre below is only the lure. The proof shows the real weakness: your website can be framed, covered and clicked without the visitor knowing.</p>
       <div class="attacker-hero__pills">
         <span>No payment needed</span>
         <span>Takes 10 seconds</span>
@@ -38,8 +38,14 @@
     </section>
 
     <section class="attacker-setup">
-      <h2>Run the proof</h2>
+      <h2>Run the live proof</h2>
       <p>Enter the website you are authorised to demonstrate, then confirm.</p>
+      <div class="demo-modes" aria-label="Proof types">
+        <span>Clickjacking / overlay</span>
+        <span>Security headers</span>
+        <span>Mobile viewport</span>
+        <span>Response speed</span>
+      </div>
       <form id="demoSetup">
         <label>Website address
           <input id="demoUrl" name="url" type="text" maxlength="300" placeholder="example.co.ke" autocomplete="off">
@@ -52,20 +58,20 @@
           <input id="demoPass" type="checkbox">
           Real click-through: let my click reach the framed page. Scripts and forms stay blocked by sandbox.
         </label>
-        <button class="demo-launch" type="submit">Launch live overlay</button>
+        <button class="demo-launch" type="submit">Launch live proof</button>
       </form>
       <p class="demo-error" id="demoError" role="alert"></p>
     </section>
 
     <section class="attacker-stage" id="attackerStage" hidden>
       <div class="attacker-stage__bar">
-        <strong id="attackerStageLabel">Live website underneath</strong>
+        <strong id="attackerStageLabel">Live website under proof</strong>
         <button type="button" id="demoStop">Stop demo</button>
       </div>
       <div class="attacker-stage__frame">
         <iframe id="demoFrame" title="Live website being framed" sandbox="" referrerpolicy="no-referrer"></iframe>
         <div class="attacker-overlay" id="attackerOverlay">
-          <span class="attacker-overlay__tag">Transparent overlay — proof of concept</span>
+          <span class="attacker-overlay__tag">Live clickjacking proof — transparent overlay</span>
           <h3>Congratulations!</h3>
           <p>Click the button below to claim your reward.</p>
           <button type="button" id="demoBait">Claim my free reward</button>
@@ -77,9 +83,9 @@
 
   <footer class="attacker-foot">
     <span>Security awareness demo by Thomas Hondo Chacha</span>
-    <a href="audit.html">Run a free website check instead</a>
+    <a href="audit.html">Back to the full website check</a>
   </footer>
 
-  <script src="js/attack-demo.min.js?v=20261121b" defer></script>
+  <script src="js/attack-demo.min.js?v=20261121c" defer></script>
 </body>
 </html>

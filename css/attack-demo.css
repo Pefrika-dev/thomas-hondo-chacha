@@ -93,6 +93,23 @@ body {
 .attacker-setup p { margin: 0 0 .5rem; }
 .attacker-setup p { color: var(--muted); font-size: .85rem; }
 
+.demo-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin: .5rem 0 .8rem;
+}
+
+.demo-modes span {
+  padding: .25rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(11, 107, 203, .07);
+  color: var(--brand);
+  font-size: .72rem;
+  font-weight: 700;
+}
+
 #demoSetup { display: grid; gap: .7rem; margin-top: 1rem; }
 #demoSetup label { display: grid; gap: .35rem; font-size: .82rem; font-weight: 700; }
 #demoSetup input[type="text"] {

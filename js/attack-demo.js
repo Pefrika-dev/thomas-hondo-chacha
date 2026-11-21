@@ -78,7 +78,7 @@
       errorBox.textContent = '';
       passMode = Boolean(passInput && passInput.checked);
       if (frameWrap) frameWrap.classList.toggle('attacker-stage__frame--pass', passMode);
-      if (label) label.textContent = 'Live website underneath: ' + url.replace(/^https:\/\//, '');
+      if (label) label.textContent = 'Live proof: ' + url.replace(/^https:\/\//, '');
       if (frame) frame.src = url;
       if (stage) stage.hidden = false;
       if (feedback) {
