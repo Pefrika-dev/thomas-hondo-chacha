@@ -249,8 +249,30 @@ async function fetchSafely(startUrl) {
   }
 }
 
-function check(id, group, label, status, points, maxPoints, detail, fix) {
-  return { id, group, label, status, points, maxPoints, detail, fix };
+function check(id, group, label, status, points, maxPoints, detail, fix, evidence) {
+  return { id, group, label, status, points, maxPoints, detail, fix, evidence: evidence || '' };
+}
+
+function evidenceValue(value, missing) {
+  const text = clean(String(value == null ? '' : value), 240);
+  return text || missing;
+}
+
+function metaTag(html, name) {
+  const match = html.match(new RegExp('<meta\\b[^>]*\\bname\\s*=\\s*["\\\']' + name + '["\\\'][^>]*>', 'i'));
+  return match ? clean(match[0].replace(/\s+/g, ' '), 220) : 'Not found';
+}
+
+function metaContent(html, name) {
+  const first = html.match(new RegExp('<meta\\b[^>]*\\bname\\s*=\\s*["\\\']' + name + '["\\\'][^>]*\\bcontent\\s*=\\s*["\\\']([^"\\\']*)["\\\'][^>]*>', 'i'));
+  const second = html.match(new RegExp('<meta\\b[^>]*\\bcontent\\s*=\\s*["\\\']([^"\\\']*)["\\\'][^>]*\\bname\\s*=\\s*["\\\']' + name + '["\\\'][^>]*>', 'i'));
+  const match = first || second;
+  return match ? clean(match[1].replace(/\s+/g, ' '), 220) : 'Not found';
+}
+
+function titleText(html) {
+  const match = html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i);
+  return match ? clean(match[1].replace(/\s+/g, ' '), 180) : 'Not found';
 }
 
 function buildChecks(response, finalUrl, responseTimeMs, html) {
@@ -261,14 +283,17 @@ function buildChecks(response, finalUrl, responseTimeMs, html) {
   checks.push(check('ssl', 'Security', t('ssl.label'), secure ? 'pass' : 'fail',
     secure ? 15 : 0, 15,
     secure ? t('ssl.pass') : t('ssl.fail'),
-    secure ? '' : t('ssl.fix')));
+    secure ? '' : t('ssl.fix'),
+    secure ? 'Final address: ' + evidenceValue(finalUrl.toString(), finalUrl.hostname)
+      : 'Final address: ' + evidenceValue(finalUrl.toString(), finalUrl.hostname) + ' — http://, no padlock'));
 
   const speedKey = responseTimeMs < 1000 ? 'fast' : (responseTimeMs <= 2500 ? 'average' : 'slow');
   const speedStatus = speedKey === 'fast' ? 'pass' : (speedKey === 'average' ? 'warn' : 'fail');
   const speedPoints = speedKey === 'fast' ? 20 : (speedKey === 'average' ? 12 : 4);
   checks.push(check('speed', 'Speed', t('speed.label'), speedStatus, speedPoints, 20,
     t('speed.' + speedKey, { ms: responseTimeMs }),
-    speedKey === 'fast' ? '' : t('speed.fix')));
+    speedKey === 'fast' ? '' : t('speed.fix'),
+    'HTTP ' + response.status + ' · responded in ' + responseTimeMs + ' ms'));
 
   const hsts = headers.get('strict-transport-security') || '';
   const hstsAge = parseInt((hsts.match(/max-age\s*=\s*(\d+)/i) || [])[1], 10);
@@ -276,43 +301,55 @@ function buildChecks(response, finalUrl, responseTimeMs, html) {
   checks.push(check('hsts', 'Security', t('hsts.label'), hstsOk ? 'pass' : 'fail',
     hstsOk ? 10 : 0, 10,
     hstsOk ? t('hsts.pass') : t('hsts.fail'),
-    hstsOk ? '' : t('hsts.fix')));
+    hstsOk ? '' : t('hsts.fix'),
+    'Strict-Transport-Security: ' + evidenceValue(hsts, 'header not sent')));
 
   const xfo = (headers.get('x-frame-options') || '').toLowerCase();
   const xfoOk = /deny|sameorigin|allow-from/.test(xfo);
   checks.push(check('xfo', 'Security', t('xfo.label'), xfoOk ? 'pass' : 'fail',
     xfoOk ? 10 : 0, 10,
     xfoOk ? t('xfo.pass') : t('xfo.fail'),
-    xfoOk ? '' : t('xfo.fix')));
+    xfoOk ? '' : t('xfo.fix'),
+    'X-Frame-Options: ' + evidenceValue(xfo, 'header not sent')));
 
   const xcto = (headers.get('x-content-type-options') || '').toLowerCase();
   const xctoOk = xcto.indexOf('nosniff') !== -1;
   checks.push(check('xcto', 'Security', t('xcto.label'), xctoOk ? 'pass' : 'fail',
     xctoOk ? 10 : 0, 10,
     xctoOk ? t('xcto.pass') : t('xcto.fail'),
-    xctoOk ? '' : t('xcto.fix')));
+    xctoOk ? '' : t('xcto.fix'),
+    'X-Content-Type-Options: ' + evidenceValue(xcto, 'header not sent')));
 
   const csp = headers.get('content-security-policy') || '';
   const cspOk = csp.trim().length > 0;
   checks.push(check('csp', 'Security', t('csp.label'), cspOk ? 'pass' : 'fail',
     cspOk ? 10 : 0, 10,
     cspOk ? t('csp.pass') : t('csp.fail'),
-    cspOk ? '' : t('csp.fix')));
+    cspOk ? '' : t('csp.fix'),
+    'Content-Security-Policy: ' + evidenceValue(csp, 'header not sent')));
 
   const hasHtml = Boolean(html) && /<html[\s>]/i.test(html);
-  const patterns = {
-    title: /<title\b[^>]*>\s*\S[\s\S]*?<\/title\s*>/i,
-    description: /<meta\b[^>]*\bname\s*=\s*["']description["'][^>]*>/i,
-    viewport: /<meta\b[^>]*\bname\s*=\s*["']viewport["'][^>]*>/i
-  };
-  const points = { title: 8, description: 9, viewport: 8 };
-  ['title', 'description', 'viewport'].forEach((id) => {
-    const found = hasHtml && patterns[id].test(html);
-    checks.push(check(id, 'Google basics', t(id + '.label'), found ? 'pass' : 'fail',
-      found ? points[id] : 0, points[id],
-      !hasHtml ? t('notHtml') : (found ? t(id + '.pass') : t(id + '.fail')),
-      found || !hasHtml ? '' : t(id + '.fix')));
-  });
+  const title = titleText(html);
+  const description = metaContent(html, 'description');
+  const viewport = metaTag(html, 'viewport');
+
+  checks.push(check('title', 'Google basics', t('title.label'), title !== 'Not found' ? 'pass' : 'fail',
+    title !== 'Not found' ? 8 : 0, 8,
+    !hasHtml ? t('notHtml') : (title !== 'Not found' ? t('title.pass') : t('title.fail')),
+    title === 'Not found' && hasHtml ? t('title.fix') : '',
+    'Page title: ' + title));
+
+  checks.push(check('description', 'Google basics', t('description.label'), description !== 'Not found' ? 'pass' : 'fail',
+    description !== 'Not found' ? 9 : 0, 9,
+    !hasHtml ? t('notHtml') : (description !== 'Not found' ? t('description.pass') : t('description.fail')),
+    description === 'Not found' && hasHtml ? t('description.fix') : '',
+    'Meta description: ' + description));
+
+  checks.push(check('viewport', 'Google basics', t('viewport.label'), viewport !== 'Not found' ? 'pass' : 'fail',
+    viewport !== 'Not found' ? 8 : 0, 8,
+    !hasHtml ? t('notHtml') : (viewport !== 'Not found' ? t('viewport.pass') : t('viewport.fail')),
+    viewport === 'Not found' && hasHtml ? t('viewport.fix') : '',
+    'Viewport tag: ' + viewport));
 
   return checks;
 }

@@ -9,10 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/admin.css?v=20261121a">
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
-  <link rel="stylesheet" href="css/admin-audit.css?v=20261121b">
+  <link rel="stylesheet" href="css/admin-audit.css?v=20261121c">
   <script src="js/language.min.js?v=20261121a" defer></script>
-  <script src="js/audit.min.js?v=20261121a" defer></script>
-  <script src="js/admin-audit-demo.min.js?v=20261121b" defer></script>
+  <script src="js/audit.min.js?v=20261121c" defer></script>
+  <script src="js/admin-audit-proof.min.js?v=20261121c" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
@@ -255,41 +255,62 @@
           </div>
         </div>
 
-        <div class="audit-demo" id="clickjackDemo" hidden>
-          <div class="audit-demo__head">
+        <div class="audit-live" id="auditLive" hidden>
+          <div class="audit-live__head">
             <div>
-              <h3>Clickjacking proof — live demo</h3>
-              <p id="auditDemoNote">This site is missing clickjacking protection. The frame below shows what another page could do.</p>
+              <h3>Live attack proof & client capture</h3>
+              <p id="auditLiveContext">Real results from the scan above. Pick any issue to show the client what actually happens.</p>
             </div>
-            <div class="audit-demo__actions">
-              <button class="btn-primary" type="button" id="auditDemoVulnerable">Show vulnerable</button>
-              <button class="btn-secondary" type="button" id="auditDemoProtectedBtn">Show protected</button>
-              <button class="refresh-btn" type="button" id="auditDemoRestore">Restore live view</button>
-            </div>
+            <span class="audit-live__score" id="auditLiveScore"></span>
           </div>
-          <label class="audit-demo__consent">
-            <input type="checkbox" id="auditDemoConsent">
-            I own this website or have permission to demonstrate it.
-          </label>
-          <div class="audit-demo__stage">
-            <div class="audit-demo__frame" id="auditDemoFrameWrap">
-              <iframe id="auditDemoFrame" title="Live framed preview" sandbox="" referrerpolicy="no-referrer"></iframe>
-              <div class="audit-demo__decoy" aria-hidden="true">
-                <span>Invisible overlay demo</span>
-                <button type="button" id="auditDemoClick" tabindex="-1">Claim free gift</button>
-              </div>
-            </div>
-            <div class="audit-demo__protected" id="auditDemoProtected" hidden>
-              <div>
-                <strong>Blocked — this is the fixed state</strong>
-                <p>With X-Frame-Options: DENY or CSP frame-ancestors, the browser refuses to show the site inside another page.</p>
-              </div>
-            </div>
+
+          <div class="audit-live__notice">
+            <strong>Safe proof of concept.</strong> The client sees the real site and the real issue. No files change, no forms submit, no message is sent.
           </div>
-          <div class="audit-demo__foot">
-            <span id="auditDemoFeedback" class="audit-demo__feedback" aria-live="polite">Sandbox is on: scripts and forms are blocked; nothing is submitted.</span>
-            <span>If the frame stays blank, the target is already blocking framing — that is the protected state. No data is stored or sent.</span>
+
+          <div class="audit-live__evidence" id="auditLiveEvidence"></div>
+
+          <div class="audit-live__preview" id="auditLivePreview" hidden>
+            <div class="audit-live__previewHead">
+              <strong id="auditLivePreviewTitle">Live preview</strong>
+              <button class="refresh-btn" type="button" id="auditLivePreviewClose">Close preview</button>
+            </div>
+            <div class="audit-live__frameWrap" id="auditLiveFrameWrap">
+              <iframe id="auditLiveFrame" title="Live website preview" sandbox="" referrerpolicy="no-referrer"></iframe>
+              <div class="audit-live__overlay" id="auditLiveOverlay" hidden></div>
+            </div>
+            <p class="audit-live__previewNote" id="auditLivePreviewNote"></p>
           </div>
+
+          <form class="audit-live__form" id="auditLeadForm" novalidate>
+            <h4>Save this client now</h4>
+            <div class="audit-live__grid">
+              <label>Full name
+                <input id="leadName" name="full_name" type="text" autocomplete="name" maxlength="120" required placeholder="e.g. Jane Doe">
+              </label>
+              <label>Phone number
+                <input id="leadPhone" name="phone" type="tel" autocomplete="tel" maxlength="32" required placeholder="+254712345678">
+              </label>
+              <label>Email address
+                <input id="leadEmail" name="email" type="email" autocomplete="email" maxlength="200" required placeholder="jane@example.com">
+              </label>
+              <label>Preferred follow-up
+                <select id="leadContact" name="preferred_contact">
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="phone">Phone call</option>
+                  <option value="email">Email</option>
+                </select>
+              </label>
+            </div>
+            <label class="audit-live__consent">
+              <input id="leadConsent" type="checkbox" required>
+              Client agrees to be contacted about this audit.
+            </label>
+            <div class="audit-live__actions">
+              <button class="btn-primary" id="leadSaveBtn" type="submit">Save client & follow up</button>
+              <span id="leadFeedback" class="audit-live__feedback" aria-live="polite"></span>
+            </div>
+          </form>
         </div>
       </section>
 
@@ -512,6 +533,7 @@
       }
 
       const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      window.thcSupabase = supabase;
 
       const loginScreen = document.getElementById("loginScreen");
       const dashboard = document.getElementById("dashboard");

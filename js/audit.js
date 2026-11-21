@@ -268,6 +268,9 @@
     if (whatsapp) whatsapp.href = whatsappLink(data);
 
     setState('results');
+    if (document.dispatchEvent) {
+      document.dispatchEvent(new CustomEvent('thc:auditresult', { detail: data }));
+    }
   }
 
   function renderError(message) {
