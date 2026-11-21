@@ -45,6 +45,9 @@
       speedNote: 'This is the measured response of the real homepage, not an estimate.',
       genericNote: 'This is the real value returned by the live scan above.',
       frameNote: 'If the frame is blank, the site is refusing to be embedded — that is the protection working. The evidence above still applies.',
+      blockedTitle: 'This site blocks embedding',
+      blockedText: 'The live header says this site refuses to be framed. That is clickjacking protection working, so the preview is intentionally empty. You can still open the real site in a new tab.',
+      openLive: 'Open live site in a new tab',
       clickDemo: 'Overlay click captured locally. Nothing was sent to the website.',
       from: 'from',
       fix: 'Fix',
@@ -93,6 +96,9 @@
       speedNote: 'Hii ni kipimo halisi cha ukurasa wa nyumbani, si makadirio.',
       genericNote: 'Hii ni thamani halisi iliyorudishwa na uchambuzi hapo juu.',
       frameNote: 'Kama frame ni tupu, tovuti inakataa kuwekwa ndani — hiyo ni ulinzi ukifanya kazi. Ushahidi hapo juu bado unatumika.',
+      blockedTitle: 'Tovuti hii inazuia kuwekwa ndani',
+      blockedText: 'Header halisi inasema tovuti hii inakataa kuwekwa kwenye frame. Hiyo ni ulinzi wa clickjacking ukifanya kazi, kwa hiyo preview imeachwa tupu makusudi. Bado unaweza kufungua tovuti halisi kwenye tab mpya.',
+      openLive: 'Fungua tovuti halisi kwenye tab mpya',
       clickDemo: 'Bonyezo la overlay limeshwa hapa local. Hakuna kilichotumwa kwenye tovuti.',
       from: 'kuanzia',
       fix: 'Rekebisha',
@@ -133,6 +139,8 @@
   var previewNote = document.getElementById('appPreviewNote');
   var frame = document.getElementById('appFrame');
   var frameWrap = document.getElementById('appFrameWrap');
+  var frameBlocked = document.getElementById('appFrameBlocked');
+  var openLive = document.getElementById('appOpenLive');
   var overlay = document.getElementById('appOverlay');
   var closeButton = document.getElementById('appPreviewClose');
   var attackLink = document.getElementById('appAttackLink');
@@ -185,6 +193,7 @@
     set('appConsentLabel', c.consent);
     set('appSaveLabel', c.save);
     set('appProposalLabel', c.proposal);
+    set('appOpenLiveLabel', c.openLive);
 
     if (packageInput) {
       var packages = ['starter', 'business', 'commerce', 'custom'];
@@ -200,6 +209,17 @@
   function issues() {
     if (!data || !data.checks) return [];
     return data.checks.filter(function (item) { return item.status !== 'pass'; });
+  }
+
+  function frameBlockReason() {
+    if (!data || !data.checks) return '';
+    for (var i = 0; i < data.checks.length; i += 1) {
+      var check = data.checks[i];
+      var evidence = String(check.evidence || '');
+      if (check.id === 'xfo' && /sameorigin|deny|allow-from/i.test(evidence)) return evidence;
+      if (check.id === 'csp' && /frame-ancestors/i.test(evidence) && !/frame-ancestors\s+'none'/i.test(evidence)) return evidence;
+    }
+    return '';
   }
 
   function money(value) {
@@ -283,6 +303,16 @@
     overlay.hidden = false;
     overlay.innerHTML = '';
     frame.src = data.finalUrl || ('https://' + data.domain);
+
+    var reason = frameBlockReason();
+    frameWrap.hidden = Boolean(reason);
+    frameBlocked.hidden = !reason;
+    if (reason) {
+      document.getElementById('appBlockedTitle').textContent = t().blockedTitle;
+      document.getElementById('appBlockedText').textContent = t().blockedText;
+      document.getElementById('appBlockedEvidence').textContent = reason;
+      openLive.href = data.finalUrl || ('https://' + data.domain);
+    }
 
     if (item.id === 'xfo') {
       overlay.appendChild(el('strong', '', c.title));
@@ -386,6 +416,8 @@
       preview.classList.remove('is-open');
       mountPreview(null);
       frame.removeAttribute('src');
+      frameWrap.hidden = false;
+      frameBlocked.hidden = true;
       overlay.hidden = true;
       overlay.innerHTML = '';
       frameWrap.classList.remove('is-mobile');
@@ -479,6 +511,8 @@
     preview.classList.remove('is-open');
     mountPreview(null);
     frame.removeAttribute('src');
+    frameWrap.hidden = false;
+    frameBlocked.hidden = true;
     overlay.hidden = true;
     overlay.innerHTML = '';
     frameWrap.classList.remove('is-mobile');

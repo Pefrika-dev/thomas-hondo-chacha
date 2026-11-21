@@ -114,6 +114,8 @@
 }
 
 .audit-public-proof__preview[hidden],
+.audit-public-proof__frame[hidden],
+.audit-public-proof__blocked[hidden],
 .audit-public-proof__overlay[hidden],
 .audit-public-proof__actions a[hidden] { display: none !important; }
 
@@ -163,6 +165,27 @@
 .audit-public-proof__overlay strong { display: block; color: #7a271a; font-size: .82rem; }
 .audit-public-proof__overlay span { display: block; color: #344054; font-size: .78rem; word-break: break-word; }
 .audit-public-proof__previewNote { margin: 0; padding: .6rem .8rem; border-top: 1px solid var(--line, #e4e7ec); font-size: .8rem; }
+
+.audit-public-proof__blocked {
+  display: grid;
+  gap: .6rem;
+  padding: 1rem;
+  background: #fef3f2;
+  border-bottom: 1px solid #fecdca;
+}
+
+.audit-public-proof__blocked strong { color: #7a271a; font-size: .9rem; }
+.audit-public-proof__blocked p { margin: 0; color: #7a271a; font-size: .82rem; line-height: 1.55; }
+.audit-public-proof__blocked code {
+  display: block;
+  padding: .55rem .7rem;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #344054;
+  font-size: .76rem;
+  word-break: break-word;
+}
+.audit-public-proof__blocked .button { justify-self: start; }
 
 .audit-public-proof__form {
   margin-top: 1rem;
