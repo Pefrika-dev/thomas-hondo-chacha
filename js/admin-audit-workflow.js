@@ -38,6 +38,14 @@
       done: 'Done',
       waiting: 'Waiting for client',
       copyInstruction: 'Copy instruction',
+      fixThis: 'Fix this',
+      askClient: 'Ask client',
+      prepAll: 'Prepare all auto fixes',
+      autoNote: 'Click Fix this to copy the exact instruction. Apply it in hosting/CMS, then set Done.',
+      collabNote: 'Click Ask client to copy the request. Send it yourself, then set Waiting for client.',
+      prepDone: 'Instruction copied. Apply it, then set Done.',
+      askDone: 'Client request copied. Send it yourself, then set Waiting for client.',
+      allDone: 'All auto-fix instructions copied. Apply them, then set Done.',
       copied: 'Copied.',
       selectText: 'Select the text above and copy it.',
       generate: 'Generate message',
@@ -85,6 +93,14 @@
       done: 'Imekamilika',
       waiting: 'Inasubiri client',
       copyInstruction: 'Nakili maelekezo',
+      fixThis: 'Rekebisha hii',
+      askClient: 'Muulize client',
+      prepAll: 'Andaa marekebisho yote',
+      autoNote: 'Bonyeza Rekebisha hii ili kunakili maelekezo. Yafanye kwenye hosting/CMS, kisha weka Imekamilika.',
+      collabNote: 'Bonyeza Muulize client ili kunakili ombi. Litume mwenyewe, kisha weka Inasubiri client.',
+      prepDone: 'Maelekezo yamenakiliwa. Yafanye, kisha weka Imekamilika.',
+      askDone: 'Ombi la client limenakiliwa. Litume mwenyewe, kisha weka Inasubiri client.',
+      allDone: 'Maelekezo yote yamenakiliwa. Yafanye, kisha weka Imekamilika.',
       copied: 'Imenakiliwa.',
       selectText: 'Chagua maandishi hapo jua na uyanakili.',
       generate: 'Tengeneza ujumbe',
@@ -155,8 +171,11 @@
     plan: root.querySelector('[data-wm-plan]'),
     rescan: root.querySelector('[data-wm-rescan]'),
     generate: root.querySelector('[data-wm-generate]'),
+    prepAll: root.querySelector('[data-wm-prep-all]'),
     autoCount: root.querySelector('[data-wm-auto-count]'),
     collabCount: root.querySelector('[data-wm-collab-count]'),
+    autoNote: root.querySelector('[data-wm-auto-note]'),
+    collabNote: root.querySelector('[data-wm-collab-note]'),
     autoList: root.querySelector('[data-wm-auto-list]'),
     collabList: root.querySelector('[data-wm-collab-list]'),
     message: root.querySelector('[data-wm-message]'),
@@ -280,8 +299,10 @@
     }).join('');
   }
 
-  function renderRow(check, lang) {
+  function renderRow(check, lang, mode) {
     var words = c(lang);
+    var action = mode === 'auto' ? 'fix' : 'ask';
+    var actionLabel = mode === 'auto' ? words.fixThis : words.askClient;
     var status = state.statuses[check.id] || 'todo';
     var guide = (GUIDE[lang] || GUIDE.en)[check.id] || { where: '', action: '' };
     var price = FIXES[check.id] ? 'from KSh ' + money(FIXES[check.id].price) : '';
@@ -297,8 +318,8 @@
           '<select data-status="' + esc(check.id) + '" aria-label="Status for ' + esc(check.label || check.id) + '">' +
             statusOptions(lang).replace('value="' + status + '"', 'value="' + status + '" selected') +
           '</select>' +
-          '<button class="button button--ghost button--tiny" type="button" data-instruction="' + esc(check.id) + '">' +
-            esc(words.copyInstruction) +
+          '<button class="button button--ghost button--tiny" type="button" data-action="' + action + '" data-issue="' + esc(check.id) + '">' +
+            esc(actionLabel) +
           '</button>' +
         '</div>' +
       '</div>';
@@ -315,6 +336,14 @@
       guide.where ? words.next + ': ' + guide.where : ''
     ];
     return lines.filter(Boolean).join('\n');
+  }
+
+  function combinedAutoInstructions(lang) {
+    var list = split().auto;
+    if (!list.length) return c(lang).none;
+    return list.map(function (check, index) {
+      return (index + 1) + '. ' + instruction(check, lang);
+    }).join('\n\n');
   }
 
   function issueLines(list, lang) {
@@ -407,11 +436,14 @@
     el.plan.hidden = false;
     el.autoCount.textContent = groups.auto.length;
     el.collabCount.textContent = groups.collab.length;
+    if (el.autoNote) el.autoNote.textContent = words.autoNote;
+    if (el.collabNote) el.collabNote.textContent = words.collabNote;
+    if (el.prepAll) el.prepAll.disabled = groups.auto.length === 0;
     el.autoList.innerHTML = groups.auto.length
-      ? groups.auto.map(function (check) { return renderRow(check, state.messageLang); }).join('')
+      ? groups.auto.map(function (check) { return renderRow(check, state.messageLang, 'auto'); }).join('')
       : '<p class="audit-workbench__empty">' + esc(words.none) + '</p>';
     el.collabList.innerHTML = groups.collab.length
-      ? groups.collab.map(function (check) { return renderRow(check, state.messageLang); }).join('')
+      ? groups.collab.map(function (check) { return renderRow(check, state.messageLang, 'collab'); }).join('')
       : '<p class="audit-workbench__empty">' + esc(words.none) + '</p>';
     if (el.message.value !== state.messages[state.messageLang]) {
       el.message.value = state.messages[state.messageLang] || '';
@@ -563,6 +595,19 @@
         if (root.scrollIntoView) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
+    if (el.prepAll) {
+      el.prepAll.addEventListener('click', function () {
+        var groups = split();
+        if (!groups.auto.length) return;
+        groups.auto.forEach(function (check) { state.statuses[check.id] = 'doing'; });
+        saveDraft();
+        render();
+        copyText(combinedAutoInstructions(state.messageLang)).then(
+          function () { feedback(c(state.messageLang).allDone, false); },
+          function () { feedback(c(state.messageLang).selectText, true); }
+        );
+      });
+    }
     [el.autoList, el.collabList].forEach(function (list) {
       list.addEventListener('change', function (event) {
         var select = event.target.closest('[data-status]');
@@ -571,13 +616,17 @@
         saveDraft();
       });
       list.addEventListener('click', function (event) {
-        var button = event.target.closest('[data-instruction]');
+        var button = event.target.closest('[data-action][data-issue]');
         if (!button) return;
-        var id = button.getAttribute('data-instruction');
+        var action = button.getAttribute('data-action');
+        var id = button.getAttribute('data-issue');
         var check = issues().filter(function (item) { return item.id === id; })[0];
         if (!check) return;
+        state.statuses[id] = action === 'fix' ? 'doing' : 'waiting';
+        saveDraft();
+        render();
         copyText(instruction(check, state.messageLang)).then(
-          function () { feedback(c(state.messageLang).copied, false); },
+          function () { feedback(c(state.messageLang)[action === 'fix' ? 'prepDone' : 'askDone'], false); },
           function () { feedback(c(state.messageLang).selectText, true); }
         );
       });

@@ -10,11 +10,11 @@
   <link rel="stylesheet" href="css/admin.css?v=20261121a">
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
   <link rel="stylesheet" href="css/admin-audit.css?v=20261121d">
-  <link rel="stylesheet" href="css/admin-audit-workflow.css?v=20261121b">
+  <link rel="stylesheet" href="css/admin-audit-workflow.css?v=20261121c">
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
   <script src="js/admin-audit-proof.min.js?v=20261121f" defer></script>
-  <script src="js/admin-audit-workflow.min.js?v=20261121b" defer></script>
+  <script src="js/admin-audit-workflow.min.js?v=20261121c" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
@@ -239,6 +239,7 @@
             <div class="audit-workbench__planHead">
               <h4>Fix plan from the latest scan</h4>
               <div class="audit-workbench__messageTools">
+                <button class="btn-primary" data-wm-prep-all type="button">Prepare all auto fixes</button>
                 <button class="btn-secondary" data-wm-rescan type="button">Re-run scan</button>
                 <button class="btn-secondary" data-wm-generate type="button">Generate message</button>
               </div>
@@ -247,10 +248,12 @@
             <div class="audit-workbench__columns">
               <section class="audit-workbench__column">
                 <h4>I handle these <span class="audit-workbench__count" data-wm-auto-count>0</span></h4>
+                <p class="audit-workbench__note" data-wm-auto-note></p>
                 <div data-wm-auto-list></div>
               </section>
               <section class="audit-workbench__column">
                 <h4>Needs client help <span class="audit-workbench__count is-collab" data-wm-collab-count>0</span></h4>
+                <p class="audit-workbench__note" data-wm-collab-note></p>
                 <div data-wm-collab-list></div>
               </section>
             </div>
