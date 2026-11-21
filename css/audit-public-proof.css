@@ -117,6 +117,12 @@
 .audit-public-proof__overlay[hidden],
 .audit-public-proof__actions a[hidden] { display: none !important; }
 
+.audit-public-proof__preview.is-open {
+  border-color: #0b6bcb;
+  box-shadow: 0 0 0 3px rgba(11, 107, 203, .18);
+  scroll-margin-top: 1.2rem;
+}
+
 .audit-public-proof__previewHead {
   display: flex;
   justify-content: space-between;

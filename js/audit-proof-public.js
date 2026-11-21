@@ -44,6 +44,7 @@
       viewportNote: 'This is the live page at phone width. Without a viewport tag, phones shrink the desktop layout.',
       speedNote: 'This is the measured response of the real homepage, not an estimate.',
       genericNote: 'This is the real value returned by the live scan above.',
+      frameNote: 'If the frame is blank, the site is refusing to be embedded — that is the protection working. The evidence above still applies.',
       clickDemo: 'Overlay click captured locally. Nothing was sent to the website.',
       from: 'from',
       fix: 'Fix',
@@ -91,6 +92,7 @@
       viewportNote: 'Hii ni ukurasa halisi kwa upana wa simu. Bila viewport tag, simu hupunguza muundo wa desktop.',
       speedNote: 'Hii ni kipimo halisi cha ukurasa wa nyumbani, si makadirio.',
       genericNote: 'Hii ni thamani halisi iliyorudishwa na uchambuzi hapo juu.',
+      frameNote: 'Kama frame ni tupu, tovuti inakataa kuwekwa ndani — hiyo ni ulinzi ukifanya kazi. Ushahidi hapo juu bado unatumika.',
       clickDemo: 'Bonyezo la overlay limeshwa hapa local. Hakuna kilichotumwa kwenye tovuti.',
       from: 'kuanzia',
       fix: 'Rekebisha',
@@ -252,9 +254,19 @@
     return lines.join('\n').slice(0, 3900);
   }
 
+  function revealPreview() {
+    preview.hidden = false;
+    preview.classList.add('is-open');
+    if (preview.scrollIntoView) {
+      window.setTimeout(function () {
+        preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 40);
+    }
+  }
+
   function showPreview(item) {
     var c = t();
-    preview.hidden = false;
+    revealPreview();
     frameWrap.classList.remove('is-mobile');
     overlay.hidden = false;
     overlay.innerHTML = '';
@@ -264,21 +276,21 @@
       overlay.appendChild(el('strong', '', c.title));
       overlay.appendChild(el('span', '', c.xfoNote));
       previewTitle.textContent = c.xfoTitle;
-      previewNote.textContent = c.xfoNote;
+      previewNote.textContent = c.xfoNote + ' ' + c.frameNote;
       return;
     }
 
     if (item.id === 'viewport') {
       frameWrap.classList.add('is-mobile');
       previewTitle.textContent = c.viewportTitle;
-      previewNote.textContent = c.viewportNote;
+      previewNote.textContent = c.viewportNote + ' ' + c.frameNote;
       return;
     }
 
     overlay.appendChild(el('strong', '', item.label));
     overlay.appendChild(el('span', '', item.evidence || item.detail));
     previewTitle.textContent = item.label;
-    previewNote.textContent = item.id === 'speed' ? c.speedNote : c.genericNote;
+    previewNote.textContent = (item.id === 'speed' ? c.speedNote : c.genericNote) + ' ' + c.frameNote;
   }
 
   function render() {
@@ -359,6 +371,7 @@
   if (closeButton) {
     closeButton.addEventListener('click', function () {
       preview.hidden = true;
+      preview.classList.remove('is-open');
       frame.removeAttribute('src');
       overlay.hidden = true;
       overlay.innerHTML = '';
@@ -450,6 +463,7 @@
   document.addEventListener('thc:auditresult', function (event) {
     data = event.detail;
     preview.hidden = true;
+    preview.classList.remove('is-open');
     frame.removeAttribute('src');
     overlay.hidden = true;
     overlay.innerHTML = '';
