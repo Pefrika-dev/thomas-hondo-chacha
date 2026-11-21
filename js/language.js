@@ -542,6 +542,126 @@
         checksPassed: "{count} of {total} checks passed",
         status: { pass: "Pass", warn: "Improve", fail: "Fix" },
         group: { security: "Security", speed: "Speed", seo: "Google basics" },
+        checksTitle: "Detailed results and fix guides",
+        roadmapTitle: "Fix first — priority action plan",
+        roadmapHint: "Ordered by business risk and score impact.",
+        roadmapClear: "No priority issues found. The checked basics all passed.",
+        pointsLost: "\u2212{count} pts",
+        priority: { critical: "Critical", high: "High", medium: "Medium", low: "Low" },
+        howToFix: "How to fix this",
+        whyItMatters: "Why it matters",
+        stepsTitle: "Steps to fix",
+        whereTitle: "Where to apply it",
+        verifyTitle: "How to confirm it worked",
+        printReport: "Print / save as PDF",
+        checkedAt: "Checked {date}",
+        responseNote: "This check measures homepage response time only. For full page-load analysis, use Google PageSpeed Insights.",
+        guide: {
+          ssl: {
+            why: "Without HTTPS, information such as enquiry forms and browsing activity can travel unprotected. Browsers may show a \"Not secure\" warning, which makes visitors less likely to contact you.",
+            steps: [
+              "Ask your host for an SSL certificate. Most hosts and Vercel/Netlify provide one free through Let's Encrypt.",
+              "Install the certificate on the domain and its www version.",
+              "Add a permanent 301 or 308 redirect from http:// to https://.",
+              "Update internal links, canonical URLs and the sitemap to use https://.",
+              "Open the site and confirm the padlock appears with no mixed-content warnings."
+            ],
+            where: "Hosting control panel \u2192 SSL/TLS, Vercel/Netlify project settings, Cloudflare SSL/TLS, or your web server configuration.",
+            verify: "Run this checker again and make sure the final address starts with https://. Also check that http://yourdomain redirects to https://."
+          },
+          speed: {
+            why: "A slow first response makes every later step slower. Visitors on mobile networks often leave before the page becomes usable, and search engines treat slow sites as a poor experience.",
+            steps: [
+              "Check the same URL in Google PageSpeed Insights to separate server response from page-load problems.",
+              "Compress and resize large images; serve WebP or AVIF where possible and lazy-load images below the fold.",
+              "Remove unused plugins, heavy sliders and scripts that are not needed on the first screen.",
+              "Minify CSS and JavaScript, enable Brotli or gzip compression, and set long cache lifetimes for static files.",
+              "Use caching or a CDN, and upgrade hosting if the server response stays above 1 second."
+            ],
+            where: "Image library/media settings, theme or build pipeline, hosting cache settings, CDN rules (Cloudflare), or server configuration.",
+            verify: "Re-run this checker and compare the response time. Then check PageSpeed Insights for the full mobile score."
+          },
+          hsts: {
+            why: "HSTS tells browsers to remember that your site must only be opened over HTTPS. Without it, an attacker on an insecure network can try to force a visitor back to http:// before the redirect happens.",
+            steps: [
+              "Confirm the whole site works on HTTPS first, including www and non-www versions.",
+              "Start with a short policy such as max-age=300 to test safely.",
+              "Once stable, increase to max-age=31536000; includeSubDomains.",
+              "Only add preload after you are certain every subdomain will stay on HTTPS for years.",
+              "Send the header on HTTPS responses and avoid setting it on http://."
+            ],
+            where: "Vercel/Netlify headers configuration, Cloudflare SSL/TLS \u2192 HSTS, Nginx add_header, Apache Header set, or a reputable WordPress security/header plugin.",
+            verify: "Open Developer Tools \u2192 Network, reload the homepage and look for Strict-Transport-Security in the response headers."
+          },
+          xfo: {
+            why: "Clickjacking lets another page hide your site in an invisible frame and trick a visitor into clicking buttons they cannot see. For business sites this can lead to accidental form submissions or unwanted actions.",
+            steps: [
+              "Choose DENY if your pages never need to be embedded, or SAMEORIGIN if only your own site may frame them.",
+              "Add the header X-Frame-Options: DENY (or SAMEORIGIN) to all HTML responses.",
+              "If a partner genuinely needs to embed a page, use Content-Security-Policy frame-ancestors instead of Allow-From.",
+              "Check that login, contact and admin pages are also covered."
+            ],
+            where: "vercel.json headers, Cloudflare Transform Rules / Response Header rules, Nginx add_header, Apache Header always set, or a WordPress HTTP headers plugin.",
+            verify: "Inspect response headers in Developer Tools \u2192 Network and confirm X-Frame-Options is present."
+          },
+          xcto: {
+            why: "Browsers sometimes try to guess a file type. If a file is misread, an attacker can use it to run unexpected code or break the layout. This header stops the guessing.",
+            steps: [
+              "Add the header X-Content-Type-Options: nosniff to every response.",
+              "Make sure files are served with the correct Content-Type (HTML as text/html, CSS as text/css, JavaScript as application/javascript).",
+              "Upload a test image and confirm it displays as an image, not as text or a download."
+            ],
+            where: "vercel.json headers, Cloudflare response-header rules, Nginx add_header, Apache Header always set, or your host's header settings.",
+            verify: "Check Developer Tools \u2192 Network for X-Content-Type-Options: nosniff on the homepage and on static files."
+          },
+          csp: {
+            why: "A Content Security Policy is an extra layer that limits which scripts, styles and external services may load. Even if another weakness appears, a tight policy makes it much harder for malicious code to run.",
+            steps: [
+              "List the resources your site really uses: your own domain, Google Fonts, analytics, payment or chat services.",
+              "Start with Content-Security-Policy-Report-Only so nothing breaks while you watch the violations.",
+              "Fix reported sources, then switch from Report-Only to Content-Security-Policy.",
+              "Prefer 'self' and exact domains; avoid 'unsafe-inline' and 'unsafe-eval' where possible.",
+              "Add frame-ancestors 'none' and object-src 'none' for a stronger baseline."
+            ],
+            where: "vercel.json headers, Cloudflare response-header rules, Nginx/Apache configuration, or your platform's security-header settings.",
+            verify: "Reload the site and confirm there are no CSP errors in the browser console, then re-run this checker."
+          },
+          title: {
+            why: "The title tag is the clickable line in Google results and the browser tab. A weak or missing title makes your business look unfinished and gives visitors less reason to click.",
+            steps: [
+              "Write one unique title for every page, around 50\u201360 characters.",
+              "Lead with the main service or page topic, then add your business name and location if it fits.",
+              "For example: Website Design in Migori | Thomas Hondo Chacha.",
+              "Remove duplicate titles across pages and avoid keyword stuffing.",
+              "Place it between <head> and </head> as <title>Your title here</title>."
+            ],
+            where: "Your CMS SEO settings, page template, React/Next metadata, or the <head> section of the HTML file.",
+            verify: "View the browser tab, then search your domain on Google and check the snippet after the pages are indexed."
+          },
+          description: {
+            why: "The meta description is the short summary under your link in search results. Google may rewrite it, but a clear one gives visitors a reason to choose your page.",
+            steps: [
+              "Write about 140\u2013160 characters for each important page.",
+              "Describe the result the visitor gets, not just what the page is called.",
+              "Include one natural phrase people actually search for, such as \"website design in Kenya\".",
+              "Add a soft call to action, for example \"Get a quote on WhatsApp\".",
+              "Keep descriptions unique; do not copy the same text to every page."
+            ],
+            where: "CMS SEO fields, template metadata, or <meta name=\"description\" content=\"...\"> inside <head>.",
+            verify: "View page source and confirm each main page has its own description. Search-result snippets may update after Google recrawls."
+          },
+          viewport: {
+            why: "Without a viewport tag, phones render the desktop layout scaled down. Text becomes tiny, buttons are hard to tap and mobile visitors usually leave quickly.",
+            steps: [
+              "Add <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> inside <head> on every page.",
+              "Do not add user-scalable=no or maximum-scale=1; people must be able to zoom for accessibility.",
+              "Test the homepage on a real phone and check that text, menus and buttons are comfortable to use.",
+              "Combine it with responsive CSS so layouts adapt instead of just shrinking."
+            ],
+            where: "The <head> section of every HTML page, or your framework's document/head component.",
+            verify: "Open the site on a phone, then re-run this checker. The mobile viewport check should pass."
+          }
+        },
         ctaTitle: "Want Thomas to fix these issues and speed up your website?",
         ctaBodyWithIssues: "Your scan found {count} areas to improve. Thomas can review the report, explain the business risk in plain English and fix the right things first.",
         ctaBodyClear: "Your scan looks healthy. Thomas can still review the details, tune performance further and make sure the site is ready to turn visitors into enquiries.",
@@ -1193,6 +1313,126 @@
         checksPassed: "Ukaguzi {count} kati ya {total} umepita",
         status: { pass: "Umezepita", warn: "Boresha", fail: "Rekebisha" },
         group: { security: "Usalama", speed: "Kasi", seo: "Mambo ya Google" },
+        checksTitle: "Matokeo ya kina na miongozo ya kurekebisha",
+        roadmapTitle: "Rekebisha kwanza — mpango wa kipaumbele",
+        roadmapHint: "Imepangwa kwa hatari ya biashara na athari kwenye alama.",
+        roadmapClear: "Hakuna matatizo ya kipaumbele. Mambo yote yaliyokaguliwa yalipita.",
+        pointsLost: "\u2212{count} pts",
+        priority: { critical: "Muhimu sana", high: "Ya juu", medium: "Ya kati", low: "Ya chini" },
+        howToFix: "Jinsi ya kurekebisha",
+        whyItMatters: "Kwa nini ni muhimu",
+        stepsTitle: "Hatua za kurekebisha",
+        whereTitle: "Mahali pa kuweka",
+        verifyTitle: "Jinsi ya kuthibitisha imefanya kazi",
+        printReport: "Chapisha / hifadhi kama PDF",
+        checkedAt: "Ilichanganuliwa {date}",
+        responseNote: "Ukaguzi huu hupima muda wa jibu la ukurasa wa nyumbani pekee. Kwa uchanganuzi kamili wa upakiaji, tumia Google PageSpeed Insights.",
+        guide: {
+          ssl: {
+            why: "Bila HTTPS, taarifa kama fomu za ombi na shughuli za kuvinjari zinaweza kusafiri bila ulinzi. Kivinjari kinaweza kuonyesha onyo la \"Sio salama\", na wageni wakakawia kukutafuta.",
+            steps: [
+              "Uliza mtoa huduma wako akupe cheti cha SSL. Wengi, pamoja na Vercel/Netlify, hutoa bure kupitia Let's Encrypt.",
+              "Sakinisha cheti kwenye domain na toleo lake la www.",
+              "Weka mwelekeo wa kudumu (301 au 308) kutoka http:// kwenda https://.",
+              "Sasisha viungo vya ndani, canonical URL na sitemap vitumie https://.",
+              "Fungua tovuti uone padlock ikionekana bila maonyo ya mixed content."
+            ],
+            where: "Paneli ya mtoa huduma \u2192 SSL/TLS, mipangilio ya Vercel/Netlify, Cloudflare SSL/TLS, au usanidi wa seva.",
+            verify: "Endesha zana hii tena na uhakikishe anwani ya mwisho inaanza https://. Pia angalia http://domain yako inaelekeza kwenye https://."
+          },
+          speed: {
+            why: "Jibu la kwanza linapokuwa polepole, kila hatua inayofuata pia huchelewa. Wageni wa mtandao wa simu mara nyingi huondoka kabla ukurasa haujatumika, na injini za utafutaji huona tovuti kama uzoefu mbaya.",
+            steps: [
+              "Angalia URL hiyo hiyo kwenye Google PageSpeed Insights ili kutofautisha jibu la seva na matatizo ya kupakia ukurasa.",
+              "Finya na upunguze picha kubwa; tumia WebP au AVIF inapowezekana na chelewesha picha zilizo chini ya ukurasa.",
+              "Ondoa programu-jalizi zisizohitajika, slider nzito na script ambazo hazihitajiki kwenye mwonekano wa kwanza.",
+              "Finyaza CSS na JavaScript, washa Brotli au gzip, na weka muda mrefu wa cache kwa faili za statiki.",
+              "Tumia cache au CDN, na uboresha hosting kama jibu la seva bado linazidi sekunde 1."
+            ],
+            where: "Mipangilio ya picha/media, theme au build pipeline, cache ya hosting, sheria za CDN (Cloudflare), au usanidi wa seva.",
+            verify: "Endesha zana hii tena ulinganishe muda wa jibu. Kisha angalia PageSpeed Insights kwa alama kamili ya simu."
+          },
+          hsts: {
+            why: "HSTS huambia kivinjari kukumbuka kuwa tovuti yako lazima ifunguliwe kupitia HTTPS tu. Bila yake, mshambuliaji kwenye mtandao usio salama anaweza kujaribu kumrudisha mgeni kwenye http:// kabla ya mwelekeo kutokea.",
+            steps: [
+              "Thibitisha kwanza tovuti yote inafanya kazi kwenye HTTPS, ikiwemo www na isiyo na www.",
+              "Anza na sera fupi kama max-age=300 ili kujaribu kwa usalama.",
+              "Ikithibitika, ongeza hadi max-age=31536000; includeSubDomains.",
+              "Ongeza preload tu unapokuwa na hakika kwamba subdomain zote zitabaki kwenye HTTPS kwa miaka.",
+              "Tuma header kwenye majibu ya HTTPS na usiiweke kwenye http://."
+            ],
+            where: "Mipangilio ya headers Vercel/Netlify, Cloudflare SSL/TLS \u2192 HSTS, Nginx add_header, Apache Header set, au plugin ya WordPress ya security/header.",
+            verify: "Fungua Developer Tools \u2192 Network, pakia upya ukurasa wa nyumbani na tafuta Strict-Transport-Security kwenye response headers."
+          },
+          xfo: {
+            why: "Clickjacking hutokea wakati ukurasa mwingine unaficha tovuti yako kwenye frame isiyoonekana na kumdanganya mgeni abofye vitu asivilvyoona. Kwenye tovuti ya biashara hii inaweza kusababisha fomu kutuma bila kukusudia.",
+            steps: [
+              "Chagua DENY kama kurasa zako hazihitaji kuingizwa popote, au SAMEORIGIN kama tovuti yako mwenyewe tu inaruhusiwa.",
+              "Ongeza header X-Frame-Options: DENY (au SAMEORIGIN) kwenye majibu yote ya HTML.",
+              "Kama mshirika anahitaji kuweka ukurasa ndani ya frame, tumia Content-Security-Policy frame-ancestors badala ya Allow-From.",
+              "Hakikisha kurasa za kuingia, mawasiliano na admin pia zinalindwa."
+            ],
+            where: "vercel.json headers, sheria za Cloudflare Response Header, Nginx add_header, Apache Header always set, au plugin ya HTTP headers ya WordPress.",
+            verify: "Angalia response headers kwenye Developer Tools \u2192 Network na uhakikishe X-Frame-Options ipo."
+          },
+          xcto: {
+            why: "Kivinjari wakati mwingine hujaribu kukisia aina ya faili. Faili ikisomwa vibaya, mshambuliaji anaweza kuitumia kuendesha msimbo usiotarajiwa au kuvuruga muonekano. Header hii inazuia kukisia huko.",
+            steps: [
+              "Ongeza header X-Content-Type-Options: nosniff kwenye kila jibu.",
+              "Hakikisha faili zinatumwa na Content-Type sahihi: HTML kama text/html, CSS kama text/css, JavaScript kama application/javascript.",
+              "Pakia picha ya majaribio na uhakikishe inaonekana kama picha, si kama maandishi au upakuaji."
+            ],
+            where: "vercel.json headers, sheria za Cloudflare response-header, Nginx add_header, Apache Header always set, au mipangilio ya header ya mtoa huduma.",
+            verify: "Angalia Developer Tools \u2192 Network kwa X-Content-Type-Options: nosniff kwenye ukurasa wa nyumbani na faili za statiki."
+          },
+          csp: {
+            why: "Content Security Policy ni safu ya ziada inayozuia ni script, mitindo na huduma gani za nje zinazoruhusiwa kupakia. Hata kama udhaifu mwingine utatokea, sera kali hufanya iwe vigumu sana kwa msimbo hatari kufanya kazi.",
+            steps: [
+              "Orodhesha rasilimali zinazotumika: domain yako, Google Fonts, analytics, malipo au huduma za chat.",
+              "Anza na Content-Security-Policy-Report-Only ili usivunje tovuti unapofuatilia maonyo.",
+              "Rekebisha vyanzo vilivyoripotiwa, kisha badilisha kutoka Report-Only kwenda Content-Security-Policy.",
+              "Pendelea 'self' na domain halisi; epuka 'unsafe-inline' na 'unsafe-eval' inapowezekana.",
+              "Ongeza frame-ancestors 'none' na object-src 'none' kwa ulinzi mkali zaidi."
+            ],
+            where: "vercel.json headers, sheria za Cloudflare response-header, usanidi wa Nginx/Apache, au mipangilio ya security-header ya jukwaa lako.",
+            verify: "Pakia upya tovuti na uhakikishe hakuna maonyo ya CSP kwenye console ya kivinjari, kisha endesha zana hii tena."
+          },
+          title: {
+            why: "Title tag ni mstari unaobofya kwenye matokeo ya Google na kwenye kichupo cha kivinjari. Title dhaifu au isiyopo hufanya biashara yako ionekane haijakamilika na huwapa wageni sababu ndogo ya kubofya.",
+            steps: [
+              "Andika title ya kipekee kwa kila ukurasa, takriban herufi 50\u201360.",
+              "Anza na huduma kuu au mada ya ukurasa, kisha ongeza jina la biashara na eneo kama linafaa.",
+              "Mfano: Ubunifu wa Tovuti Migori | Thomas Hondo Chacha.",
+              "Ondoa title zinazorudiwa kwenye kurasa na epuka kujaza maneno bila mpangilio.",
+              "Iweke kati ya <head> na </head> kama <title>Title yako hapa</title>."
+            ],
+            where: "Mipangilio ya SEO ya CMS, template ya ukurasa, metadata ya React/Next, au sehemu ya <head> ya faili ya HTML.",
+            verify: "Angalia kichupo cha kivinjari, kisha tafuta domain yako kwenye Google na uangalie snippet baada ya kurasa kufahamika."
+          },
+          description: {
+            why: "Meta description ni muhtasari mfupi chini ya kiungo chako kwenye matokeo ya utafutaji. Google inaweza kuandika upya, lakini iliyo wazi huwapa wageni sababu ya kuchagua ukurasa wako.",
+            steps: [
+              "Andika takriban herufi 140\u2013160 kwa kila ukurasa muhimu.",
+              "Elezea matokeo anayopata mgeni, si tu jina la ukurasa.",
+              "Jumuisha maneno yanayotafutwa kiasili kama \"ubunifu wa tovuti Kenya\".",
+              "Ongeza wito mpole, mfano \"Pata bei kupitia WhatsApp\".",
+              "Weka kila ukurasa description yake; usinakili maandishi yale yale kwenye kurasa zote."
+            ],
+            where: "Sehemu za SEO za CMS, metadata ya template, au <meta name=\"description\" content=\"...\"> ndani ya <head>.",
+            verify: "Angalia source ya ukurasa na uhakikishe kila ukurasa muhimu una description yake. Vipande vya matokeo vinaweza kusasishwa Google ikirudia kusoma ukurasa."
+          },
+          viewport: {
+            why: "Bila viewport tag, simu huonyesha muonekano wa kompyuta uliopunguzwa ukubwa. Maandishi huwa madogo, vitu vigumu kubofya na wageni wa simu mara nyingi huondoka haraka.",
+            steps: [
+              "Ongeza <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> ndani ya <head> kwenye kila ukurasa.",
+              "Usiongeze user-scalable=no au maximum-scale=1; watu lazima waweze kukuza kwa ajili ya ufikivu.",
+              "Jaribu ukurasa wa nyumbani kwenye simu halisi na uangalie maandishi, menyu na vitu vinavyobofywa vinatumika vizuri.",
+              "Iunganishe na CSS inayojibwa ili muonekano ubadilike, si kusinyaa tu."
+            ],
+            where: "Sehemu ya <head> ya kila ukurasa wa HTML, au kipengele cha document/head cha framework yako.",
+            verify: "Fungua tovuti kwenye simu, kisha endesha zana hii tena. Ukaguzi wa mobile viewport unapaswa kupita."
+          }
+        },
         ctaTitle: "Unataka Thomas arekebisha matatizo haya na kuharakisha tovuti yako?",
         ctaBodyWithIssues: "Uchanganuzi wako ulipata maeneo {count} ya kuboresha. Thomas anaweza kusoma ripoti, kueleza hatari ya biashara kwa lugha rahisi na kurekebisha mambo muhimu kwanza.",
         ctaBodyClear: "Uchanganuzi wako unaonekana mzuri. Thomas bado anaweza kukagua maelezo, kuboresha kasi zaidi na kuhakikisha tovuti iko tayari kuwageuza wageni kuwa wateja.",

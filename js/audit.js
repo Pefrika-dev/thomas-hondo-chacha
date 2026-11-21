@@ -23,11 +23,50 @@
   var metaBox = document.getElementById('audit-meta');
   var ctaMessage = document.getElementById('audit-cta-message');
   var whatsapp = document.getElementById('audit-whatsapp');
+  var roadmapBox = document.getElementById('audit-roadmap');
+  var printButton = document.querySelector('[data-audit-print]');
 
   var lastResult = null;
 
+  var PRIORITY = {
+    ssl: 'critical',
+    speed: 'high',
+    hsts: 'high',
+    xfo: 'medium',
+    xcto: 'medium',
+    csp: 'medium',
+    title: 'medium',
+    description: 'low',
+    viewport: 'high'
+  };
+  var PRIORITY_RANK = { critical: 0, high: 1, medium: 2, low: 3 };
+
   function T(path, values) {
     return window.Language && window.Language.t ? window.Language.t(path, values) : path;
+  }
+
+  function RAW(path) {
+    return window.Language && window.Language.raw ? window.Language.raw(path) : undefined;
+  }
+
+  function priorityFor(item) {
+    if (item.id === 'speed' && item.status === 'warn') return 'medium';
+    return PRIORITY[item.id] || 'medium';
+  }
+
+  function lostPoints(item) {
+    return Math.max(0, Number(item.maxPoints || 0) - Number(item.points || 0));
+  }
+
+  function guideFor(item) {
+    var base = 'auditPage.guide.' + item.id;
+    var steps = RAW(base + '.steps');
+    return {
+      why: T(base + '.why'),
+      steps: Array.isArray(steps) ? steps : [],
+      where: T(base + '.where'),
+      verify: T(base + '.verify')
+    };
   }
 
   function el(tag, className, text) {
@@ -71,19 +110,99 @@
   function renderCard(item) {
     var status = statusInfo(item.status);
     var card = el('article', 'audit-check audit-check--' + status.cls);
+    card.id = 'audit-issue-' + item.id;
 
     var head = el('div', 'audit-check__head');
     var title = el('h4', 'audit-check__title');
     title.appendChild(el('span', 'audit-check__badge', status.badge));
     title.appendChild(el('span', '', item.label));
     head.appendChild(title);
-    head.appendChild(el('span', 'audit-check__status', status.label));
+
+    var tags = el('div', 'audit-check__tags');
+    if (item.status !== 'pass') {
+      var priority = priorityFor(item);
+      tags.appendChild(el('span', 'audit-check__priority audit-check__priority--' + priority,
+        T('auditPage.priority.' + priority)));
+      tags.appendChild(el('span', 'audit-check__points',
+        T('auditPage.pointsLost', { count: lostPoints(item) })));
+    }
+    tags.appendChild(el('span', 'audit-check__status', status.label));
+    head.appendChild(tags);
     card.appendChild(head);
 
     card.appendChild(el('p', 'audit-check__group', groupLabel(item.group)));
     card.appendChild(el('p', '', item.detail));
     if (item.fix) card.appendChild(el('p', 'audit-check__fix', item.fix));
+
+    if (item.status !== 'pass') {
+      var guide = guideFor(item);
+      var block = el('div', 'audit-fix');
+      block.appendChild(el('h5', 'audit-fix__title', T('auditPage.howToFix')));
+
+      block.appendChild(el('p', 'audit-fix__label', T('auditPage.whyItMatters')));
+      block.appendChild(el('p', 'audit-fix__body', guide.why));
+
+      block.appendChild(el('p', 'audit-fix__label', T('auditPage.stepsTitle')));
+      if (guide.steps.length) {
+        var stepList = el('ol', 'audit-fix__steps');
+        guide.steps.forEach(function (step) { stepList.appendChild(el('li', '', step)); });
+        block.appendChild(stepList);
+      }
+
+      var details = el('details', 'audit-fix__details');
+      details.appendChild(el('summary', '', T('auditPage.whereTitle')));
+      details.appendChild(el('p', '', guide.where));
+      block.appendChild(details);
+
+      block.appendChild(el('p', 'audit-fix__label', T('auditPage.verifyTitle')));
+      block.appendChild(el('p', 'audit-fix__body', guide.verify));
+      card.appendChild(block);
+    }
+
     return card;
+  }
+
+  function renderRoadmap(data) {
+    if (!roadmapBox) return;
+    roadmapBox.innerHTML = '';
+
+    var head = el('div', 'audit-roadmap__head');
+    head.appendChild(el('h3', 'audit-roadmap__title', T('auditPage.roadmapTitle')));
+    head.appendChild(el('p', 'audit-roadmap__hint', T('auditPage.roadmapHint')));
+    roadmapBox.appendChild(head);
+
+    var issues = data.checks.filter(function (item) { return item.status !== 'pass'; });
+    issues.sort(function (a, b) {
+      var rank = PRIORITY_RANK[priorityFor(a)] - PRIORITY_RANK[priorityFor(b)];
+      if (rank !== 0) return rank;
+      return lostPoints(b) - lostPoints(a);
+    });
+
+    if (!issues.length) {
+      roadmapBox.appendChild(el('p', 'audit-roadmap__clear', T('auditPage.roadmapClear')));
+      return;
+    }
+
+    var list = el('ol', 'audit-roadmap__list');
+    issues.forEach(function (item, index) {
+      var priority = priorityFor(item);
+      var itemNode = el('li', 'audit-roadmap__item audit-roadmap__item--' + priority);
+      var link = el('a', 'audit-roadmap__link');
+      link.href = '#audit-issue-' + item.id;
+      link.appendChild(el('span', 'audit-roadmap__index', String(index + 1)));
+      link.appendChild(el('span', 'audit-roadmap__name', item.label));
+
+      var tags = el('span', 'audit-roadmap__tags');
+      tags.appendChild(el('span', 'audit-roadmap__priority audit-roadmap__priority--' + priority,
+        T('auditPage.priority.' + priority)));
+      tags.appendChild(el('span', 'audit-roadmap__points',
+        T('auditPage.pointsLost', { count: lostPoints(item) })));
+      link.appendChild(tags);
+
+      itemNode.appendChild(link);
+      list.appendChild(itemNode);
+    });
+    roadmapBox.appendChild(list);
   }
 
   function renderSummary(data) {
@@ -104,6 +223,11 @@
         T('auditPage.responseTime', { ms: Number(data.responseTimeMs).toLocaleString() })));
       metaBox.appendChild(el('span', 'audit-pill',
         T('auditPage.checksPassed', { count: data.summary.passed, total: data.summary.total })));
+      var checked = data.checkedAt ? new Date(data.checkedAt) : null;
+      if (checked && !isNaN(checked.getTime())) {
+        metaBox.appendChild(el('span', 'audit-pill',
+          T('auditPage.checkedAt', { date: checked.toLocaleString() })));
+      }
     }
     if (summary) {
       summary.classList.remove('audit-score--good', 'audit-score--warn', 'audit-score--bad');
@@ -129,6 +253,7 @@
   function renderResult(data) {
     lastResult = data;
     renderSummary(data);
+    renderRoadmap(data);
 
     if (checksBox) {
       checksBox.innerHTML = '';
@@ -211,6 +336,7 @@
         ? T('auditPage.ctaBodyWithIssues', { count: lastResult.failedIssues.length })
         : T('auditPage.ctaBodyClear');
       renderSummary(lastResult);
+      renderRoadmap(lastResult);
       if (checksBox) {
         checksBox.innerHTML = '';
         lastResult.checks.forEach(function (item) { checksBox.appendChild(renderCard(item)); });
