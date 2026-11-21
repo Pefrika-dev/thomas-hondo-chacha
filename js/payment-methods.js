@@ -8,11 +8,11 @@
   var COPY = {
     en: {
       kicker: 'Payment options',
-      title: 'Pay Thomas directly by M-Pesa',
+      title: 'Pay Thomas directly by M-Pesa or KCB Bank',
       badge: 'Automatic payment coming soon',
       tillLabel: 'Buy Goods Till',
       tillValue: '8729928 — Thomas Hondo Chacha',
-      bankLabel: 'KCB M-Pesa',
+      bankLabel: 'KCB Bank',
       bankValue: '522522 · Account 1321947844 — Thomas Hondo Chacha',
       sendLabel: 'Send Money',
       sendValue: '0705023432 — Thomas Hondo Chacha',
@@ -21,11 +21,11 @@
     },
     sw: {
       kicker: 'Njia za malipo',
-      title: 'Mlipie Thomas moja kwa moja kwa M-Pesa',
+      title: 'Mlipie Thomas kwa M-Pesa au KCB Bank',
       badge: 'Malipo ya moja kwa moja yanakuja hivi karibuni',
       tillLabel: 'Lipa Bidhaa — Till',
       tillValue: '8729928 — Thomas Hondo Chacha',
-      bankLabel: 'KCB M-Pesa',
+      bankLabel: 'KCB Bank',
       bankValue: '522522 · Akaunti 1321947844 — Thomas Hondo Chacha',
       sendLabel: 'Tuma Pesa',
       sendValue: '0705023432 — Thomas Hondo Chacha',
