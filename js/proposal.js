@@ -9,6 +9,19 @@
   var WHATSAPP_NUMBER = "254705023432";
   var PACKAGE_KEYS = ["starter", "business", "commerce", "custom"];
   var ADDON_KEYS = ["domain", "mpesa", "booking", "copy"];
+  var BRIEF_SELECTS = {
+    need: [
+      ["new", "needNew"], ["redesign", "needRedesign"], ["commerce", "needCommerce"],
+      ["app", "needApp"], ["booking", "needBooking"], ["other", "needOther"]
+    ],
+    timeline: [
+      ["asap", "timelineAsap"], ["month", "timelineMonth"],
+      ["quarter", "timelineQuarter"], ["flexible", "timelineFlexible"]
+    ],
+    contact_method: [
+      ["whatsapp", "contactWa"], ["phone", "contactPhone"], ["email", "contactEmail"]
+    ]
+  };
 
   var COPY = {
     en: {
@@ -58,7 +71,32 @@
         power4Title: "Measured handover",
         power4Body: "Testing, a written scope and a support window after launch.",
         powerFoot: "No subcontractors. No guesswork. No vanity metrics.",
-        powerLink: "Run a live website check"
+        powerLink: "Run a live website check",
+        briefTitle: "Tell me what you are building",
+        briefLede: "A few practical details help me quote the real work, not a guess.",
+        industryLabel: "Business / industry",
+        industryPlaceholder: "e.g. Hotel, school, retail shop",
+        currentSiteLabel: "Current website",
+        currentSitePlaceholder: "example.co.ke",
+        needLabel: "What do you need?",
+        needNew: "A new website",
+        needRedesign: "Redesign / improve my current site",
+        needCommerce: "Online shop with M-Pesa",
+        needApp: "Web app or customer portal",
+        needBooking: "Booking or enquiry system",
+        needOther: "Something else",
+        sitePagesLabel: "Approx. number of pages",
+        timelineLabel: "When do you want to start?",
+        timelineAsap: "As soon as possible",
+        timelineMonth: "Within a month",
+        timelineQuarter: "In 2–3 months",
+        timelineFlexible: "I am flexible",
+        contactMethodLabel: "How should Thomas reply?",
+        contactWa: "WhatsApp",
+        contactPhone: "Phone call",
+        contactEmail: "Email",
+        goalsLabel: "What should this project achieve?",
+        goalsPlaceholder: "e.g. More WhatsApp enquiries, online bookings, faster loading, a clean brand image..."
       },
       packages: {
         starter: {
@@ -149,7 +187,15 @@
           "Direct access to the engineer doing the work",
           "Built for enquiries, speed and bilingual users",
           "Written scope, testing and support after launch"
-        ]
+        ],
+        briefTitle: "Client brief",
+        industry: "Business / industry",
+        currentWebsite: "Current website",
+        need: "Main need",
+        sitePages: "Approx. pages",
+        timeline: "Preferred start",
+        contactMethod: "Reply via",
+        goals: "What success looks like"
       },
       wa: {
         intro: "Hello Thomas, I generated this project scope on your website and would like to discuss it.",
@@ -162,7 +208,15 @@
         timeline: "Timeline",
         total: "Indicative total",
         none: "None",
-        closing: "Please confirm the final scope and price."
+        closing: "Please confirm the final scope and price.",
+        brief: "Project brief",
+        industry: "Business",
+        currentWebsite: "Current website",
+        need: "Need",
+        sitePages: "Pages",
+        timeline: "Start",
+        contactMethod: "Reply via",
+        goals: "Goals"
       }
     },
 
@@ -213,7 +267,32 @@
         power4Title: "Kabidhiwa linalopimika",
         power4Body: "Upimaji, upeo ulioandikwa na muda wa usaidizi baada ya kuzindua.",
         powerFoot: "Hakuna wakandarasi wa chini. Hakuna nadhani. Hakuna takwimu za bandia.",
-        powerLink: "Fanya ukaguzi halisi wa tovuti"
+        powerLink: "Fanya ukaguzi halisi wa tovuti",
+        briefTitle: "Niambia unachojenga",
+        briefLede: "Maelezo machache ya vitendo hunisaidia kutoa bei ya kazi halisi, si nadhani.",
+        industryLabel: "Biashara / sekta",
+        industryPlaceholder: "mf. Hoteli, shule, duka la rejareja",
+        currentSiteLabel: "Tovuti ya sasa",
+        currentSitePlaceholder: "example.co.ke",
+        needLabel: "Unahitaji nini?",
+        needNew: "Tovuti mpya",
+        needRedesign: "Kuboresha tovuti iliyopo",
+        needCommerce: "Duka la mtandaoni lenye M-Pesa",
+        needApp: "Web app au portal ya wateja",
+        needBooking: "Mfumo wa kuweka nafasi au maombi",
+        needOther: "Kitu kingine",
+        sitePagesLabel: "Idadi takriban ya kurasa",
+        timelineLabel: "Unataka kuanza lini?",
+        timelineAsap: "Haraka iwezekanavyo",
+        timelineMonth: "Ndani ya mwezi",
+        timelineQuarter: "Baada ya miezi 2–3",
+        timelineFlexible: "Sina haraka sana",
+        contactMethodLabel: "Thomas akujibu vipi?",
+        contactWa: "WhatsApp",
+        contactPhone: "Simu",
+        contactEmail: "Barua pepe",
+        goalsLabel: "Mradi huu unapaswa kufanikisha nini?",
+        goalsPlaceholder: "mf. Maombi zaidi ya WhatsApp, kuweka nafasi mtandaoni, kasi zaidi, picha safi ya biashara..."
       },
       packages: {
         starter: {
@@ -304,7 +383,15 @@
           "Mawasiliano ya moja kwa moja na mhandisi anayefanya kazi",
           "Imejengwa kwa wateja, kasi na watumiaji wa lugha mbili",
           "Upeo ulioandikwa, upimaji na usaidizi baada ya kuzindua"
-        ]
+        ],
+        briefTitle: "Maelezo ya mteja",
+        industry: "Biashara / sekta",
+        currentWebsite: "Tovuti ya sasa",
+        need: "Hitaji kuu",
+        sitePages: "Idadi ya kurasa",
+        timeline: "Kuanza lini",
+        contactMethod: "Ajibu kupitia",
+        goals: "Mafanikio yanaonekana vipi"
       },
       wa: {
         intro: "Hujambo Thomas, nimetayarisha upeo wa mradi kwenye tovuti yako na ningependa kujadili.",
@@ -317,7 +404,15 @@
         timeline: "Muda",
         total: "Jumla ya makadirio",
         none: "Hakuna",
-        closing: "Tafadhali thibitisha upeo na bei ya mwisho."
+        closing: "Tafadhali thibitisha upeo na bei ya mwisho.",
+        brief: "Maelezo ya mradi",
+        industry: "Biashara",
+        currentWebsite: "Tovuti ya sasa",
+        need: "Hitaji",
+        sitePages: "Kurasa",
+        timeline: "Kuanza",
+        contactMethod: "Jibu kupitia",
+        goals: "Malengo"
       }
     }
   };
@@ -328,6 +423,14 @@
 
   function copy() {
     return COPY[language()];
+  }
+
+  function optionLabel(name, value, c) {
+    var options = BRIEF_SELECTS[name] || [];
+    for (var i = 0; i < options.length; i += 1) {
+      if (options[i][0] === value) return c.ui[options[i][1]] || value;
+    }
+    return value || c.doc.notProvided;
   }
 
   function money(value) {
@@ -357,6 +460,11 @@
     var parsed = parseInt(input ? input.value : "1", 10);
     if (!Number.isFinite(parsed) || parsed < 1) return 1;
     return Math.min(parsed, 50);
+  }
+
+  function fieldValue(form, name) {
+    var field = form.elements.namedItem(name);
+    return field ? String(field.value || "").trim() : "";
   }
 
   function selectedState(form) {
@@ -390,6 +498,13 @@
       rows: rows,
       deliverables: deliverables,
       total: total,
+      industry: fieldValue(form, "industry"),
+      currentSite: fieldValue(form, "current_site"),
+      need: fieldValue(form, "need"),
+      sitePages: fieldValue(form, "site_pages"),
+      timeline: fieldValue(form, "timeline"),
+      contactMethod: fieldValue(form, "contact_method"),
+      goals: fieldValue(form, "goals"),
       auditDomain: form.dataset.auditDomain || "",
       auditScore: form.dataset.auditScore || "",
       auditIssues: form.dataset.auditIssues || ""
@@ -426,6 +541,24 @@
         '<ul>' + listItems(doc.powerItems) + '</ul>' +
       '</div>';
 
+    var briefRows = [
+      [doc.industry, state.industry],
+      [doc.currentWebsite, state.currentSite],
+      [doc.need, optionLabel("need", state.need, c)],
+      [doc.sitePages, state.sitePages],
+      [doc.timeline, optionLabel("timeline", state.timeline, c)],
+      [doc.contactMethod, optionLabel("contact_method", state.contactMethod, c)]
+    ];
+    var briefBlock =
+      '<div class="proposal-document__block proposal-document__brief"><h3>' + escapeHtml(doc.briefTitle) + '</h3>' +
+        '<div class="proposal-document__brief-grid">' + briefRows.map(function (row) {
+          return '<div><span>' + escapeHtml(row[0]) + '</span><strong>' +
+            escapeHtml(row[1] || doc.notProvided) + '</strong></div>';
+        }).join('') + '</div>' +
+        (state.goals ? '<p class="proposal-document__goals"><span>' + escapeHtml(doc.goals) +
+          ':</span> ' + escapeHtml(state.goals) + '</p>' : '') +
+      '</div>';
+
     var summaryRows =
       '<tr><th scope="row">' + escapeHtml(doc.packageLabel) + '</th><td>' + money(pkg.price) + '</td></tr>' +
       state.rows.map(function (row) {
@@ -448,6 +581,7 @@
       '<h2>' + escapeHtml(doc.title) + '</h2>' +
       powerBlock +
       auditBlock +
+      briefBlock +
       '<div class="proposal-document__block">' +
         '<h3>' + escapeHtml(doc.preparedFor) + ' / ' + escapeHtml(doc.preparedBy) + '</h3>' +
         '<div class="proposal-document__parties">' +
@@ -487,7 +621,17 @@
       c.wa.client + ': ' + (state.client || c.doc.notProvided),
       c.wa.contact + ': ' + (state.contact || c.doc.notProvided),
       c.wa.package + ': ' + pkg.name + ' (' + c.doc.fromInline + ' ' + money(pkg.price) + ')',
+      '',
+      c.wa.brief + ':',
+      '- ' + c.wa.industry + ': ' + (state.industry || c.doc.notProvided),
+      '- ' + c.wa.currentWebsite + ': ' + (state.currentSite || c.doc.notProvided),
+      '- ' + c.wa.need + ': ' + optionLabel("need", state.need, c),
+      '- ' + c.wa.sitePages + ': ' + (state.sitePages || c.doc.notProvided),
+      '- ' + c.wa.timeline + ': ' + optionLabel("timeline", state.timeline, c),
+      '- ' + c.wa.contactMethod + ': ' + optionLabel("contact_method", state.contactMethod, c)
     ];
+
+    if (state.goals) lines.push('- ' + c.wa.goals + ': ' + state.goals);
 
     if (state.auditDomain) {
       lines.push(c.wa.audit + ': ' + state.auditDomain + ' — ' + state.auditScore + '/100');
@@ -537,6 +681,16 @@
       select.value = saved;
       delete form.dataset.prefillPackage;
     }
+
+    Object.keys(BRIEF_SELECTS).forEach(function (name) {
+      var target = form.elements.namedItem(name);
+      if (!target) return;
+      var currentValue = target.value;
+      target.innerHTML = BRIEF_SELECTS[name].map(function (option) {
+        return '<option value="' + option[0] + '">' + escapeHtml(c.ui[option[1]]) + '</option>';
+      }).join('');
+      target.value = currentValue || BRIEF_SELECTS[name][0][0];
+    });
   }
 
   function update(form, documentTarget, whatsappLink) {

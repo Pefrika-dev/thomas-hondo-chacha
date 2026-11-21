@@ -388,6 +388,51 @@
   }
 }
 
+/* ---------- Project brief fields ---------- */
+.proposal-brief {
+  margin-top: .4rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line, #e4e7ec);
+}
+
+.proposal-brief legend { padding-right: .5rem; }
+.proposal-brief__grid { margin-top: .55rem; }
+.proposal-brief textarea { min-height: 116px; resize: vertical; line-height: 1.55; }
+
+.proposal-document__brief-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .55rem 1.1rem;
+  margin: .65rem 0 0;
+}
+
+.proposal-document__brief-grid > div { display: grid; gap: .15rem; }
+
+.proposal-document__brief-grid span {
+  color: #667085;
+  font-size: 8pt;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.proposal-document__brief-grid strong { font-size: 10pt; line-height: 1.35; }
+
+.proposal-document__goals {
+  margin: .8rem 0 0;
+  padding: .6rem .7rem;
+  border-radius: 8px;
+  background: #f8fafc;
+  font-size: 9.5pt;
+  line-height: 1.55;
+}
+
+.proposal-document__goals span { font-weight: 800; }
+
+@media (max-width: 560px) {
+  .proposal-document__brief-grid { grid-template-columns: 1fr; }
+}
+
 /* ---------- Authority / superpower block ---------- */
 .proposal-power {
   position: relative;

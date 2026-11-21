@@ -37,8 +37,8 @@
   <noscript><link rel="stylesheet" href="css/components.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/responsive.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/responsive.css?v=20261120"></noscript>
-  <link rel="preload" as="style" href="css/proposal.css?v=20261120d" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="css/proposal.css?v=20261120d"></noscript>
+  <link rel="preload" as="style" href="css/proposal.css?v=20261120e" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/proposal.css?v=20261120e"></noscript>
   <link rel="preload" as="style" href="css/ai-chat.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/ai-chat.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/whatsapp-float.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
@@ -199,6 +199,47 @@
               <span class="field__hint" data-proposal-i18n="packageHint">Starting prices. Final scope and price are confirmed in writing.</span>
             </div>
 
+            <fieldset class="field field--full proposal-brief">
+              <legend class="field__label" data-proposal-i18n="briefTitle">Tell me what you are building</legend>
+              <p class="field__hint" data-proposal-i18n="briefLede">A few practical details help me quote the real work, not a guess.</p>
+              <div class="form-grid proposal-brief__grid">
+                <div class="field">
+                  <label class="field__label" for="proposal-industry"><span data-proposal-i18n="industryLabel">Business / industry</span></label>
+                  <input class="field__control" id="proposal-industry" name="industry" type="text" maxlength="120" autocomplete="organization" placeholder="e.g. Hotel, school, retail shop" data-proposal-placeholder="industryPlaceholder">
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="proposal-current-site"><span data-proposal-i18n="currentSiteLabel">Current website</span></label>
+                  <input class="field__control" id="proposal-current-site" name="current_site" type="text" maxlength="300" inputmode="url" placeholder="example.co.ke" data-proposal-placeholder="currentSitePlaceholder">
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="proposal-need"><span data-proposal-i18n="needLabel">What do you need?</span></label>
+                  <select class="field__control" id="proposal-need" name="need"></select>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="proposal-site-pages"><span data-proposal-i18n="sitePagesLabel">Approx. number of pages</span></label>
+                  <input class="field__control" id="proposal-site-pages" name="site_pages" type="number" min="1" max="200" step="1" inputmode="numeric" placeholder="5">
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="proposal-timeline"><span data-proposal-i18n="timelineLabel">When do you want to start?</span></label>
+                  <select class="field__control" id="proposal-timeline" name="timeline"></select>
+                </div>
+
+                <div class="field">
+                  <label class="field__label" for="proposal-contact-method"><span data-proposal-i18n="contactMethodLabel">How should Thomas reply?</span></label>
+                  <select class="field__control" id="proposal-contact-method" name="contact_method"></select>
+                </div>
+
+                <div class="field field--full">
+                  <label class="field__label" for="proposal-goals"><span data-proposal-i18n="goalsLabel">What should this project achieve?</span></label>
+                  <textarea class="field__control" id="proposal-goals" name="goals" rows="4" maxlength="1200" placeholder="e.g. More WhatsApp enquiries, online bookings, faster loading, a clean brand image..." data-proposal-placeholder="goalsPlaceholder"></textarea>
+                </div>
+              </div>
+            </fieldset>
+
             <fieldset class="field field--full proposal-addons">
               <legend class="field__label" data-proposal-i18n="addonsLegend">Optional add-ons</legend>
               <p class="field__hint" data-proposal-i18n="addonsHint">Tick anything you need. The total updates as you choose.</p>
@@ -331,7 +372,7 @@
   <script src="js/telemetry.min.js?v=20261120" defer></script>
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/main.min.js?v=20261120" defer></script>
-  <script src="js/proposal.min.js?v=20261121e" defer></script>
+  <script src="js/proposal.min.js?v=20261121f" defer></script>
   <script src="js/whatsapp-float.min.js?v=20261120" defer></script>
   <script src="js/ai-chat.min.js?v=20261120" defer></script>
 </body>
