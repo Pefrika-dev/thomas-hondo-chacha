@@ -123,6 +123,11 @@
   scroll-margin-top: 1.2rem;
 }
 
+.audit-public-proof__row > .audit-public-proof__preview {
+  margin-top: .85rem;
+  margin-bottom: .15rem;
+}
+
 .audit-public-proof__previewHead {
   display: flex;
   justify-content: space-between;

@@ -127,6 +127,8 @@
   var evidenceBox = document.getElementById('appEvidence');
   var fixSummary = document.getElementById('appFixSummary');
   var preview = document.getElementById('appPreview');
+  var previewHomeParent = preview ? preview.parentNode : null;
+  var previewHomeNext = preview ? preview.nextSibling : null;
   var previewTitle = document.getElementById('appPreviewTitle');
   var previewNote = document.getElementById('appPreviewNote');
   var frame = document.getElementById('appFrame');
@@ -254,19 +256,29 @@
     return lines.join('\n').slice(0, 3900);
   }
 
-  function revealPreview() {
+  function mountPreview(row) {
+    if (!preview) return;
+    if (row && row.appendChild) {
+      row.appendChild(preview);
+    } else if (previewHomeParent) {
+      previewHomeParent.insertBefore(preview, previewHomeNext);
+    }
+  }
+
+  function revealPreview(row) {
+    mountPreview(row);
     preview.hidden = false;
     preview.classList.add('is-open');
     if (preview.scrollIntoView) {
       window.setTimeout(function () {
-        preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }, 40);
     }
   }
 
-  function showPreview(item) {
+  function showPreview(item, row) {
     var c = t();
-    revealPreview();
+    revealPreview(row);
     frameWrap.classList.remove('is-mobile');
     overlay.hidden = false;
     overlay.innerHTML = '';
@@ -325,7 +337,7 @@
       var actions = el('div', 'audit-public-proof__rowActions');
       var button = el('button', 'button button--ghost', c.show);
       button.type = 'button';
-      button.addEventListener('click', function () { showPreview(item); });
+      button.addEventListener('click', function () { showPreview(item, row); });
       actions.appendChild(button);
 
       var fixInfo = FIXES[item.id];
@@ -372,6 +384,7 @@
     closeButton.addEventListener('click', function () {
       preview.hidden = true;
       preview.classList.remove('is-open');
+      mountPreview(null);
       frame.removeAttribute('src');
       overlay.hidden = true;
       overlay.innerHTML = '';
@@ -464,6 +477,7 @@
     data = event.detail;
     preview.hidden = true;
     preview.classList.remove('is-open');
+    mountPreview(null);
     frame.removeAttribute('src');
     overlay.hidden = true;
     overlay.innerHTML = '';
