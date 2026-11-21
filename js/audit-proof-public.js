@@ -15,7 +15,7 @@
       title: 'See the proof live',
       intro: 'Pick any issue below to see the real evidence, then leave your details if you want Thomas to fix it.',
       attack: 'Open full attack demo',
-      notice: 'Safe proof of concept. The framed website is sandboxed and no form is submitted from this preview.',
+      notice: 'Live Proof & Action Plan — from KSh 5,000, credited in full towards any website package. Safe proof of concept: the framed website is sandboxed and no form is submitted from this preview.',
       failed: 'Failed',
       attention: 'Needs attention',
       show: 'Show live',
@@ -45,13 +45,24 @@
       speedNote: 'This is the measured response of the real homepage, not an estimate.',
       genericNote: 'This is the real value returned by the live scan above.',
       clickDemo: 'Overlay click captured locally. Nothing was sent to the website.',
-      from: 'from'
+      from: 'from',
+      fix: 'Fix',
+      auto: 'Automatic',
+      collab: 'Needs collaboration',
+      add: 'Add to my plan',
+      added: 'Added to plan',
+      remove: 'Remove',
+      fixIntro: 'This fix can be prepared and applied as a small configuration change once access is confirmed.',
+      collabIntro: 'This fix needs your input or access to your hosting/DNS. Thomas will guide you or do it with you.',
+      fixSummaryEmpty: 'Pick the fixes you want. Prices are starting points and are confirmed in writing.',
+      fixSummary: '{count} fix(es) selected — from KSh {total}. Live Proof from KSh 5,000 is credited to your project.',
+      included: 'Selected fixes'
     },
     sw: {
       title: 'Ona ushahidi moja kwa moja',
       intro: 'Chagua tatizo lolote hapa chini kuona ushahidi halisi, kisha uache maelezo yako kama unataka Thomas akusaidie.',
       attack: 'Fungua demo kamili ya shambulio',
-      notice: 'Ushahidi salama. Tovuti iliyo kwenye frame iko sandbox na hakuna fomu inayotumwa kutoka kwenye preview hii.',
+      notice: 'Live Proof & Action Plan — kuanzia KSh 5,000, pesa yote inakatwa kwenye kifurushi chochote cha tovuti. Ushahidi salama: tovuti iliyo kwenye frame iko sandbox na hakuna fomu inayotumwa kutoka kwenye preview hii.',
       failed: 'Imeshindwa',
       attention: 'Inahitaji umakini',
       show: 'Ona live',
@@ -81,12 +92,38 @@
       speedNote: 'Hii ni kipimo halisi cha ukurasa wa nyumbani, si makadirio.',
       genericNote: 'Hii ni thamani halisi iliyorudishwa na uchambuzi hapo juu.',
       clickDemo: 'Bonyezo la overlay limeshwa hapa local. Hakuna kilichotumwa kwenye tovuti.',
-      from: 'kuanzia'
+      from: 'kuanzia',
+      fix: 'Rekebisha',
+      auto: 'Moja kwa moja',
+      collab: 'Inahitaji ushirikiano',
+      add: 'Ongeza kwenye mpango wangu',
+      added: 'Imeongezwa',
+      remove: 'Ondoa',
+      fixIntro: 'Marekebisho haya yanaweza kuandaliwa na kufanywa kama mabadiliko madogo ya configuration mara ufikiaji utakapothibitishwa.',
+      collabIntro: 'Marekebisho haya yanahitaji maelezo yako au ufikiaji wa hosting/DNS. Thomas atakuongoza au atafanya na wewe.',
+      fixSummaryEmpty: 'Chagua marekebisho unayotaka. Bei ni za kuanzia na zinathibitishwa kwa maandishi.',
+      fixSummary: 'Marekebisho {count} yaliyochaguliwa — kuanzia KSh {total}. Live Proof kuanzia KSh 5,000 inakatwa kwenye mradi wako.',
+      included: 'Marekebisho yaliyochaguliwa'
     }
   };
 
+  var FIXES = {
+    ssl: { price: 8000, mode: 'collab' },
+    speed: { price: 12000, mode: 'collab' },
+    hsts: { price: 3000, mode: 'auto' },
+    xfo: { price: 3000, mode: 'auto' },
+    xcto: { price: 3000, mode: 'auto' },
+    csp: { price: 8000, mode: 'collab' },
+    title: { price: 2500, mode: 'auto' },
+    description: { price: 2500, mode: 'auto' },
+    viewport: { price: 2500, mode: 'auto' }
+  };
+
+  var selectedFixes = {};
+
   var scoreBox = document.getElementById('appScore');
   var evidenceBox = document.getElementById('appEvidence');
+  var fixSummary = document.getElementById('appFixSummary');
   var preview = document.getElementById('appPreview');
   var previewTitle = document.getElementById('appPreviewTitle');
   var previewNote = document.getElementById('appPreviewNote');
@@ -161,6 +198,37 @@
     return data.checks.filter(function (item) { return item.status !== 'pass'; });
   }
 
+  function money(value) {
+    return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function selectedFixList() {
+    return Object.keys(selectedFixes).map(function (id) {
+      var info = FIXES[id];
+      var item = issues().filter(function (issue) { return issue.id === id; })[0];
+      return {
+        id: id,
+        label: item ? item.label : id,
+        price: info ? info.price : 0,
+        mode: info ? info.mode : 'collab'
+      };
+    });
+  }
+
+  function updateFixSummary() {
+    if (!fixSummary) return;
+    var c = t();
+    var list = selectedFixList();
+    if (!list.length) {
+      fixSummary.textContent = c.fixSummaryEmpty;
+      return;
+    }
+    var total = list.reduce(function (sum, item) { return sum + item.price; }, 0);
+    fixSummary.textContent = c.fixSummary
+      .replace('{count}', String(list.length))
+      .replace('{total}', money(total));
+  }
+
   function description() {
     var lines = [
       'Public website audit captured on thomashondochacha.co.ke.',
@@ -173,6 +241,14 @@
     issues().forEach(function (item) {
       lines.push('- ' + item.label + ': ' + (item.evidence || item.detail));
     });
+    var chosen = selectedFixList();
+    if (chosen.length) {
+      lines.push('');
+      lines.push(t().included + ':');
+      chosen.forEach(function (item) {
+        lines.push('- ' + item.label + ' — ' + t().from + ' KSh ' + money(item.price) + ' (' + item.mode + ')');
+      });
+    }
     return lines.join('\n').slice(0, 3900);
   }
 
@@ -218,6 +294,7 @@
 
     if (!found.length) {
       evidenceBox.appendChild(el('p', '', c.clear));
+      updateFixSummary();
       return;
     }
 
@@ -238,9 +315,45 @@
       button.type = 'button';
       button.addEventListener('click', function () { showPreview(item); });
       actions.appendChild(button);
+
+      var fixInfo = FIXES[item.id];
+      if (fixInfo) {
+        var fixButton = el('button', 'button button--primary', c.fix);
+        fixButton.type = 'button';
+        actions.appendChild(fixButton);
+
+        var panel = el('div', 'audit-public-proof__fix');
+        panel.hidden = true;
+        panel.appendChild(el('span', 'audit-public-proof__fixMode',
+          fixInfo.mode === 'auto' ? c.auto : c.collab));
+        panel.appendChild(el('strong', '', c.from + ' KSh ' + money(fixInfo.price)));
+        panel.appendChild(el('p', '', fixInfo.mode === 'auto' ? c.fixIntro : c.collabIntro));
+
+        var addButton = el('button', 'button button--ghost', c.add);
+        addButton.type = 'button';
+        if (selectedFixes[item.id]) addButton.textContent = c.added;
+        addButton.addEventListener('click', function () {
+          if (selectedFixes[item.id]) {
+            delete selectedFixes[item.id];
+            addButton.textContent = c.add;
+          } else {
+            selectedFixes[item.id] = true;
+            addButton.textContent = c.added;
+          }
+          updateFixSummary();
+        });
+        panel.appendChild(addButton);
+        row.appendChild(panel);
+
+        fixButton.addEventListener('click', function () {
+          panel.hidden = !panel.hidden;
+        });
+      }
+
       row.appendChild(actions);
       evidenceBox.appendChild(row);
     });
+    updateFixSummary();
   }
 
   if (closeButton) {
@@ -318,7 +431,10 @@
           '&package=' + encodeURIComponent(packageInput.value) +
           '&domain=' + encodeURIComponent(data.domain || '') +
           '&score=' + encodeURIComponent(data.score) +
-          '&issues=' + encodeURIComponent(issues().map(function (item) { return item.label; }).join(' | '));
+          '&issues=' + encodeURIComponent(issues().map(function (item) { return item.label; }).join(' | ')) +
+          '&fixes=' + encodeURIComponent(selectedFixList().map(function (item) {
+            return item.label + ' (' + t().from + ' KSh ' + money(item.price) + ')';
+          }).join(' | '));
         proposalLink.hidden = false;
         form.reset();
       }).catch(function () {
@@ -339,6 +455,7 @@
     overlay.innerHTML = '';
     frameWrap.classList.remove('is-mobile');
     if (form) form.reset();
+    selectedFixes = {};
     if (proposalLink) proposalLink.hidden = true;
     if (feedback) feedback.textContent = '';
     applyCopy();
@@ -348,6 +465,7 @@
   document.addEventListener('thc:languagechange', function () {
     applyCopy();
     render();
+    updateFixSummary();
   });
 
   applyCopy();
