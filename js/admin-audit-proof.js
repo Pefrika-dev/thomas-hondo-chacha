@@ -24,7 +24,6 @@
   var phoneInput = document.getElementById('leadPhone');
   var emailInput = document.getElementById('leadEmail');
   var contactInput = document.getElementById('leadContact');
-  var packageInput = document.getElementById('leadPackage');
   var consentInput = document.getElementById('leadConsent');
   var proposalLink = document.getElementById('auditProposalLink');
   var saveBtn = document.getElementById('leadSaveBtn');
@@ -56,7 +55,6 @@
       'Website: ' + (data.domain || 'n/a'),
       'Final URL: ' + (data.finalUrl || 'n/a'),
       'Score: ' + data.score + '/100 (' + data.overallLabel + ')',
-      'Suggested package: ' + (packageInput ? packageInput.value : 'business'),
       'Checked at: ' + (data.checkedAt || 'n/a')
     ];
     issues().forEach(function (item) {
@@ -218,7 +216,6 @@
           var params = new URLSearchParams();
           params.set('client', fullName);
           params.set('contact', phone + ' · ' + email);
-          params.set('package', packageInput ? packageInput.value : 'business');
           params.set('domain', data.domain || '');
           params.set('score', String(data.score));
           params.set('issues', issues().map(function (item) { return item.label; }).join(' | '));

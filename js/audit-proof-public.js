@@ -26,7 +26,6 @@
       name: 'Full name',
       phone: 'Phone number',
       email: 'Email address',
-      package: 'Suggested package',
       contact: 'Preferred follow-up',
       consent: 'I agree to be contacted about this audit.',
       save: 'Send my details',
@@ -77,7 +76,6 @@
       name: 'Jina kamili',
       phone: 'Namba ya simu',
       email: 'Barua pepe',
-      package: 'Kifurushi kinachopendekezwa',
       contact: 'Njia unayopendelea ya kuwasiliana',
       consent: 'Nakubali kuwasiliana nami kuhusu uchambuzi huu.',
       save: 'Tuma maelezo yangu',
@@ -148,7 +146,6 @@
   var nameInput = document.getElementById('appName');
   var phoneInput = document.getElementById('appPhone');
   var emailInput = document.getElementById('appEmail');
-  var packageInput = document.getElementById('appPackage');
   var contactInput = document.getElementById('appContact');
   var consentInput = document.getElementById('appConsent');
   var saveButton = document.getElementById('appSave');
@@ -188,22 +185,11 @@
     set('appNameLabel', c.name);
     set('appPhoneLabel', c.phone);
     set('appEmailLabel', c.email);
-    set('appPackageLabel', c.package);
     set('appContactLabel', c.contact);
     set('appConsentLabel', c.consent);
     set('appSaveLabel', c.save);
     set('appProposalLabel', c.proposal);
     set('appOpenLiveLabel', c.openLive);
-
-    if (packageInput) {
-      var packages = ['starter', 'business', 'commerce', 'custom'];
-      Array.prototype.forEach.call(packageInput.options, function (option, index) {
-        var key = packages[index];
-        if (!key) return;
-        var prices = { starter: '25,000', business: '55,000', commerce: '120,000', custom: '150,000' };
-        option.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ' — ' + c.from + ' KSh ' + prices[key];
-      });
-    }
   }
 
   function issues() {
@@ -259,7 +245,6 @@
       'Website: ' + (data.domain || 'n/a'),
       'Final URL: ' + (data.finalUrl || 'n/a'),
       'Score: ' + data.score + '/100 (' + data.overallLabel + ')',
-      'Suggested package: ' + (packageInput ? packageInput.value : 'business'),
       'Checked at: ' + (data.checkedAt || 'n/a')
     ];
     issues().forEach(function (item) {
@@ -486,7 +471,6 @@
         feedback.textContent = c.saved + ' ' + method + '.';
         proposalLink.href = 'proposal.html?client=' + encodeURIComponent(fullName) +
           '&contact=' + encodeURIComponent(phone + ' · ' + email) +
-          '&package=' + encodeURIComponent(packageInput.value) +
           '&domain=' + encodeURIComponent(data.domain || '') +
           '&score=' + encodeURIComponent(data.score) +
           '&issues=' + encodeURIComponent(issues().map(function (item) { return item.label; }).join(' | ')) +
