@@ -13,9 +13,9 @@
   var COPY = {
     en: {
       ui: {
-        eyebrow: "Instant scope",
-        title: "Scope it now. <em>Discuss it next.</em>",
-        lede: "Choose a starting package, add the extras you need, and get a formal proposal you can print or send on WhatsApp. Prices shown are starting points — the final quote is confirmed after a short brief.",
+        eyebrow: "Live-scoped proposal",
+        title: "Built by one engineer. <em>Approved by you.</em>",
+        lede: "Start with live evidence, choose a package, add what you need, and get a formal proposal you can print or send on WhatsApp. Prices shown are starting points — the final quote is confirmed after a short brief.",
         sideMeta1: "No account needed",
         sideMeta2: "Runs in your browser",
         formKicker: "01 / Your project",
@@ -45,7 +45,20 @@
         pagesHint: "KSh 3,000 per page",
         note: "Nothing is stored or sent from this page. The proposal is generated locally in your browser.",
         print: "Download / Print PDF Proposal",
-        whatsapp: "Confirm & discuss on WhatsApp"
+        whatsapp: "Confirm & discuss on WhatsApp",
+        powerKicker: "Built different",
+        powerTitle: "One engineer. One accountable owner. No hand-offs.",
+        powerBody: "You are not buying a template from a marketplace. Thomas diagnoses the real problem, shows you the live proof, builds the fix and hands over a working system you can measure.",
+        power1Title: "Proof before promise",
+        power1Body: "Live audit and real evidence, not a polished screenshot.",
+        power2Title: "One point of contact",
+        power2Body: "You talk directly to the engineer doing the work.",
+        power3Title: "Built to convert",
+        power3Body: "WhatsApp enquiries, speed and bilingual copy from day one.",
+        power4Title: "Measured handover",
+        power4Body: "Testing, a written scope and a support window after launch.",
+        powerFoot: "No subcontractors. No guesswork. No vanity metrics.",
+        powerLink: "Run a live website check"
       },
       packages: {
         starter: {
@@ -127,7 +140,16 @@
         none: "No optional add-ons selected.",
         auditTitle: "Website audit snapshot",
         auditScore: "Live score",
-        auditIssues: "Issues found"
+        auditIssues: "Issues found",
+        powerKicker: "Why this proposal is different",
+        powerTitle: "One engineer. One accountable owner. No hand-offs.",
+        powerBody: "This scope is prepared after live diagnosis, not from a generic template. The same engineer who writes the proposal builds, tests and hands over the work.",
+        powerItems: [
+          "Live proof before any promise",
+          "Direct access to the engineer doing the work",
+          "Built for enquiries, speed and bilingual users",
+          "Written scope, testing and support after launch"
+        ]
       },
       wa: {
         intro: "Hello Thomas, I generated this project scope on your website and would like to discuss it.",
@@ -146,9 +168,9 @@
 
     sw: {
       ui: {
-        eyebrow: "Upeo wa papo hapo",
-        title: "Andaa upeo sasa. <em>Ujadili baadaye.</em>",
-        lede: "Chagua kifurushi cha kuanzia, ongeza huduma unazohitaji, na upate pendekezo rasmi unaloweza kuchapisha au kutuma kwa WhatsApp. Bei zilizoonyeshwa ni za kuanzia — bei ya mwisho huthibitishwa baada ya maelezo mafupi.",
+        eyebrow: "Pendekezo lenye ushahidi halisi",
+        title: "Imejengwa na mhandisi mmoja. <em>Wewe unaidhinisha.</em>",
+        lede: "Anza na ushahidi halisi, chagua kifurushi, ongeza unachohitaji, na upate pendekezo rasmi unaloweza kuchapisha au kutuma kwa WhatsApp. Bei zilizoonyeshwa ni za kuanzia — bei ya mwisho huthibitishwa baada ya maelezo mafupi.",
         sideMeta1: "Hakuna akaunti inayohitajika",
         sideMeta2: "Hufanya kazi kwenye kivinjari chako",
         formKicker: "01 / Mradi wako",
@@ -178,7 +200,20 @@
         pagesHint: "KSh 3,000 kwa ukurasa",
         note: "Hakuna kitu kinachohifadhiwa au kutumwa kutoka ukurasa huu. Pendekezo linatolewa ndani ya kivinjari chako.",
         print: "Pakua / Chapisha Pendekezo la PDF",
-        whatsapp: "Thibitisha na ujadili kwa WhatsApp"
+        whatsapp: "Thibitisha na ujadili kwa WhatsApp",
+        powerKicker: "Imejengwa tofauti",
+        powerTitle: "Mhandisi mmoja. Mtu mmoja anayewajibika. Hakuna kukabidhiwa kwa wengine.",
+        powerBody: "Hununui template kutoka sokoni. Thomas hutambua tatizo halisi, hukuonyesha ushahidi halisi, hujenga suluhisho na hukabidhi mfumo unaofanya kazi na unaopimika.",
+        power1Title: "Ushahidi kabla ya ahadi",
+        power1Body: "Audit halisi na ushahidi wa moja kwa moja, si picha iliyopambwa.",
+        power2Title: "Mtu mmoja wa mawasiliano",
+        power2Body: "Unazungumza moja kwa moja na mhandisi anayefanya kazi.",
+        power3Title: "Imejengwa kuleta wateja",
+        power3Body: "WhatsApp, kasi na maandishi ya lugha mbili tangu siku ya kwanza.",
+        power4Title: "Kabidhiwa linalopimika",
+        power4Body: "Upimaji, upeo ulioandikwa na muda wa usaidizi baada ya kuzindua.",
+        powerFoot: "Hakuna wakandarasi wa chini. Hakuna nadhani. Hakuna takwimu za bandia.",
+        powerLink: "Fanya ukaguzi halisi wa tovuti"
       },
       packages: {
         starter: {
@@ -260,7 +295,16 @@
         none: "Hakuna huduma za ziada zilizoteuliwa.",
         auditTitle: "Matokeo ya uchambuzi wa tovuti",
         auditScore: "Alama halisi",
-        auditIssues: "Matatizo yaliyopatikana"
+        auditIssues: "Matatizo yaliyopatikana",
+        powerKicker: "Kwa nini pendekezo hili ni tofauti",
+        powerTitle: "Mhandisi mmoja. Mtu mmoja anayewajibika. Hakuna kukabidhiwa kwa wengine.",
+        powerBody: "Upeo huu umeandaliwa baada ya uchambuzi halisi, si kutoka kwenye template ya jumla. Mhandisi yule yule aliyeandika pendekezo hujenga, hupima na hukabidhi kazi.",
+        powerItems: [
+          "Ushahidi halisi kabla ya ahadi yoyote",
+          "Mawasiliano ya moja kwa moja na mhandisi anayefanya kazi",
+          "Imejengwa kwa wateja, kasi na watumiaji wa lugha mbili",
+          "Upeo ulioandikwa, upimaji na usaidizi baada ya kuzindua"
+        ]
       },
       wa: {
         intro: "Hujambo Thomas, nimetayarisha upeo wa mradi kwenye tovuti yako na ningependa kujadili.",
@@ -374,6 +418,14 @@
         (auditPoints.length ? '<ul>' + listItems(auditPoints) + '</ul>' : '') + '</div>'
       : '';
 
+    var powerBlock =
+      '<div class="proposal-document__power">' +
+        '<span class="proposal-document__power-kicker">' + escapeHtml(doc.powerKicker) + '</span>' +
+        '<h3>' + escapeHtml(doc.powerTitle) + '</h3>' +
+        '<p>' + escapeHtml(doc.powerBody) + '</p>' +
+        '<ul>' + listItems(doc.powerItems) + '</ul>' +
+      '</div>';
+
     var summaryRows =
       '<tr><th scope="row">' + escapeHtml(doc.packageLabel) + '</th><td>' + money(pkg.price) + '</td></tr>' +
       state.rows.map(function (row) {
@@ -394,6 +446,7 @@
         '<div class="proposal-document__date"><span>' + escapeHtml(doc.dateLabel) + '</span><strong>' + escapeHtml(dateLabel()) + '</strong></div>' +
       '</div>' +
       '<h2>' + escapeHtml(doc.title) + '</h2>' +
+      powerBlock +
       auditBlock +
       '<div class="proposal-document__block">' +
         '<h3>' + escapeHtml(doc.preparedFor) + ' / ' + escapeHtml(doc.preparedBy) + '</h3>' +
