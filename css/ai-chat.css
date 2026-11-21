@@ -603,6 +603,8 @@ html.floats-at-footer:not(.ai-chat-open) .ai-chat {
   }
 
   .ai-chat__launcher {
+    display: flex;
+    width: max-content;
     margin-right: 0;
     margin-left: auto;
   }
