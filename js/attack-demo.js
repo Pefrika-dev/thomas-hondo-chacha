@@ -14,11 +14,14 @@
   var errorBox = document.getElementById('demoError');
   var stage = document.getElementById('attackerStage');
   var frame = document.getElementById('demoFrame');
+  var frameWrap = frame ? frame.parentElement : null;
+  var passInput = document.getElementById('demoPass');
   var bait = document.getElementById('demoBait');
   var feedback = document.getElementById('demoFeedback');
   var stop = document.getElementById('demoStop');
   var label = document.getElementById('attackerStageLabel');
   var timer = document.getElementById('demoTimer');
+  var passMode = false;
 
   function normalise(value) {
     var raw = String(value || '').trim();
@@ -73,10 +76,16 @@
         return;
       }
       errorBox.textContent = '';
+      passMode = Boolean(passInput && passInput.checked);
+      if (frameWrap) frameWrap.classList.toggle('attacker-stage__frame--pass', passMode);
       if (label) label.textContent = 'Live website underneath: ' + url.replace(/^https:\/\//, '');
       if (frame) frame.src = url;
       if (stage) stage.hidden = false;
-      if (feedback) feedback.textContent = 'Nothing has been submitted.';
+      if (feedback) {
+        feedback.textContent = passMode
+          ? 'Real click-through is ON. Your next click will reach the framed page at the overlay position. Scripts and forms remain blocked by sandbox.'
+          : 'Nothing has been submitted.';
+      }
       if (form) form.hidden = true;
       startClock();
     });
@@ -94,10 +103,26 @@
     });
   }
 
+  if (frame) {
+    document.addEventListener('mousedown', function (event) {
+      if (!passMode || !stage || stage.hidden) return;
+      var box = frame.getBoundingClientRect();
+      if (event.clientX >= box.left && event.clientX <= box.right &&
+          event.clientY >= box.top && event.clientY <= box.bottom) {
+        if (feedback) {
+          feedback.textContent = 'Click at ' + event.clientX + ', ' + event.clientY +
+            ' passed into the framed page. Sandbox still blocks scripts and forms.';
+        }
+      }
+    }, true);
+  }
+
   if (stop) {
     stop.addEventListener('click', function () {
       if (stage) stage.hidden = true;
       if (frame) frame.removeAttribute('src');
+      if (frameWrap) frameWrap.classList.remove('attacker-stage__frame--pass');
+      passMode = false;
       if (form) form.hidden = false;
       if (feedback) feedback.textContent = 'Nothing has been submitted.';
     });

@@ -188,3 +188,22 @@ body {
   .attacker-stage__frame { height: 420px; }
   .attacker-overlay { right: 4%; bottom: 5%; }
 }
+
+.attacker-stage__frame--pass iframe { pointer-events: auto; }
+
+.attacker-stage__frame--pass .attacker-overlay {
+  pointer-events: none;
+  background: rgba(254, 243, 242, .18);
+  border-style: solid;
+  border-color: rgba(217, 45, 32, .55);
+}
+
+.attacker-stage__frame--pass .attacker-overlay button {
+  background: rgba(217, 45, 32, .72);
+  box-shadow: 0 0 0 3px rgba(217, 45, 32, .2);
+}
+
+.attacker-stage__frame--pass .attacker-overlay__note {
+  color: #7a271a !important;
+  font-weight: 700;
+}

@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/attack-demo.css?v=20261121a">
+  <link rel="stylesheet" href="css/attack-demo.css?v=20261121b">
 </head>
 <body>
   <div class="demo-banner">
@@ -48,6 +48,10 @@
           <input id="demoConsent" type="checkbox" required>
           I own this website or have written permission to demonstrate it.
         </label>
+        <label class="demo-consent">
+          <input id="demoPass" type="checkbox">
+          Real click-through: let my click reach the framed page. Scripts and forms stay blocked by sandbox.
+        </label>
         <button class="demo-launch" type="submit">Launch live overlay</button>
       </form>
       <p class="demo-error" id="demoError" role="alert"></p>
@@ -76,6 +80,6 @@
     <a href="audit.html">Run a free website check instead</a>
   </footer>
 
-  <script src="js/attack-demo.min.js?v=20261121a" defer></script>
+  <script src="js/attack-demo.min.js?v=20261121b" defer></script>
 </body>
 </html>
