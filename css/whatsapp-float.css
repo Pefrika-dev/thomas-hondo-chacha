@@ -1,11 +1,12 @@
 /* ==========================================================================
    Thomas Hondo Chacha — floating WhatsApp button
-   Sits directly above the AI assistant launcher, theme-aware and responsive.
+   Locked to the right, directly above the AI assistant launcher, theme-aware and responsive.
    ========================================================================== */
 
 .wa-float {
   position: fixed;
   right: clamp(1rem, 2vw, 1.5rem);
+  left: auto;
   bottom: calc(clamp(1rem, 2vw, 1.5rem) + 62px);
   z-index: 89;
   display: grid;
