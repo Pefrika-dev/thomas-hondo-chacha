@@ -478,9 +478,11 @@
         return;
       }
       var message = String(response.error.message || '');
-      el.setup.textContent = /client_audit_jobs|42P01|relation/i.test(message)
-        ? words.missing
-        : words.loginRequired;
+      var code = String(response.error.code || '');
+      var tableMissing = code === '42P01'
+        || /does not exist/i.test(message)
+        || /could not find table/i.test(message);
+      el.setup.textContent = tableMissing ? words.missing : words.loginRequired;
       el.setup.classList.remove('is-ready');
     });
   }
