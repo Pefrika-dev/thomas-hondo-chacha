@@ -39,7 +39,7 @@
   <noscript><link rel="stylesheet" href="css/responsive.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/audit.css?v=20261121a" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/audit.css?v=20261121a"></noscript>
-  <link rel="stylesheet" href="css/audit-public-proof.css?v=20261121e">
+  <link rel="stylesheet" href="css/audit-public-proof.css?v=20261121f">
   <link rel="preload" as="style" href="css/ai-chat.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/ai-chat.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/whatsapp-float.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
@@ -57,8 +57,8 @@
     "inLanguage": ["en", "sw"]
   }
   </script>
-  <link rel="preload" as="style" href="css/copy-protection.css?v=20261121a" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="css/copy-protection.css?v=20261121a"></noscript>
+  <link rel="preload" as="style" href="css/copy-protection.css?v=20261121b" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/copy-protection.css?v=20261121b"></noscript>
 </head>
 <body id="top" data-page="audit">
   <a class="skip-link" href="#main-content" data-i18n="a11y.skip">Skip to content</a>
@@ -210,6 +210,20 @@
               <div class="audit-public-proof__evidence" id="appEvidence"></div>
               <div class="audit-public-proof__fixSummary" id="appFixSummary"></div>
 
+              <div class="audit-public-proof__payment" id="appPayment">
+                <div class="audit-public-proof__paymentHead">
+                  <strong id="appPayTitle">Pay for the fixes you choose</strong>
+                  <span class="audit-public-proof__payBadge" id="appPayBadge">Automatic payment coming soon</span>
+                </div>
+                <p class="audit-public-proof__paymentTotal" id="appPayTotal"></p>
+                <div class="audit-public-proof__paymentGrid">
+                  <div><strong id="appPayTillTitle">M-Pesa Buy Goods</strong><span id="appPayTill"></span></div>
+                  <div><strong id="appPayBankTitle">KCB M-Pesa</strong><span id="appPayBank"></span></div>
+                  <div><strong id="appPaySendTitle">Send Money</strong><span id="appPaySend"></span></div>
+                </div>
+                <p class="audit-public-proof__paymentNote" id="appPayNote"></p>
+              </div>
+
               <div class="audit-public-proof__preview" id="appPreview" hidden>
                 <div class="audit-public-proof__previewHead">
                   <strong id="appPreviewTitle">Live preview</strong>
@@ -357,12 +371,12 @@
     </div>
   </footer>
 
-  <script src="js/copy-protection.min.js?v=20261121a" defer></script>
+  <script src="js/copy-protection.min.js?v=20261121b" defer></script>
   <script src="js/telemetry.min.js?v=20261120" defer></script>
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/main.min.js?v=20261120" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
-  <script src="js/audit-proof-public.min.js?v=20261121g" defer></script>
+  <script src="js/audit-proof-public.min.js?v=20261121h" defer></script>
   <script src="js/whatsapp-float.min.js?v=20261120" defer></script>
   <script src="js/ai-chat.min.js?v=20261120" defer></script>
 </body>

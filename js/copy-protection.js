@@ -1,7 +1,7 @@
 /* ==========================================================================
    Copy / drag deterrent for public pages.
    Blocks casual right-click, selection, drag and Ctrl/Cmd copy shortcuts.
-   Inputs, textareas, selects and contenteditable areas are untouched.
+   Inputs, textareas, selects, contenteditable areas and payment details are untouched.
    ========================================================================== */
 (function () {
   'use strict';
@@ -40,6 +40,9 @@
     while (node && node.nodeType === 1) {
       var tag = node.tagName.toLowerCase();
       if (tag === 'input' || tag === 'textarea' || tag === 'select' || node.isContentEditable) {
+        return true;
+      }
+      if (node.classList && node.classList.contains('audit-public-proof__payment')) {
         return true;
       }
       node = node.parentNode;

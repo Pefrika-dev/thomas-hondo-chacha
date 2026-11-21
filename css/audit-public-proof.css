@@ -105,6 +105,60 @@
   font-weight: 700;
 }
 
+.audit-public-proof__payment {
+  margin-top: .9rem;
+  padding: .85rem;
+  border: 1px solid #a6c7ff;
+  border-radius: 10px;
+  background: #f5f9ff;
+}
+
+.audit-public-proof__paymentHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.audit-public-proof__paymentHead strong { color: #084e96; font-size: .9rem; }
+
+.audit-public-proof__payBadge {
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  background: #ecfdf3;
+  color: #067647;
+  font-size: .68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.audit-public-proof__paymentTotal {
+  margin: .55rem 0;
+  color: #084e96;
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+.audit-public-proof__paymentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .55rem;
+}
+
+.audit-public-proof__paymentGrid > div {
+  display: grid;
+  gap: .2rem;
+  padding: .55rem .65rem;
+  border: 1px solid #d0e2ff;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.audit-public-proof__paymentGrid strong { color: #344054; font-size: .76rem; }
+.audit-public-proof__paymentGrid span { color: #175cd3; font-size: .82rem; font-weight: 700; word-break: break-word; }
+.audit-public-proof__paymentNote { margin: .6rem 0 0; color: #475467; font-size: .78rem; }
+
 .audit-public-proof__preview {
   margin-top: 1rem;
   overflow: hidden;

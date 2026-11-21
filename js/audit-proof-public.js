@@ -15,7 +15,7 @@
       title: 'See the proof live',
       intro: 'Pick any issue below to see the real evidence, then leave your details if you want Thomas to fix it.',
       attack: 'Open full attack demo',
-      notice: 'Live Proof & Action Plan — from KSh 5,000, credited in full towards any website package. Safe proof of concept: the framed website is sandboxed and no form is submitted from this preview.',
+      notice: 'See the real evidence, choose the fixes you want, then pay using the M-Pesa options below. Automatic payment is coming soon.',
       failed: 'Failed',
       attention: 'Needs attention',
       show: 'Show live',
@@ -58,14 +58,25 @@
       fixIntro: 'This fix can be prepared and applied as a small configuration change once access is confirmed.',
       collabIntro: 'This fix needs your input or access to your hosting/DNS. Thomas will guide you or do it with you.',
       fixSummaryEmpty: 'Pick the fixes you want. Prices are starting points and are confirmed in writing.',
-      fixSummary: '{count} fix(es) selected — from KSh {total}. Live Proof from KSh 5,000 is credited to your project.',
+      fixSummary: '{count} fix(es) selected — from KSh {total}.',
+      payTitle: 'Pay for the fixes you choose',
+      payBadge: 'Automatic payment coming soon',
+      payEmpty: 'Choose fixes above to see your total.',
+      payTotal: 'Selected fixes total — from KSh {total}',
+      payTillTitle: 'M-Pesa Buy Goods',
+      payTill: 'Till No. 8729928 — Thomas Hondo Chacha',
+      payBankTitle: 'KCB M-Pesa',
+      payBank: '522522 · Account No. 1321947844 — Thomas Hondo Chacha',
+      paySendTitle: 'Send Money',
+      paySend: '0705023432 — Thomas Hondo Chacha',
+      payNote: 'After paying, send your details below. Thomas confirms the payment manually and starts the work.',
       included: 'Selected fixes'
     },
     sw: {
       title: 'Ona ushahidi moja kwa moja',
       intro: 'Chagua tatizo lolote hapa chini kuona ushahidi halisi, kisha uache maelezo yako kama unataka Thomas akusaidie.',
       attack: 'Fungua demo kamili ya shambulio',
-      notice: 'Live Proof & Action Plan — kuanzia KSh 5,000, pesa yote inakatwa kwenye kifurushi chochote cha tovuti. Ushahidi salama: tovuti iliyo kwenye frame iko sandbox na hakuna fomu inayotumwa kutoka kwenye preview hii.',
+      notice: 'Ona ushahidi halisi, chagua marekebisho unayotaka, kisha lipa kwa njia za M-Pesa hapo chini. Malipo ya moja kwa moja yanakuja hivi karibuni.',
       failed: 'Imeshindwa',
       attention: 'Inahitaji umakini',
       show: 'Ona live',
@@ -108,7 +119,18 @@
       fixIntro: 'Marekebisho haya yanaweza kuandaliwa na kufanywa kama mabadiliko madogo ya configuration mara ufikiaji utakapothibitishwa.',
       collabIntro: 'Marekebisho haya yanahitaji maelezo yako au ufikiaji wa hosting/DNS. Thomas atakuongoza au atafanya na wewe.',
       fixSummaryEmpty: 'Chagua marekebisho unayotaka. Bei ni za kuanzia na zinathibitishwa kwa maandishi.',
-      fixSummary: 'Marekebisho {count} yaliyochaguliwa — kuanzia KSh {total}. Live Proof kuanzia KSh 5,000 inakatwa kwenye mradi wako.',
+      fixSummary: 'Marekebisho {count} yaliyochaguliwa — kuanzia KSh {total}.',
+      payTitle: 'Lipa kwa marekebisho uliyochagua',
+      payBadge: 'Malipo ya moja kwa moja yanakuja hivi karibuni',
+      payEmpty: 'Chagua marekebisho hapo juu ili uone jumla.',
+      payTotal: 'Jumla ya marekebisho yaliyochaguliwa — kuanzia KSh {total}',
+      payTillTitle: 'M-Pesa Lipa Bidhaa',
+      payTill: 'Namba ya Till 8729928 — Thomas Hondo Chacha',
+      payBankTitle: 'KCB M-Pesa',
+      payBank: '522522 · Namba ya Akaunti 1321947844 — Thomas Hondo Chacha',
+      paySendTitle: 'Tuma Pesa',
+      paySend: '0705023432 — Thomas Hondo Chacha',
+      payNote: 'Baada ya kulipa, tuma maelezo yako hapo chini. Thomas athibitisha malipo kwa mkono na kuanza kazi.',
       included: 'Marekebisho yaliyochaguliwa'
     }
   };
@@ -190,6 +212,15 @@
     set('appSaveLabel', c.save);
     set('appProposalLabel', c.proposal);
     set('appOpenLiveLabel', c.openLive);
+    set('appPayTitle', c.payTitle);
+    set('appPayBadge', c.payBadge);
+    set('appPayTillTitle', c.payTillTitle);
+    set('appPayTill', c.payTill);
+    set('appPayBankTitle', c.payBankTitle);
+    set('appPayBank', c.payBank);
+    set('appPaySendTitle', c.paySendTitle);
+    set('appPaySend', c.paySend);
+    set('appPayNote', c.payNote);
   }
 
   function issues() {
@@ -226,17 +257,21 @@
   }
 
   function updateFixSummary() {
-    if (!fixSummary) return;
     var c = t();
     var list = selectedFixList();
+    var payTotal = document.getElementById('appPayTotal');
     if (!list.length) {
-      fixSummary.textContent = c.fixSummaryEmpty;
+      if (fixSummary) fixSummary.textContent = c.fixSummaryEmpty;
+      if (payTotal) payTotal.textContent = c.payEmpty;
       return;
     }
     var total = list.reduce(function (sum, item) { return sum + item.price; }, 0);
-    fixSummary.textContent = c.fixSummary
-      .replace('{count}', String(list.length))
-      .replace('{total}', money(total));
+    if (fixSummary) {
+      fixSummary.textContent = c.fixSummary
+        .replace('{count}', String(list.length))
+        .replace('{total}', money(total));
+    }
+    if (payTotal) payTotal.textContent = c.payTotal.replace('{total}', money(total));
   }
 
   function description() {
