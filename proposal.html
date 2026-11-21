@@ -37,8 +37,8 @@
   <noscript><link rel="stylesheet" href="css/components.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/responsive.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/responsive.css?v=20261120"></noscript>
-  <link rel="preload" as="style" href="css/proposal.css?v=20261120f" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="css/proposal.css?v=20261120f"></noscript>
+  <link rel="preload" as="style" href="css/proposal.css?v=20261120g" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="css/proposal.css?v=20261120g"></noscript>
   <link rel="preload" as="style" href="css/ai-chat.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/ai-chat.css?v=20261120"></noscript>
   <link rel="preload" as="style" href="css/whatsapp-float.css?v=20261120" onload="this.onload=null;this.rel='stylesheet'">
@@ -193,6 +193,16 @@
               <input class="field__control" id="proposal-contact" name="contact" type="text" maxlength="100" autocomplete="name" placeholder="e.g. Amina Otieno" data-proposal-placeholder="contactPlaceholder">
             </div>
 
+            <div class="field">
+              <label class="field__label" for="proposal-email"><span data-proposal-i18n="emailLabel">Email address</span></label>
+              <input class="field__control" id="proposal-email" name="email" type="email" maxlength="200" autocomplete="email" placeholder="you@business.co.ke" data-proposal-placeholder="emailPlaceholder">
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="proposal-phone"><span data-proposal-i18n="phoneLabel">Phone / WhatsApp</span></label>
+              <input class="field__control" id="proposal-phone" name="phone" type="tel" maxlength="32" autocomplete="tel" placeholder="+254712345678" data-proposal-placeholder="phonePlaceholder">
+            </div>
+
             <div class="field field--full">
               <label class="field__label" for="proposal-package"><span data-proposal-i18n="packageLabel">Project package</span></label>
               <select class="field__control" id="proposal-package" name="package"></select>
@@ -240,9 +250,25 @@
               </div>
             </fieldset>
 
+            <div class="field field--full proposal-send">
+              <label class="proposal-consent">
+                <input id="proposal-consent" name="consent" type="checkbox">
+                <span data-proposal-i18n="consentLabel">I agree that Thomas may contact me about this proposal.</span>
+              </label>
+              <div class="proposal-send__hp" aria-hidden="true">
+                <input id="proposal-honeypot" name="company_website" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="proposal-send__actions">
+                <button class="button button--primary" id="proposal-send" type="button">
+                  <span data-proposal-i18n="sendLabel">Send this proposal to Thomas</span>
+                </button>
+                <span id="proposal-send-feedback" aria-live="polite"></span>
+              </div>
+            </div>
+
           </div>
 
-          <p class="proposal-form__note" data-proposal-i18n="note">Nothing is stored or sent from this page. The proposal is generated locally in your browser.</p>
+          <p class="proposal-form__note" data-proposal-i18n="note">Your details are saved only when you click “Send this proposal to Thomas”. Otherwise the proposal is generated locally in your browser.</p>
         </form>
 
         <div class="proposal-preview reveal" data-delay="1">
@@ -326,7 +352,7 @@
   <script src="js/telemetry.min.js?v=20261120" defer></script>
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/main.min.js?v=20261120" defer></script>
-  <script src="js/proposal.min.js?v=20261121g" defer></script>
+  <script src="js/proposal.min.js?v=20261121h" defer></script>
   <script src="js/whatsapp-float.min.js?v=20261120" defer></script>
   <script src="js/ai-chat.min.js?v=20261120" defer></script>
 </body>

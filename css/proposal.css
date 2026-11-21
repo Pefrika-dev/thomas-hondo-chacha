@@ -299,6 +299,27 @@
   }
 }
 
+/* ---------- Proposal lead capture ---------- */
+.proposal-send {
+  margin-top: .9rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line, #e4e7ec);
+}
+
+.proposal-consent {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.proposal-consent input { accent-color: var(--accent, #0b6bcb); }
+.proposal-send__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.proposal-send__actions { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; margin-top: .8rem; }
+.proposal-send__actions > span { color: var(--accent, #0b6bcb); font-size: .8rem; font-weight: 700; }
+
 /* ---------- Project brief fields ---------- */
 .proposal-brief {
   margin-top: .4rem;

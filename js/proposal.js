@@ -55,7 +55,7 @@
         copyPrice: "KSh 3,000 / page",
         pagesLabel: "Pages to write",
         pagesHint: "KSh 3,000 per page",
-        note: "Nothing is stored or sent from this page. The proposal is generated locally in your browser.",
+        note: "Your details are saved only when you click “Send this proposal to Thomas”. Otherwise the proposal is generated locally in your browser.",
         print: "Download / Print PDF Proposal",
         whatsapp: "Confirm & discuss on WhatsApp",
         powerKicker: "Built different",
@@ -95,7 +95,21 @@
         contactPhone: "Phone call",
         contactEmail: "Email",
         goalsLabel: "What should this project achieve?",
-        goalsPlaceholder: "e.g. More WhatsApp enquiries, online bookings, faster loading, a clean brand image..."
+        goalsPlaceholder: "e.g. More WhatsApp enquiries, online bookings, faster loading, a clean brand image...",
+        emailLabel: "Email address",
+        emailPlaceholder: "you@business.co.ke",
+        phoneLabel: "Phone / WhatsApp",
+        phonePlaceholder: "+254712345678",
+        consentLabel: "I agree that Thomas may contact me about this proposal.",
+        sendLabel: "Send this proposal to Thomas",
+        sending: "Saving…",
+        sent: "Saved. Thomas will see it in Submissions.",
+        needName: "Enter the client or company name.",
+        needContact: "Enter the contact person's name.",
+        needEmail: "Enter a valid email address.",
+        needPhone: "Enter a valid phone number.",
+        needConsent: "Confirm that you agree to be contacted.",
+        sendError: "Could not save right now. Please use the WhatsApp button instead."
       },
       packages: {
         starter: {
@@ -251,7 +265,7 @@
         copyPrice: "KSh 3,000 / ukurasa",
         pagesLabel: "Idadi ya kurasa",
         pagesHint: "KSh 3,000 kwa ukurasa",
-        note: "Hakuna kitu kinachohifadhiwa au kutumwa kutoka ukurasa huu. Pendekezo linatolewa ndani ya kivinjari chako.",
+        note: "Maelezo yako huhifadhiwa tu unapobonyeza “Tuma pendekezo hili kwa Thomas”. Vinginevyo pendekezo linatolewa ndani ya kivinjari chako.",
         print: "Pakua / Chapisha Pendekezo la PDF",
         whatsapp: "Thibitisha na ujadili kwa WhatsApp",
         powerKicker: "Imejengwa tofauti",
@@ -291,7 +305,21 @@
         contactPhone: "Simu",
         contactEmail: "Barua pepe",
         goalsLabel: "Mradi huu unapaswa kufanikisha nini?",
-        goalsPlaceholder: "mf. Maombi zaidi ya WhatsApp, kuweka nafasi mtandaoni, kasi zaidi, picha safi ya biashara..."
+        goalsPlaceholder: "mf. Maombi zaidi ya WhatsApp, kuweka nafasi mtandaoni, kasi zaidi, picha safi ya biashara...",
+        emailLabel: "Barua pepe",
+        emailPlaceholder: "wewe@biashara.co.ke",
+        phoneLabel: "Simu / WhatsApp",
+        phonePlaceholder: "+254712345678",
+        consentLabel: "Nakubali Thomas aniwasiliane kuhusu pendekezo hili.",
+        sendLabel: "Tuma pendekezo hili kwa Thomas",
+        sending: "Inahifadhi…",
+        sent: "Imehifadhiwa. Thomas ataiona kwenye Submissions.",
+        needName: "Weka jina la mteja au kampuni.",
+        needContact: "Weka jina la mtu wa mawasiliano.",
+        needEmail: "Weka barua pepe sahihi.",
+        needPhone: "Weka namba sahihi ya simu.",
+        needConsent: "Thibitisha kuwa unakubali kuwasiliana naye.",
+        sendError: "Imeshindwa kuhifadhi kwa sasa. Tafadhali tumia kitufe cha WhatsApp."
       },
       packages: {
         starter: {
@@ -610,6 +638,72 @@
     return lines.join('\n');
   }
 
+  function sendProposal(form) {
+    var c = copy();
+    var button = document.getElementById("proposal-send");
+    var feedback = document.getElementById("proposal-send-feedback");
+    var state = selectedState(form);
+    var fullName = state.contact || state.client;
+    var email = fieldValue(form, "email");
+    var phone = fieldValue(form, "phone");
+    var consent = form.elements.namedItem("consent");
+    var honeypot = document.getElementById("proposal-honeypot");
+
+    if (state.client.length < 2) {
+      feedback.textContent = c.ui.needName;
+      form.elements.namedItem("client").focus();
+      return;
+    }
+    if (fullName.length < 2) {
+      feedback.textContent = c.ui.needContact;
+      form.elements.namedItem("contact").focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(email)) {
+      feedback.textContent = c.ui.needEmail;
+      form.elements.namedItem("email").focus();
+      return;
+    }
+    if (!/^\+?[0-9][0-9\s()-]{6,24}$/.test(phone)) {
+      feedback.textContent = c.ui.needPhone;
+      form.elements.namedItem("phone").focus();
+      return;
+    }
+    if (!consent || !consent.checked) {
+      feedback.textContent = c.ui.needConsent;
+      consent.focus();
+      return;
+    }
+
+    button.disabled = true;
+    feedback.textContent = c.ui.sending;
+
+    fetch("/api/submit-contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        full_name: fullName.slice(0, 120),
+        email: email.slice(0, 200),
+        phone: phone.slice(0, 32),
+        company_website: honeypot ? honeypot.value : "",
+        project_type: "Proposal request",
+        project_description: ("Proposal request from proposal.html.\n\n" + whatsappMessage(form)).slice(0, 4000),
+        preferred_contact: state.contactMethod || "whatsapp"
+      })
+    }).then(function (response) {
+      if (!response.ok) throw new Error("bad response");
+      return response.json();
+    }).then(function () {
+      feedback.textContent = c.ui.sent;
+    }).catch(function () {
+      feedback.textContent = c.ui.sendError;
+    }).then(function () {
+      button.disabled = false;
+    }, function () {
+      button.disabled = false;
+    });
+  }
+
   function applyCopy(form) {
     var c = copy();
     document.querySelectorAll("[data-proposal-i18n]").forEach(function (element) {
@@ -691,6 +785,9 @@
 
     form.addEventListener("input", function () { update(form, documentTarget, whatsappLink); });
     form.addEventListener("change", function () { update(form, documentTarget, whatsappLink); });
+
+    var sendButton = document.getElementById("proposal-send");
+    if (sendButton) sendButton.addEventListener("click", function () { sendProposal(form); });
 
     document.addEventListener("thc:languagechange", function () {
       update(form, documentTarget, whatsappLink);
