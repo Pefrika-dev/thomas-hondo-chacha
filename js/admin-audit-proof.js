@@ -109,6 +109,11 @@
 
     var found = issues();
     card.hidden = false;
+    var attackLink = document.getElementById('auditOpenAttack');
+    if (attackLink) {
+      attackLink.href = 'attack-demo.html?url=' +
+        encodeURIComponent(data.finalUrl || ('https://' + data.domain));
+    }
     context.textContent = data.domain + ' · ' + data.score + '/100 · ' + found.length +
       (found.length === 1 ? ' issue found live.' : ' issues found live.');
     if (scoreBox) scoreBox.textContent = data.score + '/100';

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Clickjacking Proof — Thomas Hondo Chacha</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/attack-demo.css?v=20261121a">
+</head>
+<body>
+  <div class="demo-banner">
+    <strong>SAFE LIVE PROOF</strong>
+    <span>This page demonstrates what a malicious site could do. No data is sent and the framed website is not changed.</span>
+  </div>
+
+  <header class="attacker-head">
+    <div class="attacker-head__brand">
+      <span class="attacker-head__logo">🎁</span>
+      <div>
+        <strong>DAILY REWARD CENTER</strong>
+        <small>Limited offer for visitors of this website</small>
+      </div>
+    </div>
+    <span class="attacker-head__timer" id="demoTimer">00:09:59</span>
+  </header>
+
+  <main class="attacker-main">
+    <section class="attacker-hero">
+      <h1>You have 1 free reward waiting</h1>
+      <p>Confirm your details below to claim it now. This offer disappears when the timer ends.</p>
+      <div class="attacker-hero__pills">
+        <span>No payment needed</span>
+        <span>Takes 10 seconds</span>
+        <span>Today only</span>
+      </div>
+    </section>
+
+    <section class="attacker-setup">
+      <h2>Run the proof</h2>
+      <p>Enter the website you are authorised to demonstrate, then confirm.</p>
+      <form id="demoSetup">
+        <label>Website address
+          <input id="demoUrl" name="url" type="text" maxlength="300" placeholder="example.co.ke" autocomplete="off">
+        </label>
+        <label class="demo-consent">
+          <input id="demoConsent" type="checkbox" required>
+          I own this website or have written permission to demonstrate it.
+        </label>
+        <button class="demo-launch" type="submit">Launch live overlay</button>
+      </form>
+      <p class="demo-error" id="demoError" role="alert"></p>
+    </section>
+
+    <section class="attacker-stage" id="attackerStage" hidden>
+      <div class="attacker-stage__bar">
+        <strong id="attackerStageLabel">Live website underneath</strong>
+        <button type="button" id="demoStop">Stop demo</button>
+      </div>
+      <div class="attacker-stage__frame">
+        <iframe id="demoFrame" title="Live website being framed" sandbox="" referrerpolicy="no-referrer"></iframe>
+        <div class="attacker-overlay" id="attackerOverlay">
+          <span class="attacker-overlay__tag">Transparent overlay — proof of concept</span>
+          <h3>Congratulations!</h3>
+          <p>Click the button below to claim your reward.</p>
+          <button type="button" id="demoBait">Claim my free reward</button>
+          <p class="attacker-overlay__note" id="demoFeedback" aria-live="polite">Nothing has been submitted.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="attacker-foot">
+    <span>Security awareness demo by Thomas Hondo Chacha</span>
+    <a href="audit.html">Run a free website check instead</a>
+  </footer>
+
+  <script src="js/attack-demo.min.js?v=20261121a" defer></script>
+</body>
+</html>
