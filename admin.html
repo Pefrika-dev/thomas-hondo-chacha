@@ -9,9 +9,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="css/admin.css?v=20261121a">
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
-  <link rel="stylesheet" href="css/admin-audit.css?v=20261121a">
+  <link rel="stylesheet" href="css/admin-audit.css?v=20261121b">
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/audit.min.js?v=20261121a" defer></script>
+  <script src="js/admin-audit-demo.min.js?v=20261121b" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
 </head>
 <body>
@@ -251,6 +252,43 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="audit-demo" id="clickjackDemo" hidden>
+          <div class="audit-demo__head">
+            <div>
+              <h3>Clickjacking proof — live demo</h3>
+              <p id="auditDemoNote">This site is missing clickjacking protection. The frame below shows what another page could do.</p>
+            </div>
+            <div class="audit-demo__actions">
+              <button class="btn-primary" type="button" id="auditDemoVulnerable">Show vulnerable</button>
+              <button class="btn-secondary" type="button" id="auditDemoProtectedBtn">Show protected</button>
+              <button class="refresh-btn" type="button" id="auditDemoRestore">Restore live view</button>
+            </div>
+          </div>
+          <label class="audit-demo__consent">
+            <input type="checkbox" id="auditDemoConsent">
+            I own this website or have permission to demonstrate it.
+          </label>
+          <div class="audit-demo__stage">
+            <div class="audit-demo__frame" id="auditDemoFrameWrap">
+              <iframe id="auditDemoFrame" title="Live framed preview" sandbox="" referrerpolicy="no-referrer"></iframe>
+              <div class="audit-demo__decoy" aria-hidden="true">
+                <span>Invisible overlay demo</span>
+                <button type="button" id="auditDemoClick" tabindex="-1">Claim free gift</button>
+              </div>
+            </div>
+            <div class="audit-demo__protected" id="auditDemoProtected" hidden>
+              <div>
+                <strong>Blocked — this is the fixed state</strong>
+                <p>With X-Frame-Options: DENY or CSP frame-ancestors, the browser refuses to show the site inside another page.</p>
+              </div>
+            </div>
+          </div>
+          <div class="audit-demo__foot">
+            <span id="auditDemoFeedback" class="audit-demo__feedback" aria-live="polite">Sandbox is on: scripts and forms are blocked; nothing is submitted.</span>
+            <span>Demo only. No data is stored or sent.</span>
           </div>
         </div>
       </section>

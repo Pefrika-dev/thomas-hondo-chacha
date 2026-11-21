@@ -112,3 +112,146 @@ body.audit-present #tab-audit .audit-check { padding: 1rem 1.15rem; }
   body.audit-present #tab-audit { padding: 70px 14px 36px; }
   .present-bar { padding: 10px 14px; font-size: .82rem; }
 }
+
+/* ---------- Clickjacking proof-of-concept demo ---------- */
+
+#clickjackDemo[hidden],
+#clickjackDemo [hidden] { display: none !important; }
+
+#clickjackDemo {
+  margin-top: 18px;
+  padding: 1rem;
+  border: 1px solid #f0c36d;
+  border-radius: 12px;
+  background: #fffaf0;
+}
+
+#clickjackDemo .audit-demo__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#clickjackDemo h3 {
+  margin: 0 0 .35rem;
+  font-size: 1.05rem;
+}
+
+#clickjackDemo p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+#clickjackDemo .audit-demo__actions {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+#clickjackDemo .audit-demo__actions button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+#clickjackDemo .audit-demo__actions .is-active {
+  box-shadow: 0 0 0 2px rgba(11, 107, 203, .25);
+}
+
+#clickjackDemo .btn-secondary {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+#clickjackDemo .audit-demo__consent {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .8rem 0;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+#clickjackDemo .audit-demo__stage {
+  min-height: 260px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#clickjackDemo .audit-demo__frame {
+  position: relative;
+  height: 260px;
+}
+
+#clickjackDemo iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
+
+#clickjackDemo .audit-demo__decoy {
+  position: absolute;
+  right: 10%;
+  bottom: 12%;
+  display: grid;
+  gap: .35rem;
+  justify-items: end;
+  padding: .7rem;
+  border: 2px dashed #d92d20;
+  border-radius: 8px;
+  background: rgba(254, 243, 242, .94);
+}
+
+#clickjackDemo .audit-demo__decoy span {
+  color: #b42318;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+#clickjackDemo .audit-demo__decoy button {
+  border: 0;
+  border-radius: 6px;
+  padding: .45rem .8rem;
+  background: #d92d20;
+  color: #ffffff;
+  font-size: .82rem;
+  cursor: pointer;
+}
+
+#clickjackDemo .audit-demo__protected {
+  display: grid;
+  min-height: 260px;
+  padding: 1rem;
+  place-items: center;
+  background: #ecfdf3;
+  color: #067647;
+  text-align: center;
+}
+
+#clickjackDemo .audit-demo__protected p {
+  max-width: 46ch;
+  margin-top: .4rem;
+  color: #067647;
+}
+
+#clickjackDemo .audit-demo__foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: .7rem;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+#clickjackDemo .audit-demo__feedback {
+  color: var(--brand-dark);
+  font-weight: 600;
+}
