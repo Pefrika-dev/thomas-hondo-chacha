@@ -20,6 +20,9 @@
     { "source": "/blog/:slug", "destination": "/api/render?type=post&slug=:slug" },
     { "source": "/work/:slug", "destination": "/api/render?type=project&slug=:slug" }
   ],
+  "crons": [
+    { "path": "/api/outreach-scan", "schedule": "0 6 * * *" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

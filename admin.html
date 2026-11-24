@@ -11,11 +11,13 @@
   <link rel="stylesheet" href="css/audit.css?v=20261121a">
   <link rel="stylesheet" href="css/admin-audit.css?v=20261121d">
   <link rel="stylesheet" href="css/admin-audit-workflow.css?v=20261121c">
+  <link rel="stylesheet" href="css/outreach-radar.css?v=20261124a">
   <script src="js/language.min.js?v=20261121a" defer></script>
   <script src="js/audit.min.js?v=20261121c" defer></script>
   <script src="js/admin-audit-proof.min.js?v=20261121f" defer></script>
   <script src="js/admin-audit-workflow.min.js?v=20261121e" defer></script>
   <script src="js/outreach.min.js?v=20261121a" defer></script>
+  <script src="js/outreach-radar.min.js?v=20261124a" defer></script>
 </head>
 <body>
   <div id="loginScreen" class="login-container">
@@ -488,6 +490,62 @@
             <p>Approved messages and a composer for any prospect. Send from your own WhatsApp, then tick Sent.</p>
           </div>
         </div>
+
+        <section class="radar" data-lead-radar aria-labelledby="radar-title">
+          <div class="radar__head">
+            <div>
+              <p class="radar__eyebrow"><span class="radar__dot" aria-hidden="true"></span>Daily Lead Radar</p>
+              <h3 id="radar-title">Five public leads, ready for manual outreach</h3>
+              <p>Free OpenStreetMap public listings, checked against public business websites only. Phone is required; email is shown only when it is public. Nothing is sent automatically.</p>
+            </div>
+            <div class="radar__controls">
+              <span class="radar__setup" data-radar-setup>Checking admin session…</span>
+              <button class="btn-primary" type="button" data-radar-scan>Scan today’s 5</button>
+              <button class="btn-secondary" type="button" data-radar-refresh>Refresh list</button>
+            </div>
+          </div>
+
+          <p class="radar__feedback" data-radar-feedback aria-live="polite"></p>
+
+          <div class="radar__bar">
+            <span class="radar__count" data-radar-count>Loading leads…</span>
+            <label>Status
+              <select data-radar-filter>
+                <option value="all">All</option>
+                <option value="new">New</option>
+                <option value="contacted">Contacted</option>
+                <option value="replied">Replied</option>
+                <option value="won">Won</option>
+                <option value="lost">Lost</option>
+                <option value="do_not_contact">Do not contact</option>
+              </select>
+            </label>
+            <label>
+              <input type="checkbox" data-radar-today> Only today
+            </label>
+          </div>
+
+          <div class="radar__table-wrap">
+            <table class="radar__table">
+              <thead>
+                <tr>
+                  <th scope="col">Business</th>
+                  <th scope="col">Public contact</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Service opportunity</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Pipeline</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody data-radar-body></tbody>
+            </table>
+            <p class="radar__empty" data-radar-empty hidden>No leads yet. Apply the lead table SQL, then use “Scan today’s 5”.</p>
+          </div>
+
+          <p class="radar__foot">Source data © OpenStreetMap contributors, available under ODbL. Verify each listing before contacting. Follow the outreach rules below: maximum 5 first messages a day, manual sending from your own accounts, and only day 3 and day 8 follow-ups.</p>
+        </section>
+
         <div id="outreachRoot" class="outreach-root"></div>
       </section>
     </main>
