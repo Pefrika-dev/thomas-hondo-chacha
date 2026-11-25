@@ -1361,7 +1361,9 @@
         }
         closeEditor();
         await loadProjects();
-        toast(isNew ? "Project created" : "Project updated", "success");
+        const notified = payload.published ? await notifySitemap("project", slug) : false;
+        const baseMessage = isNew ? "Project created" : "Project updated";
+        toast(notified ? baseMessage + " — Google sitemap submitted" : baseMessage, "success");
       }
 
       async function savePost() {
@@ -1407,12 +1409,35 @@
         }
         closeEditor();
         await loadPosts();
-        toast(isNew ? "Article created" : "Article updated", "success");
+        const notified = status === "published" ? await notifySitemap("post", slug) : false;
+        const baseMessage = isNew ? "Article created" : "Article updated";
+        toast(notified ? baseMessage + " — Google sitemap submitted" : baseMessage, "success");
       }
 
       function emptyToNull(value) {
         const text = String(value || "").trim();
         return text ? text : null;
+      }
+
+      /* After a successful publish, ask Google to re-read the live sitemap.
+         This never blocks saving and never puts a secret in the browser. */
+      async function notifySitemap(kind, slug) {
+        try {
+          const sessionResult = await supabase.auth.getSession();
+          const token = sessionResult.data && sessionResult.data.session && sessionResult.data.session.access_token;
+          if (!token) return false;
+          const response = await fetch("/api/gsc-submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token
+            },
+            body: JSON.stringify({ kind: kind, slug: slug })
+          });
+          return response.ok;
+        } catch (error) {
+          return false;
+        }
       }
 
       async function deleteProjectById(id) {
