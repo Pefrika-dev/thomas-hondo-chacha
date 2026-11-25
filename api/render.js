@@ -217,7 +217,7 @@ function renderProject(project) {
   const title = project.title || project.slug;
   const description = project.summary ||
     String(project.description || '').replace(/\s+/g, ' ').trim().slice(0, 155);
-  const image = project.cover_url || `${SITE}/assets/images/og-cover.png`;
+  const image = project.cover_url ? new URL(project.cover_url, `${SITE}/`).href : `${SITE}/assets/images/og-cover.png`;
   const tech = splitList(project.technologies);
   const cover = project.cover_url
     ? `<img class="project-detail__cover" src="${esc(optimiseImageUrl(project.cover_url, 960))}" alt="${esc(title)}" loading="eager" decoding="async">`
