@@ -3,15 +3,26 @@
   "outputDirectory": ".",
   "redirects": [
     {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog-post.html",
+      "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[A-Za-z0-9-]+)" }],
+      "destination": "/blog/:slug?",
+      "permanent": true
+    },
+    {
       "source": "/post.html",
       "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[A-Za-z0-9-]+)" }],
-      "destination": "/blog/:slug",
+      "destination": "/blog/:slug?",
       "permanent": true
     },
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "slug", "value": "(?<slug>[A-Za-z0-9-]+)" }],
-      "destination": "/work/:slug",
+      "destination": "/work/:slug?",
       "permanent": true
     }
   ],
