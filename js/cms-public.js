@@ -106,7 +106,8 @@
         return raw.replace(/\/width\/\d+/, "/width/" + target).replace(/\/crop\/\d+/, "/crop/" + Math.round(target * 0.75));
       }
       if (host === "thomashondochacha.co.ke" || raw.indexOf("/assets/") === 0 || raw.indexOf("assets/") === 0) {
-        if (/\.(png|jpe?g)$/i.test(url.pathname)) return raw.replace(/\.(png|jpe?g)$/i, ".webp");
+        /* Local WebP twins are not guaranteed; serve the committed original. */
+        if (/\.(png|jpe?g)$/i.test(url.pathname)) return raw;
       }
     } catch (error) { /* Leave unusual URLs untouched. */ }
     return raw;
