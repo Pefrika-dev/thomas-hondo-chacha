@@ -226,7 +226,7 @@
       excerpt = localized(post, "content").replace(/[#*_>`\[\]]/g, "").slice(0, 170);
     }
     var cover = post.cover_url
-      ? '<a class="blog-card__media" href="' + esc(url) + '"><img src="' + esc(imageUrl(post.cover_url, 640)) + '" alt="' + esc(title) + '" width="640" height="360" loading="lazy" decoding="async"></a>'
+      ? '<a class="blog-card__media" href="' + esc(url) + '"><img src="' + esc(imageUrl(post.cover_url, 640)) + '" alt="' + esc(title) + '" width="640" height="360" loading="eager" fetchpriority="high" decoding="async"></a>'
       : "";
     var tags = splitList(post.tags).map(function (tag) {
       return "<span>" + esc(tag) + "</span>";
