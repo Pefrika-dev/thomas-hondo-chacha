@@ -59,6 +59,16 @@ const CONTACT_TIMEOUT_MS = 4000;
 const UA = NOMINATIM_UA;
 
 const SOURCE_ID_PREFIX = { node: 'n', way: 'w', relation: 'r' };
+const GENERIC_NAMES = new Set([
+  'hotel', 'hotels', 'lodge', 'restaurant', 'restaurants', 'pharmacy', 'pharmacies',
+  'hardware', 'shop', 'shops', 'guest house', 'guesthouse', 'bar', 'cafe', 'supermarket',
+  'school', 'clinic', 'hospital', 'office', 'business', 'company', 'limited', 'ltd'
+]);
+
+function isGenericName(value) {
+  const name = String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+  return name.length < 3 || GENERIC_NAMES.has(name);
+}
 
 const TYPE_LABELS = {
   'hardware': 'Hardware shop',
@@ -453,7 +463,7 @@ function buildCandidate(item, search, date) {
   if (!item || !SOURCE_ID_PREFIX[item.osm_type] || !item.osm_id) return null;
   const tags = item.extratags || {};
   const businessName = clean(item.name, 180);
-  if (!businessName) return null;
+  if (!businessName || isGenericName(businessName)) return null;
 
   const prefix = SOURCE_ID_PREFIX[item.osm_type];
   const sourceId = `${prefix}-${item.osm_id}`;
