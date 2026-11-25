@@ -35,21 +35,25 @@ const NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/search';
 const NOMINATIM_UA = 'THC-LeadRadar/1.0 (+https://www.thomashondochacha.co.ke; thomashondochacha@gmail.com)';
 
 const SEARCHES = [
-  { label: 'Migori', query: 'hotel Migori Kenya' },
-  { label: 'Migori', query: 'pharmacy Migori Kenya' },
-  { label: 'Kisii', query: 'hotel Kisii Kenya' },
-  { label: 'Kisumu', query: 'hotel Kisumu Kenya' },
-  { label: 'Nakuru', query: 'hotel Nakuru Kenya' },
-  { label: 'Nairobi', query: 'hotel Nairobi Kenya' },
   { label: 'Mombasa', query: 'hotel Mombasa Kenya' },
+  { label: 'Nairobi', query: 'hotel Nairobi Kenya' },
+  { label: 'Nakuru', query: 'hotel Nakuru Kenya' },
+  { label: 'Kisumu', query: 'hotel Kisumu Kenya' },
   { label: 'Eldoret', query: 'hotel Eldoret Kenya' },
+  { label: 'Thika', query: 'hotel Thika Kenya' },
+  { label: 'Kisii', query: 'hotel Kisii Kenya' },
+  { label: 'Migori', query: 'hotel Migori Kenya' },
+  { label: 'Mombasa', query: 'restaurants in Mombasa Kenya' },
+  { label: 'Nairobi', query: 'restaurants in Nairobi Kenya' },
+  { label: 'Kisumu', query: 'restaurants in Kisumu Kenya' },
+  { label: 'Mombasa', query: 'pharmacy Mombasa Kenya' },
   { label: 'Kakamega', query: 'pharmacy Kakamega Kenya' },
-  { label: 'Thika', query: 'hotel Thika Kenya' }
+  { label: 'Migori', query: 'pharmacy Migori Kenya' }
 ];
 
 const MAX_LEADS_PER_DAY = 5;
-const MAX_SEARCH_REQUESTS = 2;
-const MAX_CONTACT_LOOKUPS = 3;
+const MAX_SEARCH_REQUESTS = 4;
+const MAX_CONTACT_LOOKUPS = 10;
 const NOMINATIM_DELAY_MS = 1100;
 const CONTACT_TIMEOUT_MS = 4000;
 const UA = NOMINATIM_UA;
@@ -485,7 +489,7 @@ async function fetchNominatim(search) {
   const url = new URL(NOMINATIM_ENDPOINT);
   url.searchParams.set('format', 'jsonv2');
   url.searchParams.set('q', search.query);
-  url.searchParams.set('limit', '20');
+  url.searchParams.set('limit', '40');
   url.searchParams.set('extratags', '1');
   url.searchParams.set('addressdetails', '1');
 
@@ -548,7 +552,7 @@ module.exports = async (req, res) => {
     const seen = new Set();
     const candidates = [];
 
-    for (let i = 0; i < SEARCHES.length && scannedSearches.length < MAX_SEARCH_REQUESTS && candidates.length < 24; i += 1) {
+    for (let i = 0; i < SEARCHES.length && scannedSearches.length < MAX_SEARCH_REQUESTS && candidates.length < 48; i += 1) {
       const search = SEARCHES[(start + i) % SEARCHES.length];
       if (scannedSearches.length) await sleep(NOMINATIM_DELAY_MS);
       let items;
@@ -578,7 +582,7 @@ module.exports = async (req, res) => {
 
     candidates.sort((a, b) => leadScore(b) - leadScore(a));
     const existing = await existingSourceIds(candidates.map((lead) => lead.source_id), auth.token);
-    const pool = candidates.filter((lead) => !existing.has(lead.source_id)).slice(0, 12);
+    const pool = candidates.filter((lead) => !existing.has(lead.source_id)).slice(0, 20);
 
     if (!pool.length) {
       res.status(200).json({
