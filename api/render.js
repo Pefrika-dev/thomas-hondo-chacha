@@ -163,7 +163,7 @@ function renderPost(post) {
   const title = post.seo_title || post.title || post.slug;
   const description = post.seo_description || post.excerpt ||
     String(post.content || '').replace(/\s+/g, ' ').trim().slice(0, 155);
-  const image = post.cover_url || `${SITE}/assets/images/og-cover.png`;
+  const image = post.cover_url ? new URL(post.cover_url, `${SITE}/`).href : `${SITE}/assets/images/og-cover.png`;
   const tags = splitList(post.tags);
   const cover = post.cover_url
     ? `<img class="post-cover" src="${esc(optimiseImageUrl(post.cover_url, 960))}" alt="${esc(post.title)}" loading="eager" decoding="async">`
