@@ -69,7 +69,7 @@ function blogCard(post) {
   const url = `${SITE}/blog/${encodeURIComponent(post.slug)}`;
   const title = post.title || post.slug;
   const cover = post.cover_url
-    ? `<a class="blog-card__media" href="${esc(url)}"><img src="${esc(optimiseImageUrl(post.cover_url, 640))}" alt="${esc(title)}" width="640" height="360" loading="lazy" decoding="async"></a>`
+    ? `<a class="blog-card__media" href="${esc(url)}"><img src="${esc(optimiseImageUrl(post.cover_url, 640))}" alt="${esc(title)}" width="640" height="360" loading="eager" fetchpriority="high" decoding="async"></a>`
     : '';
   const tags = splitList(post.tags).map((tag) => `<span>${esc(tag)}</span>`).join('');
   return (
@@ -105,7 +105,7 @@ function projectCard(project) {
   return (
     `<article class="project-card reveal" data-project-card data-project-id="${esc(project.id)}" data-project-type="${project.status === 'concept' ? 'concept' : 'website'}">` +
     `<a class="project-card__visual" href="${esc(url)}">` +
-    `<span class="project-card__image-wrap"><img class="project-card__image" src="${esc(optimiseImageUrl(cover, 640))}" alt="${esc(title)}" width="640" height="480" loading="lazy" decoding="async"></span>` +
+    `<span class="project-card__image-wrap"><img class="project-card__image" src="${esc(optimiseImageUrl(cover, 640))}" alt="${esc(title)}" width="640" height="480" loading="eager" decoding="async"></span>` +
     `<span class="project-card__visual-top"><span class="project-card__visual-tag">${esc(category)}</span>` +
     `<span class="status status--${esc(project.status || 'development')}">${esc(STATUS_LABEL[project.status] || project.status || '')}</span></span>` +
     `<span class="project-card__image-note">Illustrative visual</span>` +
