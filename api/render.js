@@ -52,6 +52,57 @@ function breadcrumb(items) {
   };
 }
 
+/* One stable entity graph is added to every rendered article and case study,
+   so crawlers see the same Person / WebSite / ProfessionalService identities
+   on the CMS pages as on the static pages. */
+const COMMON_GRAPH = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE}/#person`,
+      name: 'Thomas Hondo Chacha',
+      givenName: 'Thomas',
+      familyName: 'Hondo Chacha',
+      url: `${SITE}/`,
+      image: `${SITE}/assets/images/og-cover.png`,
+      jobTitle: 'Software Engineer',
+      description: 'Software engineer in Kenya focused on modern websites, business landing pages, web applications, redesigns, API integrations and technical support.',
+      email: 'mailto:thomashondochacha@gmail.com',
+      telephone: '+254705023432',
+      address: { '@type': 'PostalAddress', addressCountry: 'KE' },
+      knowsLanguage: ['English', 'Kiswahili'],
+      knowsAbout: [
+        'Web development', 'Front-end development', 'Web applications',
+        'API integration', 'Responsive web design', 'Website redesign',
+      ],
+      areaServed: { '@type': 'Country', name: 'Kenya' },
+      sameAs: ['https://github.com/Pefrika-dev'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE}/#website`,
+      url: `${SITE}/`,
+      name: 'Thomas Hondo Chacha',
+      alternateName: 'Thomas Hondo Chacha — Software Engineer',
+      description: 'Software engineering, websites and web applications in Kenya.',
+      inLanguage: ['en', 'sw'],
+      publisher: { '@id': `${SITE}/#person` },
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${SITE}/#professional-service`,
+      name: 'Thomas Hondo Chacha — Software Engineering',
+      url: `${SITE}/services.html`,
+      description: 'Website design, web applications, redesigns, integrations and technical support for businesses in Kenya.',
+      provider: { '@id': `${SITE}/#person` },
+      areaServed: { '@type': 'Country', name: 'Kenya' },
+      priceRange: 'KES',
+      sameAs: ['https://github.com/Pefrika-dev'],
+    },
+  ],
+};
+
 /* Every shell asset is root-relative so the page works at /blog/<slug>. */
 const absolutise = (html) => html.replace(/(href|src)="(?!https?:|mailto:|tel:|#|\/|data:)/g, '$1="/');
 
@@ -77,6 +128,7 @@ function head(html, meta) {
     extra.push(`<meta property="article:modified_time" content="${esc(meta.modified || meta.published)}">`);
     extra.push('<meta property="article:author" content="Thomas Hondo Chacha">');
   }
+  extra.push(jsonLd(COMMON_GRAPH));
   extra.push(jsonLd(meta.structured));
   extra.push(jsonLd(meta.crumb));
   return out.replace('</head>', extra.join('\n  ') + '\n</head>');
@@ -145,8 +197,9 @@ function renderPost(post) {
       dateModified: post.updated_at || post.published_at,
       inLanguage: 'en-KE',
       keywords: tags.join(', '),
-      author: { '@type': 'Person', name: 'Thomas Hondo Chacha', url: `${SITE}/about.html` },
-      publisher: { '@type': 'Person', name: 'Thomas Hondo Chacha', url: SITE },
+      author: { '@id': `${SITE}/#person` },
+      publisher: { '@id': `${SITE}/#person` },
+      isPartOf: { '@id': `${SITE}/#website` },
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     },
     crumb: breadcrumb([
@@ -201,7 +254,8 @@ function renderProject(project) {
       dateModified: project.updated_at || project.created_at,
       inLanguage: 'en-KE',
       keywords: tech.join(', '),
-      creator: { '@type': 'Person', name: 'Thomas Hondo Chacha', url: `${SITE}/about.html` },
+      creator: { '@id': `${SITE}/#person` },
+      isPartOf: { '@id': `${SITE}/#website` },
     },
     crumb: breadcrumb([
       { name: 'Home', url: `${SITE}/` },

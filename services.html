@@ -46,29 +46,108 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://www.thomashondochacha.co.ke/#person",
-    "name": "Thomas Hondo Chacha",
-    "givenName": "Thomas",
-    "familyName": "Hondo Chacha",
-    "url": "https://www.thomashondochacha.co.ke/",
-    "image": "https://www.thomashondochacha.co.ke/assets/images/og-cover.png",
-    "jobTitle": "Software Engineer",
-    "description": "Software engineer in Kenya focused on modern websites, business landing pages, web applications, redesigns, API integrations and technical support.",
-    "email": "mailto:thomashondochacha@gmail.com",
-    "telephone": "+254705023432",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "KE"
-    },
-    "knowsLanguage": ["English", "Kiswahili"],
-    "knowsAbout": ["Web development", "Front-end development", "Web applications", "API integration", "Responsive web design", "Website redesign"],
-    "areaServed": {
-      "@type": "Country",
-      "name": "Kenya"
-    },
-    "sameAs": [
-      "https://github.com/Pefrika-dev"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.thomashondochacha.co.ke/#person",
+        "name": "Thomas Hondo Chacha",
+        "givenName": "Thomas",
+        "familyName": "Hondo Chacha",
+        "url": "https://www.thomashondochacha.co.ke/",
+        "image": "https://www.thomashondochacha.co.ke/assets/images/og-cover.png",
+        "jobTitle": "Software Engineer",
+        "description": "Software engineer in Kenya focused on modern websites, business landing pages, web applications, redesigns, API integrations and technical support.",
+        "email": "mailto:thomashondochacha@gmail.com",
+        "telephone": "+254705023432",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "KE"
+        },
+        "knowsLanguage": [
+          "English",
+          "Kiswahili"
+        ],
+        "knowsAbout": [
+          "Web development",
+          "Front-end development",
+          "Web applications",
+          "API integration",
+          "Responsive web design",
+          "Website redesign"
+        ],
+        "areaServed": {
+          "@type": "Country",
+          "name": "Kenya"
+        },
+        "sameAs": [
+          "https://github.com/Pefrika-dev"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.thomashondochacha.co.ke/#website",
+        "url": "https://www.thomashondochacha.co.ke/",
+        "name": "Thomas Hondo Chacha",
+        "alternateName": "Thomas Hondo Chacha — Software Engineer",
+        "description": "Software engineering, websites and web applications in Kenya.",
+        "inLanguage": [
+          "en",
+          "sw"
+        ],
+        "publisher": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.thomashondochacha.co.ke/#professional-service",
+        "name": "Thomas Hondo Chacha — Software Engineering",
+        "url": "https://www.thomashondochacha.co.ke/services.html",
+        "description": "Website design, web applications, redesigns, integrations and technical support for businesses in Kenya.",
+        "provider": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Kenya"
+        },
+        "priceRange": "KES",
+        "sameAs": [
+          "https://github.com/Pefrika-dev"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.thomashondochacha.co.ke/services.html",
+        "name": "Website design and development in Kenya",
+        "url": "https://www.thomashondochacha.co.ke/services.html",
+        "isPartOf": {
+          "@id": "https://www.thomashondochacha.co.ke/#website"
+        },
+        "about": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        },
+        "inLanguage": [
+          "en",
+          "sw"
+        ],
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.thomashondochacha.co.ke/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services"
+            }
+          ]
+        }
+      }
     ]
   }
   </script>
@@ -76,13 +155,16 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": "https://www.thomashondochacha.co.ke/services.html#service",
     "name": "Website design and development in Kenya",
     "serviceType": "Website design and development",
     "url": "https://www.thomashondochacha.co.ke/services.html",
     "provider": { "@id": "https://www.thomashondochacha.co.ke/#person" },
     "areaServed": { "@type": "Country", "name": "Kenya" },
+    "isPartOf": { "@id": "https://www.thomashondochacha.co.ke/#professional-service" },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
+      "@id": "https://www.thomashondochacha.co.ke/services.html#offer-catalog",
       "name": "Website packages",
       "itemListElement": [
         {
@@ -143,7 +225,7 @@
         "name": "How do payments work?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "50% deposit to start and 50% before the site goes live. Projects above KSh 100,000 are split 40%, 30% and 30%. A 5% discount applies when the full amount is paid upfront."
+          "text": "Each issue is priced separately. Payment is made after the scope and price are agreed, using the M-Pesa or bank details shown on this site. Thomas confirms payments manually; automatic payment is coming soon. There is no automatic debit, gateway or unlock flow."
         }
       },
       {
@@ -567,7 +649,7 @@
           </details>
           <details class="faq-item">
             <summary data-i18n="servicesPage.faqQ3">How do payments work?</summary>
-            <p data-i18n="servicesPage.faqA3">50% deposit to start and 50% before the site goes live. Projects above KSh 100,000 are split 40%, 30% and 30%. A 5% discount applies when the full amount is paid upfront.</p>
+            <p data-i18n="servicesPage.faqA3">Each issue is priced separately. Payment is made after the scope and price are agreed, using the M-Pesa or bank details shown on this site. Thomas confirms payments manually; automatic payment is coming soon. There is no automatic debit, gateway or unlock flow.</p>
           </details>
           <details class="faq-item">
             <summary data-i18n="servicesPage.faqQ4">How long does a website take?</summary>

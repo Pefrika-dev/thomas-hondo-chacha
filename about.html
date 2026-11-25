@@ -44,29 +44,108 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://www.thomashondochacha.co.ke/#person",
-    "name": "Thomas Hondo Chacha",
-    "givenName": "Thomas",
-    "familyName": "Hondo Chacha",
-    "url": "https://www.thomashondochacha.co.ke/",
-    "image": "https://www.thomashondochacha.co.ke/assets/images/og-cover.png",
-    "jobTitle": "Software Engineer",
-    "description": "Software engineer in Kenya focused on modern websites, business landing pages, web applications, redesigns, API integrations and technical support.",
-    "email": "mailto:thomashondochacha@gmail.com",
-    "telephone": "+254705023432",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "KE"
-    },
-    "knowsLanguage": ["English", "Kiswahili"],
-    "knowsAbout": ["Web development", "Front-end development", "Web applications", "API integration", "Responsive web design", "Website redesign"],
-    "areaServed": {
-      "@type": "Country",
-      "name": "Kenya"
-    },
-    "sameAs": [
-      "https://github.com/Pefrika-dev"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.thomashondochacha.co.ke/#person",
+        "name": "Thomas Hondo Chacha",
+        "givenName": "Thomas",
+        "familyName": "Hondo Chacha",
+        "url": "https://www.thomashondochacha.co.ke/",
+        "image": "https://www.thomashondochacha.co.ke/assets/images/og-cover.png",
+        "jobTitle": "Software Engineer",
+        "description": "Software engineer in Kenya focused on modern websites, business landing pages, web applications, redesigns, API integrations and technical support.",
+        "email": "mailto:thomashondochacha@gmail.com",
+        "telephone": "+254705023432",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "KE"
+        },
+        "knowsLanguage": [
+          "English",
+          "Kiswahili"
+        ],
+        "knowsAbout": [
+          "Web development",
+          "Front-end development",
+          "Web applications",
+          "API integration",
+          "Responsive web design",
+          "Website redesign"
+        ],
+        "areaServed": {
+          "@type": "Country",
+          "name": "Kenya"
+        },
+        "sameAs": [
+          "https://github.com/Pefrika-dev"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.thomashondochacha.co.ke/#website",
+        "url": "https://www.thomashondochacha.co.ke/",
+        "name": "Thomas Hondo Chacha",
+        "alternateName": "Thomas Hondo Chacha — Software Engineer",
+        "description": "Software engineering, websites and web applications in Kenya.",
+        "inLanguage": [
+          "en",
+          "sw"
+        ],
+        "publisher": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.thomashondochacha.co.ke/#professional-service",
+        "name": "Thomas Hondo Chacha — Software Engineering",
+        "url": "https://www.thomashondochacha.co.ke/services.html",
+        "description": "Website design, web applications, redesigns, integrations and technical support for businesses in Kenya.",
+        "provider": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Kenya"
+        },
+        "priceRange": "KES",
+        "sameAs": [
+          "https://github.com/Pefrika-dev"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.thomashondochacha.co.ke/about.html",
+        "name": "About Thomas Hondo Chacha",
+        "url": "https://www.thomashondochacha.co.ke/about.html",
+        "isPartOf": {
+          "@id": "https://www.thomashondochacha.co.ke/#website"
+        },
+        "about": {
+          "@id": "https://www.thomashondochacha.co.ke/#person"
+        },
+        "inLanguage": [
+          "en",
+          "sw"
+        ],
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://www.thomashondochacha.co.ke/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "About"
+            }
+          ]
+        }
+      }
     ]
   }
   </script>

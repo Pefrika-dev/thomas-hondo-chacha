@@ -1,0 +1,28 @@
+# Thomas Hondo Chacha
+
+> Software engineer in Kenya building modern websites, web applications and practical digital solutions for businesses.
+
+## Key pages
+
+- [Home](https://www.thomashondochacha.co.ke/): verified identity, role and contact details.
+- [About](https://www.thomashondochacha.co.ke/about.html): biography, location and languages.
+- [Services and starting prices](https://www.thomashondochacha.co.ke/services.html): Starter from KSh 25,000; Business from KSh 55,000; Commerce from KSh 120,000; Custom web application from KSh 150,000.
+- [Projects](https://www.thomashondochacha.co.ke/projects.html): selected website and web application work with honest project statuses.
+- [Blog](https://www.thomashondochacha.co.ke/blog.html): articles on web design, software engineering, security and business websites in Kenya.
+- [Contact](https://www.thomashondochacha.co.ke/contact.html): phone, WhatsApp and email.
+
+## Contact
+
+- Email: thomashondochacha@gmail.com
+- Phone / WhatsApp: +254705023432
+- Location: Kenya
+- Website: https://www.thomashondochacha.co.ke
+
+## Payment policy
+
+Prices are per issue and confirmed in writing after a short brief. Payment is made using the M-Pesa or bank details published on the site. Thomas Hondo Chacha confirms payments manually. Automatic payment is coming soon; there is no auto-debit, payment gateway or pay-to-unlock flow.
+
+## Verification
+
+- GitHub: https://github.com/Pefrika-dev
+- Google Search Console property: sc-domain:thomashondochacha.co.ke
