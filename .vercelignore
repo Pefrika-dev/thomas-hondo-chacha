@@ -1,6 +1,7 @@
 # Internal material. Never upload it to the public site.
 *.md
 outreach/
+content/blog-drafts/
 scripts/
 supabase/
 .github/
