@@ -52,13 +52,17 @@ const SEARCHES = [
 ];
 
 const MAX_LEADS_PER_DAY = 5;
-const MAX_SEARCH_REQUESTS = 4;
-const MAX_CONTACT_LOOKUPS = 10;
+const MAX_SEARCH_REQUESTS = 5;
+const MAX_CONTACT_LOOKUPS = 12;
 const NOMINATIM_DELAY_MS = 1100;
 const CONTACT_TIMEOUT_MS = 4000;
 const UA = NOMINATIM_UA;
 
 const SOURCE_ID_PREFIX = { node: 'n', way: 'w', relation: 'r' };
+const SOCIAL_HOSTS = new Set([
+  'facebook.com', 'instagram.com', 'twitter.com', 'x.com', 'tiktok.com',
+  'wa.me', 'api.whatsapp.com', 'linktr.ee'
+]);
 const GENERIC_NAMES = new Set([
   'hotel', 'hotels', 'lodge', 'restaurant', 'restaurants', 'pharmacy', 'pharmacies',
   'hardware', 'shop', 'shops', 'guest house', 'guesthouse', 'bar', 'cafe', 'supermarket',
@@ -68,6 +72,14 @@ const GENERIC_NAMES = new Set([
 function isGenericName(value) {
   const name = String(value || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
   return name.length < 3 || GENERIC_NAMES.has(name);
+}
+
+function isSocialHost(hostname) {
+  const host = String(hostname || '').toLowerCase();
+  for (const domain of SOCIAL_HOSTS) {
+    if (host === domain || host.endsWith('.' + domain)) return true;
+  }
+  return false;
 }
 
 const TYPE_LABELS = {
@@ -222,6 +234,20 @@ async function existingSourceIds(ids, token) {
   return found;
 }
 
+async function existingPhones(phones, token) {
+  const found = new Set();
+  if (!phones.length) return found;
+  const list = phones.map((phone) => encodeURIComponent(phone)).join(',');
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/outreach_leads?select=phone&phone=in.(${list})&limit=500`,
+    { headers: writeHeaders(token) }
+  );
+  if (!response.ok) throw new Error(`Supabase phone dedupe lookup failed (${response.status})`);
+  const rows = await response.json();
+  if (Array.isArray(rows)) rows.forEach((row) => { if (row.phone) found.add(row.phone); });
+  return found;
+}
+
 async function insertLeads(leads, token) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/outreach_leads?on_conflict=source,source_id`, {
     method: 'POST',
@@ -299,6 +325,7 @@ function normaliseWebsite(value) {
   if (!/^https?:$/.test(url.protocol) || url.username || url.password || !url.hostname) {
     throw new Error('Invalid website');
   }
+  if (isSocialHost(url.hostname)) throw new Error('Social profile only');
   return url;
 }
 
@@ -428,12 +455,14 @@ function locationOf(item, search) {
 
 function businessType(item) {
   const tags = item.extratags || {};
+  const category = clean(item.category, 40).toLowerCase();
+  const genericCategory = ['amenity', 'shop', 'tourism', 'office', 'craft', 'healthcare', 'leisure', 'building'].indexOf(category) !== -1;
   const raw = clean(
     tags.shop || tags.amenity || tags.office || tags.craft || tags.tourism || tags.healthcare ||
-    (item.category && item.category !== 'building' ? item.category : '') || item.type,
+    (category && !genericCategory ? category : '') || item.type,
     80
   ).replace(/_/g, ' ');
-  if (!raw) return 'Local business';
+  if (!raw || raw === 'yes' || raw === 'no') return 'Local business';
   if (TYPE_LABELS[raw]) return TYPE_LABELS[raw];
   return raw.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
@@ -562,7 +591,7 @@ module.exports = async (req, res) => {
     const seen = new Set();
     const candidates = [];
 
-    for (let i = 0; i < SEARCHES.length && scannedSearches.length < MAX_SEARCH_REQUESTS && candidates.length < 48; i += 1) {
+    for (let i = 0; i < SEARCHES.length && scannedSearches.length < MAX_SEARCH_REQUESTS && candidates.length < 200; i += 1) {
       const search = SEARCHES[(start + i) % SEARCHES.length];
       if (scannedSearches.length) await sleep(NOMINATIM_DELAY_MS);
       let items;
@@ -592,7 +621,27 @@ module.exports = async (req, res) => {
 
     candidates.sort((a, b) => leadScore(b) - leadScore(a));
     const existing = await existingSourceIds(candidates.map((lead) => lead.source_id), auth.token);
-    const pool = candidates.filter((lead) => !existing.has(lead.source_id)).slice(0, 20);
+    const existingPhoneSet = await existingPhones(
+      candidates.map((lead) => lead.phone).filter(Boolean),
+      auth.token
+    );
+
+    const seenPhones = new Set();
+    const seenNames = new Set();
+    const fresh = [];
+    for (const lead of candidates) {
+      if (existing.has(lead.source_id)) continue;
+      if (lead.phone) {
+        if (existingPhoneSet.has(lead.phone) || seenPhones.has(lead.phone)) continue;
+        seenPhones.add(lead.phone);
+      } else {
+        const nameKey = lead.business_name.toLowerCase() + '|' + lead.location.toLowerCase();
+        if (seenNames.has(nameKey)) continue;
+        seenNames.add(nameKey);
+      }
+      fresh.push(lead);
+    }
+    const pool = fresh.slice(0, 30);
 
     if (!pool.length) {
       res.status(200).json({
