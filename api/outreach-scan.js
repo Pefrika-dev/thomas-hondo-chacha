@@ -52,7 +52,7 @@ const SEARCHES = [
 ];
 
 const MAX_LEADS_PER_DAY = 5;
-const MAX_SEARCH_REQUESTS = 5;
+const MAX_SEARCH_REQUESTS = SEARCHES.length;
 const MAX_CONTACT_LOOKUPS = 12;
 const NOMINATIM_DELAY_MS = 1100;
 const CONTACT_TIMEOUT_MS = 4000;
@@ -137,12 +137,6 @@ function nairobiDate() {
   } catch (error) {
     return new Date().toISOString().slice(0, 10);
   }
-}
-
-function dayOfYear() {
-  const date = new Date();
-  const start = Date.UTC(date.getUTCFullYear(), 0, 0);
-  return Math.floor((Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) - start) / 86400000);
 }
 
 function cors(req, res) {
@@ -586,7 +580,7 @@ module.exports = async (req, res) => {
       return;
     }
 
-    const start = dayOfYear() % SEARCHES.length;
+    const start = 0;
     const scannedSearches = [];
     const seen = new Set();
     const candidates = [];
@@ -614,7 +608,7 @@ module.exports = async (req, res) => {
     if (!candidates.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: [],
-        message: 'No public listings were returned by today’s rotated sources. Saved leads remain available below. Try again tomorrow.'
+        message: 'No public listings were returned by today’s sources. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }
@@ -646,7 +640,7 @@ module.exports = async (req, res) => {
     if (!pool.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: [],
-        message: 'Today’s rotated sources contain no new phone-verified leads. Saved leads remain available below. Try again tomorrow.'
+        message: 'Today’s public sources contain no new phone-verified leads. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }
@@ -674,7 +668,7 @@ module.exports = async (req, res) => {
     if (!usable.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: scannedSearches,
-        message: 'No new phone-verified lead was found in today’s rotated sources. Saved leads remain available below. Try again tomorrow.'
+        message: 'No new phone-verified lead was found in today’s public sources. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }
