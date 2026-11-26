@@ -348,20 +348,20 @@
           availability: "No public demo or source link is configured for this project."
         },
         suna: {
-          category: "Vehicle marketplace",
-          alt: "Illustrative interface study for the Suna Motor Bazaar website demonstration",
-          summary: "A vehicle marketplace demonstration exploring how a dealership or bazaar could present its stock clearly and make browsing feel effortless.",
-          problem: "Vehicle listings become difficult to scan when photographs, specifications, prices and contact options all compete for attention.",
-          solution: "A structured marketplace interface with a strong visual hierarchy, readable vehicle cards and a direct route from discovery to enquiry.",
+          category: "Vehicle dealership",
+          alt: "Bilingual Suna Motor Bazaar website concept with licensed vehicle model photography",
+          summary: "An EN/SW dealership website for Suna Motor Bazaar in Migori Town, with real vehicle model photography, owner-supplied business details, opening hours, payment options and a copy-only enquiry flow.",
+          problem: "A dealership in Migori needs buyers to see location, phone numbers, hours and payment options before they travel or send a message. Generic stock photos and invented prices would make that trust harder.",
+          solution: "An EN/SW website that publishes the owner-supplied details, uses real model photographs with attribution, and keeps exact stock and price confirmation with the dealership.",
           features: [
-            "Vehicle listing layout with clear entry points",
-            "Specification and price hierarchy",
-            "Concept for search and category filtering",
-            "Mobile-friendly browsing",
-            "Enquiry-focused calls to action"
+            "Six real vehicle model families with licensed photographs stored locally",
+            "Filters by make, body type and stock source",
+            "Phone, WhatsApp, address, opening hours and payment options up front",
+            "Copy-only enquiry composer with no automatic sending",
+            "Submitted sitemap and structured data for discovery"
           ],
-          limitations: "This is a website demonstration. It does not claim live inventory data, a production content workflow or a deployed dealership site. No public demo link is configured.",
-          availability: "No public demo or source link is configured for this project."
+          limitations: "This is a website concept prepared with business details supplied by the owner. Photographs show model examples, not specific vehicles for sale. No stock or prices are invented, and the site is not an official launch announcement.",
+          availability: "Live concept: https://suna-motor-bazaar.vercel.app/ · Source: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page"
         },
         pefrika: {
           category: "Business website",
@@ -1119,20 +1119,20 @@
           availability: "Hakuna kiungo cha onyesho la umma au msimbo kilichowekwa kwa mradi huu."
         },
         suna: {
-          category: "Soko la magari",
-          alt: "Dhana ya kiolesura kwa onyesho la tovuti ya Suna Motor Bazaar",
-          summary: "Onyesho la soko la magari linalochunguza jinsi biashara ya magari inaweza kuwasilisha magari yaliyopo kwa uwazi na kurahisisha kuvinjari.",
-          problem: "Orodha za magari huwa ngumu kuchunguza wakati picha, vipimo, bei na njia za kuwasiliana vinashindana kwa makini ya mtumiaji.",
-          solution: "Kiolesura cha soko kilichopangwa vizuri, chenye mpangilio wazi, kadi za magari rahisi kusoma na njia ya moja kwa moja kutoka kwa ugunduzi hadi kuuliza.",
+          category: "Duka la magari",
+          alt: "Tovuti ya Suna Motor Bazaar ya lugha mbili yenye picha halisi za aina za magari",
+          summary: "Tovuti ya duka la magari ya EN/SW kwa Suna Motor Bazaar mjini Migori, yenye picha halisi za aina za magari, maelezo yaliyotolewa na mmiliki, saa za kazi, njia za malipo na ujumbe unaandaliwa kwa kunakili tu.",
+          problem: "Duka la magari Migori linahitaji wageni waone mahali, namba za simu, saa za kazi na njia za malipo kabla ya kusafiri au kutuma ujumbe. Picha za jumla na bei za uongo zingeharibu uaminifu huo.",
+          solution: "Tovuti ya EN/SW inayochapisha maelezo yaliyotolewa na mmiliki, kutumia picha halisi za aina za magari zenye vyanzo, na kuacha uthibitisho wa gari na bei kwa duka.",
           features: [
-            "Mpangilio wa orodha za magari wenye maeneo wazi ya kuanzia",
-            "Uwazi wa vipimo na bei",
-            "Dhana ya utafutaji na vichujio vya aina",
-            "Uvinjari rahisi kwenye simu",
-            "Vitendo vya kuuliza vinavyoelekea wateja"
+            "Familia sita halisi za magari zenye picha zilizo na leseni na kuhifadhiwa ndani",
+            "Vichujio vya mtengenezaji, aina ya gari na chanzo cha gari",
+            "Simu, WhatsApp, anwani, saa za kazi na njia za malipo zinazoonekana mapema",
+            "Fomu ya kuuliza inayoandaa maandishi bila kutuma kiotomatiki",
+            "Sitemap iliyosubmit na structured data kwa ugunduzi"
           ],
-          limitations: "Huu ni onyesho la tovuti. Haukudai data halisi ya magari, mtiririko wa maudhui wa uzalishaji au tovuti ya biashara iliyowekwa mtandaoni. Hakuna kiungo cha onyesho la umma kilichowekwa.",
-          availability: "Hakuna kiungo cha onyesho la umma au msimbo kilichowekwa kwa mradi huu."
+          limitations: "Huu ni dhana ya tovuti iliyotayarishwa kwa kutumia maelezo yaliyotolewa na mmiliki. Picha zinaonyesha mfano wa aina ya gari, si magari maalum yanayouzwa. Hakuna magari au bei za uongo, na si tangazo rasmi la uzinduzi.",
+          availability: "Tovuti: https://suna-motor-bazaar.vercel.app/ · Msimbo: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page"
         },
         pefrika: {
           category: "Tovuti ya biashara",

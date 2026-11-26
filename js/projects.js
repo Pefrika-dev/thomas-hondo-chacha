@@ -29,11 +29,11 @@
       status: "demo",
       featured: true,
       cover: "assets/images/project-suna.svg",
-      technologies: ["HTML5", "CSS3", "JavaScript"],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Vercel"],
       service: "website-design",
       links: {
-        demo: null,
-        source: null,
+        demo: "https://suna-motor-bazaar.vercel.app/",
+        source: "https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page",
         internal: null
       }
     },
