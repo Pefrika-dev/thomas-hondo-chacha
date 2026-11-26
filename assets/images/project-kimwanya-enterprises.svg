@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Kimwanya Enterprises - property discovery concept</title>
+  <desc id="desc">A property discovery website concept for Migori County, Kenya.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2b24"/>
+      <stop offset="1" stop-color="#143b2e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="72" y="72" width="1056" height="531" rx="24" fill="none" stroke="#d8b27a" stroke-opacity=".45" stroke-width="2"/>
+  <text x="112" y="170" fill="#d8b27a" font-family="Georgia, serif" font-size="26" letter-spacing="8">MIGORI COUNTY - KENYA</text>
+  <text x="112" y="300" fill="#fffaf0" font-family="Georgia, serif" font-size="82" font-weight="700">KIMWANYA</text>
+  <text x="112" y="390" fill="#fffaf0" font-family="Georgia, serif" font-size="82" font-weight="700">ENTERPRISES</text>
+  <text x="112" y="470" fill="#d8b27a" font-family="Arial, sans-serif" font-size="30" letter-spacing="3">PROPERTY DISCOVERY CONCEPT</text>
+  <text x="112" y="540" fill="#cfc7b8" font-family="Arial, sans-serif" font-size="24">Designed and built by Thomas Hondo Chacha</text>
+</svg>
