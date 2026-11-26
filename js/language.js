@@ -366,19 +366,20 @@
         },
         pefrika: {
           category: "Business website",
-          alt: "Illustrative interface study for the Pefrika website project",
-          summary: "A business website project focused on a coherent digital identity, clear service communication and a direct route to client enquiry.",
-          problem: "A small business needs a website that explains what it does without overcomplicating the story, while making it easy for a prospective client to take the next step.",
-          solution: "A service-led website structure with a professional visual system, concise content and enquiry paths that reduce friction.",
+          alt: "Pefrika business website concept with a clear service-led layout",
+          summary: "A business website concept for Pefrika, Thomas Hondo Chacha's future company, with clear service messaging, a direct enquiry path and a working live demo.",
+          problem: "A future company needs a website that explains its services simply, shows where it is based and makes the next step obvious without pretending the company has already launched.",
+          solution: "A service-led website concept built by Thomas Hondo Chacha, with a professional visual system, concise copy and a direct route to enquiry.",
           features: [
             "Business-focused information architecture",
             "Service presentation and clear calls to action",
             "Contact and enquiry flow",
             "Responsive implementation",
-            "Reusable interface patterns"
+            "Reusable interface patterns",
+            "Working live demo on Vercel"
           ],
-          limitations: "This project is still in development. It is not presented as a live deployment, and no public URL or source repository is configured.",
-          availability: "This project is in development. No public demo or source link is configured."
+          limitations: "This is a concept for a future company, not an announcement that Pefrika has launched. No source repository is configured.",
+          availability: "Live demo: https://pefrika-website.vercel.app/"
         },
         togotane: {
           category: "Community media",
@@ -1138,19 +1139,20 @@
         },
         pefrika: {
           category: "Tovuti ya biashara",
-          alt: "Dhana ya kiolesura kwa mradi wa tovuti ya Pefrika",
-          summary: "Mradi wa tovuti ya biashara unaolenga utambulisho wa kidijitali uliojengwa kwa uthabiti, mawasiliano wazi ya huduma na njia ya moja kwa moja ya wateja kuuliza.",
-          problem: "Biashara ndogo inahitaji tovuti inayoeleza inachofanya bila kutatiza hadithi, huku ikirahisisha mteja anayetarajia kuchukua hatua inayofuata.",
-          solution: "Muundo wa tovuti unaoongozwa na huduma, wenye mfumo wa kuona wa kitaalamu, maudhui mafupi na njia za kuuliza zisizo na usumbufu.",
+          alt: "Dhana ya tovuti ya biashara ya Pefrika yenye mpangilio wazi wa huduma",
+          summary: "Dhana ya tovuti ya biashara kwa Pefrika, kampuni ya baadaye ya Thomas Hondo Chacha, yenye ujumbe wazi wa huduma, njia ya moja kwa moja ya kuuliza na onyesho linalofanya kazi.",
+          problem: "Kampuni ya baadaye inahitaji tovuti inayoeleza huduma zake kwa urahisi, inayoonyesha ilipo na kufanya hatua inayofuata iwe wazi bila kudai kampuni imezinduliwa tayari.",
+          solution: "Dhana ya tovuti iliyojengwa na Thomas Hondo Chacha, yenye mfumo wa kuona wa kitaalamu, maudhui mafupi na njia ya moja kwa moja ya kuuliza.",
           features: [
             "Muundo wa taarifa unaolenga biashara",
             "Uwasilishaji wa huduma na wito wazi wa kuchukua hatua",
             "Mchakato wa mawasiliano na kuuliza",
             "Utekelezaji unaobadilika kwa vifaa",
-            "Vipengele vya kiolesura vinavyoweza kutumika tena"
+            "Vipengele vya kiolesura vinavyoweza kutumika tena",
+            "Onyesho linalofanya kazi kwenye Vercel"
           ],
-          limitations: "Mradi bado unaendelezwa. Haiwasilishwi kama tovuti iliyowekwa mtandaoni, na hakuna kiungo cha umma au hazina ya msimbo iliyowekwa.",
-          availability: "Mradi unaendelezwa. Hakuna kiungo cha onyesho la umma au msimbo kilichowekwa."
+          limitations: "Huu ni dhana ya kampuni ya baadaye, si tangazo kwamba Pefrika imezinduliwa. Hakuna hazina ya msimbo iliyowekwa.",
+          availability: "Onyesho: https://pefrika-website.vercel.app/"
         },
         togotane: {
           category: "Vyombo vya habari vya jamii",

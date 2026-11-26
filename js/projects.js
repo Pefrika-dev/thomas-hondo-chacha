@@ -41,13 +41,13 @@
       id: "pefrika",
       title: "Pefrika Website",
       type: "website",
-      status: "development",
+      status: "demo",
       featured: true,
       cover: "assets/images/project-pefrika.svg",
-      technologies: ["HTML5", "CSS3", "JavaScript"],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Vercel"],
       service: "website-design",
       links: {
-        demo: null,
+        demo: "https://pefrika-website.vercel.app/",
         source: null,
         internal: null
       }
