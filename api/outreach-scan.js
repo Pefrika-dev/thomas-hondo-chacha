@@ -614,7 +614,7 @@ module.exports = async (req, res) => {
     if (!candidates.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: [],
-        message: 'No new public listings were found in this scan. Try again tomorrow.'
+        message: 'No public listings were returned by today’s rotated sources. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }
@@ -646,7 +646,7 @@ module.exports = async (req, res) => {
     if (!pool.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: [],
-        message: 'These public listings are already in the radar. Try again tomorrow.'
+        message: 'Today’s rotated sources contain no new phone-verified leads. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }
@@ -674,7 +674,7 @@ module.exports = async (req, res) => {
     if (!usable.length) {
       res.status(200).json({
         ok: true, added: 0, todayCount: todayCount, capReached: false, leads: [], scannedSearches: scannedSearches,
-        message: 'No listing with a public phone number was found this time. Try again tomorrow.'
+        message: 'No new phone-verified lead was found in today’s rotated sources. Saved leads remain available below. Try again tomorrow.'
       });
       return;
     }

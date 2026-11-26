@@ -66,7 +66,7 @@
     scanning = on;
     scanBtn.disabled = on;
     refreshBtn.disabled = on;
-    scanBtn.textContent = on ? "Scanning…" : "Scan today’s 5";
+    scanBtn.textContent = on ? "Scanning…" : "Scan today (max 5)";
   }
 
   async function ensureSession() {
