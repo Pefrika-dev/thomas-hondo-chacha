@@ -350,18 +350,19 @@
         suna: {
           category: "Vehicle dealership",
           alt: "Bilingual Suna Motor Bazaar website concept with licensed vehicle model photography",
-          summary: "An EN/SW dealership website for Suna Motor Bazaar in Migori Town, with real vehicle model photography, owner-supplied business details, opening hours, payment options and a copy-only enquiry flow.",
+          summary: "A bilingual EN/SW dealership website for Suna Motor Bazaar in Migori Town, designed and built by Thomas Hondo Chacha with real vehicle model photography, direct contact links, hours, payment options and a copy-only enquiry flow.",
           problem: "A dealership in Migori needs buyers to see location, phone numbers, hours and payment options before they travel or send a message. Generic stock photos and invented prices would make that trust harder.",
-          solution: "An EN/SW website that publishes the owner-supplied details, uses real model photographs with attribution, and keeps exact stock and price confirmation with the dealership.",
+          solution: "An EN/SW website designed and built by Thomas Hondo Chacha, using real model photographs with attribution and keeping exact stock and price confirmation with the dealership.",
           features: [
             "Six real vehicle model families with licensed photographs stored locally",
             "Filters by make, body type and stock source",
             "Phone, WhatsApp, address, opening hours and payment options up front",
             "Copy-only enquiry composer with no automatic sending",
-            "Submitted sitemap and structured data for discovery"
+            "Submitted sitemap and structured data for discovery",
+            "Visible credit and a contact path to Thomas for similar work"
           ],
-          limitations: "This is a website concept prepared with business details supplied by the owner. Photographs show model examples, not specific vehicles for sale. No stock or prices are invented, and the site is not an official launch announcement.",
-          availability: "Live concept: https://suna-motor-bazaar.vercel.app/ · Source: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page"
+          limitations: "This is an independent website concept by Thomas Hondo Chacha, not an official launch announcement. Photographs show model examples, not specific vehicles for sale. No stock or prices are invented; confirm current details directly with Suna Motor Bazaar.",
+          availability: "Live concept: https://suna-motor-bazaar.vercel.app/ · Source: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page · Work with Thomas: https://www.thomashondochacha.co.ke/contact.html"
         },
         pefrika: {
           category: "Business website",
@@ -1121,18 +1122,19 @@
         suna: {
           category: "Duka la magari",
           alt: "Tovuti ya Suna Motor Bazaar ya lugha mbili yenye picha halisi za aina za magari",
-          summary: "Tovuti ya duka la magari ya EN/SW kwa Suna Motor Bazaar mjini Migori, yenye picha halisi za aina za magari, maelezo yaliyotolewa na mmiliki, saa za kazi, njia za malipo na ujumbe unaandaliwa kwa kunakili tu.",
+          summary: "Tovuti ya duka la magari ya EN/SW kwa Suna Motor Bazaar mjini Migori, iliyobuniwa na kujengwa na Thomas Hondo Chacha, yenye picha halisi za aina za magari, viungo vya mawasiliano, saa za kazi, njia za malipo na ujumbe wa kunakili tu.",
           problem: "Duka la magari Migori linahitaji wageni waone mahali, namba za simu, saa za kazi na njia za malipo kabla ya kusafiri au kutuma ujumbe. Picha za jumla na bei za uongo zingeharibu uaminifu huo.",
-          solution: "Tovuti ya EN/SW inayochapisha maelezo yaliyotolewa na mmiliki, kutumia picha halisi za aina za magari zenye vyanzo, na kuacha uthibitisho wa gari na bei kwa duka.",
+          solution: "Tovuti ya EN/SW iliyobuniwa na kujengwa na Thomas Hondo Chacha, kutumia picha halisi za aina za magari zenye vyanzo, na kuacha uthibitisho wa gari na bei kwa duka.",
           features: [
             "Familia sita halisi za magari zenye picha zilizo na leseni na kuhifadhiwa ndani",
             "Vichujio vya mtengenezaji, aina ya gari na chanzo cha gari",
             "Simu, WhatsApp, anwani, saa za kazi na njia za malipo zinazoonekana mapema",
             "Fomu ya kuuliza inayoandaa maandishi bila kutuma kiotomatiki",
-            "Sitemap iliyosubmit na structured data kwa ugunduzi"
+            "Sitemap iliyosubmit na structured data kwa ugunduzi",
+            "Sifa inayoonekana na njia ya kuwasiliana na Thomas kwa kazi kama hii"
           ],
-          limitations: "Huu ni dhana ya tovuti iliyotayarishwa kwa kutumia maelezo yaliyotolewa na mmiliki. Picha zinaonyesha mfano wa aina ya gari, si magari maalum yanayouzwa. Hakuna magari au bei za uongo, na si tangazo rasmi la uzinduzi.",
-          availability: "Tovuti: https://suna-motor-bazaar.vercel.app/ · Msimbo: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page"
+          limitations: "Huu ni dhana huru ya tovuti ya Thomas Hondo Chacha, si tangazo rasmi la uzinduzi. Picha zinaonyesha mfano wa aina ya gari, si magari maalum yanayouzwa. Hakuna magari au bei za uongo; thibitisha maelezo ya sasa moja kwa moja na Suna Motor Bazaar.",
+          availability: "Tovuti: https://suna-motor-bazaar.vercel.app/ · Msimbo: https://github.com/Pefrika-dev/suna-motor-bazaar-landing-page · Fanya kazi na Thomas: https://www.thomashondochacha.co.ke/contact.html"
         },
         pefrika: {
           category: "Tovuti ya biashara",
