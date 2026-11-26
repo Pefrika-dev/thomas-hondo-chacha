@@ -3,6 +3,12 @@
   "outputDirectory": ".",
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "thomashondochacha.co.ke" }],
+      "destination": "https://www.thomashondochacha.co.ke/$1",
+      "permanent": true
+    },
+    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
